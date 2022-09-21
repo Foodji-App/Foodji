@@ -10,9 +10,9 @@ jobs:
         with:
           dotnet-version: 6.0.x
       - name: Build
-        run: dotnet build foodji_api/FoodjiApi/FoodjiApi.sln
+        run: dotnet build foodji_api/FoodjiApi.sln
       - name: Test
-        run: dotnet test --no-build --verbosity normal foodji_api/FoodjiApi/FoodjiApiTests/FoodjiApiTests.csproj
+        run: dotnet test --no-build --verbosity normal foodji_api/FoodjiApiTests/FoodjiApiTests.csproj
     
     #- name: Upload a Build Artifact
     #  uses: actions/upload-artifact@v3.1.0
