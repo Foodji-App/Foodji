@@ -1,6 +1,6 @@
-﻿using FoodjiApi.DbRepresentations.Ingredients;
+﻿using Api.DbRepresentations.Ingredients;
 
-namespace FoodjiApi.DbRepresentations.Recipes;
+namespace Api.DbRepresentations.Recipes;
 
 public class RecipeIngredient
 {

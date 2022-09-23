@@ -1,4 +1,4 @@
-﻿namespace FoodjiApi.DbRepresentations.Recipes;
+﻿namespace Api.DbRepresentations.Recipes;
 
 public enum UnitType
 {

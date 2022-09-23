@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodjiApi", "FoodjiApi\FoodjiApi.csproj", "{5E5D29DA-75EA-4270-9878-3779DD149369}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{5E5D29DA-75EA-4270-9878-3779DD149369}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodjiApiTests", "FoodjiApiTests\FoodjiApiTests.csproj", "{D9CC6158-2EBD-4AD6-944E-0072519F68EB}"
 EndProject
@@ -12,6 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{DAE2CBE9-3596-4500-93B2-389443B030DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{98265661-5290-40EC-B8F8-A8E4AD09AE04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra", "Infra\Infra.csproj", "{3949615C-DCB4-439D-8EBA-1C484DBF3D23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{D9CC6158-2EBD-4AD6-944E-0072519F68EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9CC6158-2EBD-4AD6-944E-0072519F68EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9CC6158-2EBD-4AD6-944E-0072519F68EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAE2CBE9-3596-4500-93B2-389443B030DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAE2CBE9-3596-4500-93B2-389443B030DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAE2CBE9-3596-4500-93B2-389443B030DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAE2CBE9-3596-4500-93B2-389443B030DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98265661-5290-40EC-B8F8-A8E4AD09AE04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98265661-5290-40EC-B8F8-A8E4AD09AE04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98265661-5290-40EC-B8F8-A8E4AD09AE04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98265661-5290-40EC-B8F8-A8E4AD09AE04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3949615C-DCB4-439D-8EBA-1C484DBF3D23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3949615C-DCB4-439D-8EBA-1C484DBF3D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3949615C-DCB4-439D-8EBA-1C484DBF3D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3949615C-DCB4-439D-8EBA-1C484DBF3D23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

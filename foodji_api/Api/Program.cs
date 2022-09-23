@@ -1,4 +1,4 @@
-using MongoDB.Driver;
+using Infra.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Map dependency injection
-builder.Services.AddSingleton<IMongoClient, MongoClient>(_ => 
-    // TODO use secrets - not critical for the moment in local development ONLY
-    new MongoClient(builder.Configuration.GetSection("Database:MongoDB")["ConnectionString"]));
+builder.SetupInfra();
 
 var app = builder.Build();
 

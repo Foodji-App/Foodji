@@ -1,4 +1,4 @@
-﻿namespace FoodjiApi.DbRepresentations.Ingredients;
+﻿namespace Api.DbRepresentations.Ingredients;
 
 public class Ingredient
 {

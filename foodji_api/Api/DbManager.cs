@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace FoodjiApi;
+namespace Api;
 
 public class DbManager
 {
