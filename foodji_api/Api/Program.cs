@@ -10,7 +10,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Map dependency injection
-builder.SetupInfra();
+builder.Services.SetupInfra(
+    // TODO use secrets - not critical for the moment in local development ONLY
+    builder.Configuration.GetSection("Database:MongoDB")["ConnectionString"]);
 
 var app = builder.Build();
 
