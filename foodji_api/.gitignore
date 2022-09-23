@@ -1,3 +1,9 @@
+# Project specific ignores
+# Secrets
+[Ss]ecrets/
+*.secrets*
+
+# Template ignores
 # Created by https://www.toptal.com/developers/gitignore/api/csharp,dotnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=csharp,dotnetcore
 
@@ -398,6 +404,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+*.idea/
 
 ### DotnetCore ###
 # .NET Core build folders
