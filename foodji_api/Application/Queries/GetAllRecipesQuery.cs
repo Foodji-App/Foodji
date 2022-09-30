@@ -1,5 +1,4 @@
-﻿using Api.DbRepresentations.Ingredients;
-using MediatR;
+﻿using MediatR;
 using MongoDB.Driver;
 
 namespace Application.Queries;
@@ -22,7 +21,7 @@ public class GetAllRecipesQuery : IRequest
             temp.Add("testKey", "testValue");
             
             await _client.GetDatabase("foodji")
-                .GetCollection<Dictionary<string, string>>()
+                .GetCollection<Dictionary<string, string>>("test")
                 .InsertOneAsync(temp, cancellationToken);
 
             return default;

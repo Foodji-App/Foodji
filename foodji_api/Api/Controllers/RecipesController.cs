@@ -23,4 +23,16 @@ public class RecipesController : ControllerBase
         
         return Enumerable.Empty<string>();
     }
+
+
+    [HttpPost]
+    public async Task CreateRecipe(RecipeDto recipe)
+    {
+        
+    }
+}
+
+public class RecipeDto
+{
+    
 }

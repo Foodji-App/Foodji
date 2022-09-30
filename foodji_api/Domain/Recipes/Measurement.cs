@@ -1,4 +1,4 @@
-﻿namespace Api.DbRepresentations.Recipes;
+﻿namespace Domain.Recipes;
 
 public class Measurement
 {
