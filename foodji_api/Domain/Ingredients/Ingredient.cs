@@ -1,4 +1,4 @@
-﻿namespace Api.DbRepresentations.Ingredients;
+﻿namespace Domain.Ingredients;
 
 public class Ingredient
 {
@@ -7,7 +7,7 @@ public class Ingredient
     // TODO - will implement later
     // public IEnumerable<string> Synonyms { get; private set; }
     
-    public IEnumerable<Tags> Tags { get; private set; }
+    public IEnumerable<Tag> Tags { get; private set; }
     
     public IEnumerable<Ingredient> Substitutes { get; set; }
 }
