@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FOODJi',
-      theme: ThemeData(),
+      theme: ThemeData(fontFamily: 'bauhaus'),
       home: BlocProvider<AppCubits>(
           create: (context) => AppCubits(data: DataServices()),
           child: const AppCubitLogics()),

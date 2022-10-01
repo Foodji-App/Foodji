@@ -14,6 +14,7 @@ class SplashPage extends StatefulWidget {
 class SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => afterBuild());
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       return Scaffold(
           body: Container(
@@ -49,10 +50,14 @@ class SplashPageState extends State<SplashPage> {
                         image: AssetImage('img/splash-fr.png'),
                         fit: BoxFit.fitWidth),
                   )),
-            )
+            ),
           ],
         ),
       ));
     });
+  }
+
+  void afterBuild() {
+    BlocProvider.of<AppCubits>(context).getInitialData();
   }
 }
