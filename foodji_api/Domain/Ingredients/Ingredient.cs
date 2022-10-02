@@ -1,13 +1,44 @@
-﻿namespace Api.DbRepresentations.Ingredients;
+﻿namespace Domain.Ingredients;
 
-public class Ingredient
+public class Ingredient : IngredientBase
 {
-    public string Name { get; private set; }
+    public IEnumerable<Substitute> Substitutes { get; set; } = new List<Substitute>();
+
+    private Ingredient(string name)
+        : base (name)
+    {
+    }
     
-    // TODO - will implement later
-    // public IEnumerable<string> Synonyms { get; private set; }
-    
-    public IEnumerable<Tags> Tags { get; private set; }
-    
-    public IEnumerable<Ingredient> Substitutes { get; set; }
+    public static Ingredient Create(
+        string name,
+        IEnumerable<Tag>? tags = null,
+        IEnumerable<Substitute>? substitutes = null)
+    {
+        var ingredient = new Ingredient(name);
+        
+        if (tags != null)
+        {
+            ingredient.Tags = tags.ToList();
+        }
+
+        if (substitutes != null)
+        {
+            ingredient.Substitutes = substitutes.ToList();
+        }
+
+        return ingredient;
+    }
+
+    public void AddSubstitute(Substitute substitute)
+    {
+        if (Substitutes.Any(x => x.Name == substitute.Name))
+        {
+            throw new DomainException("Cannot add a substitute with the same name as another substitute.");
+        }
+
+        var newSubstitutes = Substitutes.ToList();
+        newSubstitutes.Add(substitute);
+
+        Substitutes = newSubstitutes;
+    }
 }

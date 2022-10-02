@@ -1,19 +1,41 @@
-﻿using Api.DbRepresentations.Ingredients;
+﻿using Domain.Ingredients;
 
-namespace Api.DbRepresentations.Recipes;
+namespace Domain.Recipes;
 
 public class RecipeIngredient
 {
     // Recipe-specific fields
-    public Measurement Measurement { get; private set; }
+    public string Description { get; protected set; }
     
-    public string Description { get; private set; }
+    public Measurement Measurement { get; protected set; }
     
-    // TODO - Should there be a safeguard against nested substitutions? (Different type, validation...)
-    public IEnumerable<RecipeIngredient> Substitutions { get; private set; }
     
     // Generic ingredient fields
-    public string Name { get; private set; }
+    public string Name { get; protected set; }
 
-    public IEnumerable<Tags> Tags { get; private set; }
+    public IEnumerable<Tag> Tags { get; protected set; }
+
+    protected RecipeIngredient(
+        string description,
+        Measurement measurement,
+        string name,
+        IEnumerable<Tag> tags)
+    {
+        Description = description;
+        Measurement = measurement;
+        Name = name;
+        Tags = tags.ToList();
+    }
+    static RecipeIngredient Create(
+        Measurement measurement,
+        string name,
+        string description = "",
+        IEnumerable<Tag>? tags = null)
+    {
+        return new RecipeIngredient(
+            description,
+            measurement,
+            name,
+            tags ?? Enumerable.Empty<Tag>());
+    }
 }

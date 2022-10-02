@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Commands" />
+      <PackageReference Include="MediatR" Version="10.0.1" />
+      <PackageReference Include="MongoDB.Driver" Version="2.17.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="10.0.1" />
-      <PackageReference Include="MongoDB.Driver" Version="2.17.1" />
+      <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
 </Project>
