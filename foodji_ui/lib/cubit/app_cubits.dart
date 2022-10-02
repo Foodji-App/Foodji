@@ -16,7 +16,6 @@ class AppCubits extends Cubit<CubitStates> {
 
   void getInitialData() async {
     try {
-      sleep(const Duration(seconds: 3));
       emit(AuthState());
     } catch (e) {
       emit(ErrorState());
