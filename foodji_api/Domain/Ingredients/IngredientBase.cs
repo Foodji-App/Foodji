@@ -6,12 +6,11 @@ public class IngredientBase
     
     // TODO - will implement later
     // public IEnumerable<string> Synonyms { get; private set; }
-    
-    public IEnumerable<Tag> Tags { get; protected set; }
 
-    protected IngredientBase(string name, IEnumerable<Tag> tags)
+    public IEnumerable<Tag> Tags { get; protected set; } = new List<Tag>();
+
+    protected IngredientBase(string name)
     {
         Name = name;
-        Tags = tags.ToList();
     }
 }

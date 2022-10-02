@@ -2,20 +2,31 @@
 
 public class Ingredient : IngredientBase
 {
-    public IEnumerable<Substitute> Substitutes { get; set; }
+    public IEnumerable<Substitute> Substitutes { get; set; } = new List<Substitute>();
 
     protected Ingredient(string name, IEnumerable<Tag> tags, IEnumerable<Substitute> substitutes)
         : base (name, tags)
     {
-        Substitutes = substitutes.ToList();
     }
     
-    public Ingredient Create(
+    public static Ingredient Create(
         string name,
         IEnumerable<Tag>? tags = null,
         IEnumerable<Substitute>? substitutes = null)
     {
-        return new Ingredient(name, tags ?? Enumerable.Empty<Tag>(), substitutes ?? Enumerable.Empty<Substitute>());
+        var ingredient = new Ingredient(name);
+        
+        if (tags != null)
+        {
+            ingredient.Tags = tags.ToList();
+        }
+
+        if (substitutes != null)
+        {
+            ingredient.Substitutes = substitutes.ToList();
+        }
+
+        return ingredient;
     }
 
     public void AddSubstitute(Substitute substitute)
