@@ -7,17 +7,17 @@ class InitialState extends CubitStates {
   List<Object> get props => throw [];
 }
 
-class SplashState extends CubitStates {
-  @override
-  List<Object> get props => throw [];
-}
-
 class LoadingState extends CubitStates {
   @override
   List<Object> get props => throw [];
 }
 
-class LoadedState extends CubitStates {
+class AuthState extends CubitStates {
+  @override
+  List<Object> get props => throw [];
+}
+
+class ErrorState extends CubitStates {
   @override
   List<Object> get props => throw [];
 }

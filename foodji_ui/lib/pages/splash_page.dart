@@ -15,6 +15,9 @@ class SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
+      //Delayed to simulate loading
+      Future.delayed(const Duration(seconds: 3),
+          () => BlocProvider.of<AppCubits>(context).getInitialData());
       return Scaffold(
           body: Container(
         width: double.maxFinite,
@@ -49,7 +52,7 @@ class SplashPageState extends State<SplashPage> {
                         image: AssetImage('img/splash-fr.png'),
                         fit: BoxFit.fitWidth),
                   )),
-            )
+            ),
           ],
         ),
       ));
