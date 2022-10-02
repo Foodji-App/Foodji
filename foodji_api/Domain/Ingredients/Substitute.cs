@@ -2,10 +2,10 @@
 
 public class Substitute : IngredientBase
 {
-    public string SubstitutionPrecisions { get; private set; }
+    public string SubstitutionPrecisions { get; protected set; }
 
-    protected Substitute(string name, IEnumerable<Tag> tags, string substitutionPrecisions)
-        : base(name, tags)
+    protected Substitute(string name)
+        : base(name)
     {
     }
 

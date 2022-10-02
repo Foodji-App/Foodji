@@ -12,10 +12,8 @@ public class RecipeIngredient : Ingredient
     private RecipeIngredient(
         string description,
         Measurement measurement,
-        string name,
-        IEnumerable<RecipeSubstitute> substitutes,
-        IEnumerable<Tag> tags)
-            : base(name, tags, substitutes)
+        string name)
+            : base(name)
     {
         Description = description;
         Measurement = measurement;
@@ -29,11 +27,18 @@ public class RecipeIngredient : Ingredient
         IEnumerable<Tag>? tags = null,
         IEnumerable<RecipeSubstitute>? substitutes = null)
     {
-        return new RecipeIngredient(
-            description,
-            measurement,
-            name,
-            substitutes ?? Enumerable.Empty<RecipeSubstitute>(),
-            tags ?? Enumerable.Empty<Tag>());
+        var recipeIngredient = new RecipeIngredient(description, measurement, name);
+
+        if (substitutes != null)
+        {
+            recipeIngredient.Substitutes = substitutes.ToList();
+        }
+
+        if (tags != null)
+        {
+            recipeIngredient.Tags = tags.ToList();
+        }
+        
+        return recipeIngredient;
     }
 }
