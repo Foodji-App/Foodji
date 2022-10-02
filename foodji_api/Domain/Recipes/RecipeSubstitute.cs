@@ -2,38 +2,39 @@
 
 namespace Domain.Recipes;
 
-public class RecipeIngredient : Ingredient
+public class RecipeSubstitute : Substitute
 {
     public string Description { get; protected set; }
     
     public Measurement Measurement { get; protected set; }
     
-    // TODO - Refactor method after merge
-    private RecipeIngredient(
+    private RecipeSubstitute(
         string description,
         Measurement measurement,
         string name,
-        IEnumerable<RecipeSubstitute> substitutes,
+        string substitutionPrecisions,
         IEnumerable<Tag> tags)
-            : base(name, tags, substitutes)
+            : base(
+                name,
+                tags,
+                substitutionPrecisions)
     {
         Description = description;
         Measurement = measurement;
-        Name = name;
     }
-    
-    public static RecipeIngredient Create(
+
+    public static RecipeSubstitute Create(
         Measurement measurement,
         string name,
         string description = "",
-        IEnumerable<Tag>? tags = null,
-        IEnumerable<RecipeSubstitute>? substitutes = null)
+        string substitutionPrecisions = "",
+        IEnumerable<Tag>? tags = null)
     {
-        return new RecipeIngredient(
+        return new RecipeSubstitute(
             description,
             measurement,
             name,
-            substitutes ?? Enumerable.Empty<RecipeSubstitute>(),
+            substitutionPrecisions,
             tags ?? Enumerable.Empty<Tag>());
     }
 }

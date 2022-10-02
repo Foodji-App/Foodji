@@ -5,8 +5,6 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{5E5D29DA-75EA-4270-9878-3779DD149369}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodjiApiTests", "FoodjiApiTests\FoodjiApiTests.csproj", "{D9CC6158-2EBD-4AD6-944E-0072519F68EB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B7D4DB15-930C-4E3E-BF31-2AF1F5B35D1D}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
@@ -31,10 +29,6 @@ Global
 		{5E5D29DA-75EA-4270-9878-3779DD149369}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E5D29DA-75EA-4270-9878-3779DD149369}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E5D29DA-75EA-4270-9878-3779DD149369}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9CC6158-2EBD-4AD6-944E-0072519F68EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9CC6158-2EBD-4AD6-944E-0072519F68EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9CC6158-2EBD-4AD6-944E-0072519F68EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9CC6158-2EBD-4AD6-944E-0072519F68EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DAE2CBE9-3596-4500-93B2-389443B030DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAE2CBE9-3596-4500-93B2-389443B030DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAE2CBE9-3596-4500-93B2-389443B030DF}.Release|Any CPU.ActiveCfg = Release|Any CPU

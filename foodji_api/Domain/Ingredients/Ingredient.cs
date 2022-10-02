@@ -4,7 +4,7 @@ public class Ingredient : IngredientBase
 {
     public IEnumerable<Substitute> Substitutes { get; set; }
 
-    private Ingredient(string name, IEnumerable<Tag> tags, IEnumerable<Substitute> substitutes)
+    protected Ingredient(string name, IEnumerable<Tag> tags, IEnumerable<Substitute> substitutes)
         : base (name, tags)
     {
         Substitutes = substitutes.ToList();

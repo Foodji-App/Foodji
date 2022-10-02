@@ -4,7 +4,7 @@ public class Substitute : IngredientBase
 {
     public string SubstitutionPrecisions { get; private set; }
 
-    private Substitute(string name, IEnumerable<Tag> tags, string substitutionPrecisions)
+    protected Substitute(string name, IEnumerable<Tag> tags, string substitutionPrecisions)
         : base(name, tags)
     {
         SubstitutionPrecisions = substitutionPrecisions;

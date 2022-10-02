@@ -15,6 +15,10 @@ public class RecipeStep
     
     public static RecipeStep Create(string content, int index)
     {
+        if (String.IsNullOrEmpty(content) || index < 0)
+            throw new DomainException(
+                "The content cannot be null or empty and the index cannot be less than 0.");
+        
         return new RecipeStep(content, index);
     }
 }
