@@ -1,0 +1,10 @@
+{
+  "@@locale": "fr",
+
+  "global_app_name": "FOODJi",
+  "global_slogan": "Remix ta bouffe comme tu l'aimes",
+
+  "demo_access": "Cliquez pour accéder à la démo",
+  
+  "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Veuillez redémarrer l'application."
+}

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
@@ -34,9 +36,8 @@ class ErrorPageState extends State<ErrorPage> {
                       onPressed: () {
                         BlocProvider.of<AppCubits>(context).gotoRecipes();
                       },
-                      child: const AppText(
-                          text:
-                              'Une erreur inconnue est survenue durant l\'exécution. Veuillez redémarrer l\'application.',
+                      child: AppText(
+                          text: AppLocalizations.of(context)!.error_unknown,
                           color: AppColors.backgroundColor,
                           size: AppTextSize.normal,
                           fontFamily: AppFontFamily.bauhaus)))));

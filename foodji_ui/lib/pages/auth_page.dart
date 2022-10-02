@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/misc/colors.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../widgets/app_text.dart';
@@ -34,8 +36,8 @@ class AuthPageState extends State<AuthPage> {
                       onPressed: () {
                         BlocProvider.of<AppCubits>(context).gotoRecipes();
                       },
-                      child: const AppText(
-                          text: 'Cliquez pour accéder à la démo',
+                      child: AppText(
+                          text: AppLocalizations.of(context)!.demo_access,
                           color: AppColors.backgroundColor,
                           size: AppTextSize.normal,
                           fontFamily: AppFontFamily.bauhaus)))));
