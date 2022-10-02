@@ -1,6 +1,6 @@
 ﻿namespace Domain.Ingredients;
 
-public class Tag
+public record Tag
 {
     public string Name { get; private set; }
 
