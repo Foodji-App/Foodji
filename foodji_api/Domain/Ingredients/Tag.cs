@@ -18,7 +18,7 @@ public class Tag
         Name = name;
     }
 
-    static Tag Create(string name)
+    public static Tag Create(string name)
     {
         return new Tag(name);
     }
