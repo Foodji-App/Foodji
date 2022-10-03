@@ -62,8 +62,26 @@ class ProfileState extends CubitStates {
   List<Object> get props => throw [];
 }
 
-// When the menu is selected, displays a list of available tools
-class ToolsState extends CubitStates {
+// When the speed dial menu is selected, displays the converter tool
+class ConverterState extends CubitStates {
+  @override
+  List<Object> get props => throw [];
+}
+
+// When the speed dial menu is selected, displays the ingredients tool
+class IngredientsState extends CubitStates {
+  @override
+  List<Object> get props => throw [];
+}
+
+// When the speed dial menu is selected, displays the pantry tool
+class PantryState extends CubitStates {
+  @override
+  List<Object> get props => throw [];
+}
+
+// When the speed dial menu is selected, displays the grocery tool
+class GroceryState extends CubitStates {
   @override
   List<Object> get props => throw [];
 }

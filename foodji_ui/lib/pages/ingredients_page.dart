@@ -4,14 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 
-class ToolsPage extends StatefulWidget {
-  const ToolsPage({Key? key}) : super(key: key);
+class IngredientsPage extends StatefulWidget {
+  const IngredientsPage({Key? key}) : super(key: key);
 
   @override
-  ToolsPageState createState() => ToolsPageState();
+  IngredientsPageState createState() => IngredientsPageState();
 }
 
-class ToolsPageState extends State<ToolsPage> {
+class IngredientsPageState extends State<IngredientsPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {

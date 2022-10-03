@@ -12,6 +12,10 @@
   "menu_favourites": "Favorites",
   "menu_profile": "Profile",
   "menu_tools": "Tools",
+  "menu_converter": "Converter",
+  "menu_ingredients": "Ingredients",
+  "menu_pantry": "Pantry",
+  "menu_grocery": "Grocery List",
 
   "error_unknown": "An unknown error occured during the execution. Please restart the application."
 }

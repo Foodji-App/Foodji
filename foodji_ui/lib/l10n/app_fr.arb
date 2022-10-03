@@ -12,6 +12,10 @@
   "menu_favourites": "Favoris",
   "menu_profile": "Profil",
   "menu_tools": "Outils",
+  "menu_converter": "Convertisseur",
+  "menu_ingredients": "Ingrédients",
+  "menu_pantry": "Garde-Manger",
+  "menu_grocery": "Liste d'épicerie",
   
   "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Veuillez redémarrer l'application."
 }
