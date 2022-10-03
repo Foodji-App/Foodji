@@ -7,8 +7,12 @@ namespace Application.Command;
 
 public class CreateRecipeCommand : IRequest
 {
+    public CreateRecipeCommand(RecipeDto recipeDto)
+    {
+        RecipeDto = recipeDto;
+    }
     
-    
+    public RecipeDto RecipeDto { get; }
     
     private class Handler : IRequestHandler<CreateRecipeCommand>
     {
