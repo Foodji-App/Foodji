@@ -1,10 +1,17 @@
 {
   "@@locale": "en",
+  "locale": "en",
 
   "global_app_name": "FOODJi",
   "global_slogan": "Remix your meals to your heart's content",
 
   "demo_access": "Click here to access the demo",
   
+  "menu_recipes": "Recipes",
+  "menu_exploration": "Explore",
+  "menu_favourites": "Favorites",
+  "menu_profile": "Profile",
+  "menu_tools": "Tools",
+
   "error_unknown": "An unknown error occured during the execution. Please restart the application."
 }
