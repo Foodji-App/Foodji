@@ -1,5 +1,5 @@
-﻿using MediatR;
-using MongoDB.Driver;
+﻿using Infra;
+using MediatR;
 
 namespace Application.Queries;
 
@@ -7,9 +7,9 @@ public class GetAllRecipesQuery : IRequest
 {
     private class Handler : IRequestHandler<GetAllRecipesQuery>
     {
-        private readonly IMongoClient _client;
+        private readonly IFoodjiDbClient _client;
 
-        public Handler(IMongoClient client)
+        public Handler(IFoodjiDbClient client)
         {
             _client = client;
         }
@@ -19,10 +19,6 @@ public class GetAllRecipesQuery : IRequest
         {
             var temp = new Dictionary<string, string>();
             temp.Add("testKey", "testValue");
-            
-            await _client.GetDatabase("foodji")
-                .GetCollection<Dictionary<string, string>>("test")
-                .InsertOneAsync(temp, cancellationToken);
 
             return default;
         }

@@ -1,6 +1,7 @@
-﻿using Application.Queries;
+﻿using Application.Dto;
+using Infra;
 using MediatR;
-using MongoDB.Driver;
+using Domain.Recipes;
 
 namespace Application.Command;
 
@@ -11,9 +12,9 @@ public class CreateRecipeCommand : IRequest
     
     private class Handler : IRequestHandler<CreateRecipeCommand>
     {
-        private readonly IMongoClient _client;
+        private readonly IFoodjiDbClient _client;
 
-        public Handler(IMongoClient client)
+        public Handler(IFoodjiDbClient client)
         {
             _client = client;
         }
