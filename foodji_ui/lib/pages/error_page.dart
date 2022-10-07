@@ -34,7 +34,7 @@ class ErrorPageState extends State<ErrorPage> {
                   alignment: Alignment.center,
                   child: TextButton(
                       onPressed: () {
-                        BlocProvider.of<AppCubits>(context).gotoRecipes();
+                        BlocProvider.of<AppCubits>(context).gotoInit();
                       },
                       child: AppText(
                           text: AppLocalizations.of(context)!.error_unknown,

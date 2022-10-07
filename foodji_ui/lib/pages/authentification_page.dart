@@ -8,14 +8,14 @@ import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../widgets/app_text.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({Key? key}) : super(key: key);
+class AuthentificationPage extends StatefulWidget {
+  const AuthentificationPage({Key? key}) : super(key: key);
 
   @override
-  AuthPageState createState() => AuthPageState();
+  AuthentificationPageState createState() => AuthentificationPageState();
 }
 
-class AuthPageState extends State<AuthPage> {
+class AuthentificationPageState extends State<AuthentificationPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
@@ -34,7 +34,8 @@ class AuthPageState extends State<AuthPage> {
                   alignment: Alignment.center,
                   child: TextButton(
                       onPressed: () {
-                        BlocProvider.of<AppCubits>(context).gotoRecipes();
+                        BlocProvider.of<AppCubits>(context)
+                            .gotoAuthentifiedState();
                       },
                       child: AppText(
                           text: AppLocalizations.of(context)!.demo_access,
