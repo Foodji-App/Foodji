@@ -15,9 +15,16 @@ public class GetAllRecipesQuery : IRequest
         }
 
 
-        public Task<Unit> Handle(GetAllRecipesQuery request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(GetAllRecipesQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var temp = new Dictionary<string, string>();
+            temp.Add("testKey", "testValue");
+            
+            await _client.GetDatabase("foodji")
+                .GetCollection<Dictionary<string, string>>("test")
+                .InsertOneAsync(temp, cancellationToken);
+
+            return default;
         }
     }
 }

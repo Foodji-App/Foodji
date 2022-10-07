@@ -16,11 +16,23 @@ public class RecipesController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<string> GetAllRecipes()
+    public async Task<IEnumerable<string>> GetAllRecipes()
     {
         var query = new GetAllRecipesQuery();
-        var result =  _mediator.Send(query);
+        var result =  await _mediator.Send(query);
         
         return Enumerable.Empty<string>();
     }
+
+
+    [HttpPost]
+    public async Task CreateRecipe(RecipeDto recipe)
+    {
+        
+    }
+}
+
+public class RecipeDto
+{
+    
 }

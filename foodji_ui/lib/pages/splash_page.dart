@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 
@@ -15,6 +17,9 @@ class SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
+      //Delayed to simulate loading
+      Future.delayed(const Duration(seconds: 3),
+          () => BlocProvider.of<AppCubits>(context).getInitialData());
       return Scaffold(
           body: Container(
         width: double.maxFinite,
@@ -44,12 +49,13 @@ class SplashPageState extends State<SplashPage> {
               child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('img/splash-fr.png'),
+                        image: AssetImage(
+                            "img/splash-${AppLocalizations.of(context)!.locale}.png"),
                         fit: BoxFit.fitWidth),
                   )),
-            )
+            ),
           ],
         ),
       ));

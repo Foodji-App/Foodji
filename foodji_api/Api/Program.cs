@@ -1,4 +1,7 @@
+using System.Reflection;
+using Application.Queries;
 using Infra.Services;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.SetupInfra(
     // TODO use secrets - not critical for the moment in local development ONLY
     builder.Configuration.GetSection("Database:MongoDB")["ConnectionString"]);
+
+builder.Services.AddMediatR(Assembly.Load("Application"));
 
 var app = builder.Build();
 

@@ -1,0 +1,21 @@
+{
+  "@@locale": "fr",
+  "locale": "fr",
+
+  "global_app_name": "FOODJi",
+  "global_slogan": "Remix ta bouffe comme tu l'aimes",
+
+  "demo_access": "Cliquez pour accéder à la démo",
+
+  "menu_recipes": "Recettes",
+  "menu_exploration": "Explorer",
+  "menu_favourites": "Favoris",
+  "menu_profile": "Profil",
+  "menu_tools": "Outils",
+  "menu_converter": "Convertisseur",
+  "menu_ingredients": "Ingrédients",
+  "menu_pantry": "Garde-Manger",
+  "menu_grocery": "Liste d'épicerie",
+  
+  "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Veuillez redémarrer l'application."
+}

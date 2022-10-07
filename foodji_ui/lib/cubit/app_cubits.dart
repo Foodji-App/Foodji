@@ -5,17 +5,42 @@ import 'app_cubit_states.dart';
 
 class AppCubits extends Cubit<CubitStates> {
   AppCubits({required this.data}) : super(InitialState()) {
-    emit(SplashState());
+    emit(InitState());
   }
 
   final DataServices data;
 
-  void getData() async {
+  // Getters -------------------------------------
+
+  // Splash screen
+  void getInitialData() async {
     try {
-      emit(LoadingState());
-      emit(LoadedState());
+      emit(AuthentificationRequestState());
     } catch (e) {
-      emit(LoadedState());
+      emit(ErrorState());
+    }
+  }
+
+  // Setters -------------------------------------
+
+  // Navigation ----------------------------------
+
+  // To user's recipes list through navigation bar display, once user has
+  // been authorized to proceed
+  void gotoAuthentifiedState() async {
+    try {
+      emit(AuthentifiedState());
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  // To splash screen
+  void gotoInit() async {
+    try {
+      emit(InitState());
+    } catch (e) {
+      emit(ErrorState());
     }
   }
 }
