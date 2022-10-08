@@ -16,6 +16,11 @@
   "menu_ingredients": "Ingrédients",
   "menu_pantry": "Garde-Manger",
   "menu_grocery": "Liste d'épicerie",
+
+  "recipe_description": "Description",
+  "recipe_steps": "Instructions",
+  "recipe_no_steps": "Aucune instruction n'a été ajoutée",
+  "recipe_no_ingredients": "Aucun ingrédient n'a été ajouté",
   
   "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Veuillez redémarrer l'application."
 }

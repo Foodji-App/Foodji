@@ -6,4 +6,7 @@ class AppColors {
   static const Color highlightColor3 = Color(0xff5b8e7d);
   static const Color textColor = Color(0xff32292f);
   static const Color backgroundColor = Color(0xfffffeef);
+  static const Color none = Color(0x00000000);
+  static const Color starColor = Color(0xFFe7bb4e);
+
 }
