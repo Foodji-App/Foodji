@@ -10,12 +10,15 @@ class AppText extends StatelessWidget {
   final String text;
   final Color color;
   final AppFontFamily fontFamily;
+  final Color backgroundColor;
+
   const AppText(
       {Key? key,
       this.size = AppTextSize.normal,
       required this.text,
       this.color = AppColors.textColor,
-      this.fontFamily = AppFontFamily.bauhaus})
+      this.fontFamily = AppFontFamily.bauhaus,
+      this.backgroundColor = AppColors.none})
       : super(key: key);
 
   @override
@@ -50,10 +53,27 @@ class AppText extends StatelessWidget {
         resolvedFontFamily = 'bauhaus';
         break;
     }
-    return Text(
-      text,
-      style: TextStyle(
-          color: color, fontSize: resolvedSize, fontFamily: resolvedFontFamily),
-    );
+    return 
+    backgroundColor == AppColors.none
+        ? Text(
+            text,
+            style: TextStyle(
+                color: color,
+                fontSize: resolvedSize,
+                fontFamily: resolvedFontFamily),
+          )
+        : Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(50)),
+            child: Text(
+              text,
+              style: TextStyle(
+                  color: color,
+                  fontSize: resolvedSize,
+                  fontFamily: resolvedFontFamily),
+            ),
+          );
   }
 }

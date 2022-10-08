@@ -17,5 +17,12 @@
   "menu_pantry": "Pantry",
   "menu_grocery": "Grocery List",
 
+  "recipe_description": "Description",
+  "recipe_steps": "Steps",
+  "recipe_no_steps": "Instructions",
+  "recipe_no_ingredients": "Instructions",
+  "recipe_no_steps": "Aucune instruction n'a été ajoutée",
+  "recipe_no_ingredients": "Aucun ingrédient n'a été ajouté",
+
   "error_unknown": "An unknown error occured during the execution. Please restart the application."
 }
