@@ -5,16 +5,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../misc/colors.dart';
 import '../models/recipe_model.dart';
-import '../widgets/app_ico_btn.dart';
+import '../widgets/app_ico_button.dart';
 
 class RecipeDetailPage extends StatefulWidget {
   const RecipeDetailPage({Key? key}) : super(key: key);
 
   @override
-  _RecipeDetailPageState createState() => _RecipeDetailPageState();
+  RecipeDetailPageState createState() => RecipeDetailPageState();
 }
 
-class _RecipeDetailPageState extends State<RecipeDetailPage>
+class RecipeDetailPageState extends State<RecipeDetailPage>
     with TickerProviderStateMixin {
   RecipeModel _recipe = RecipeModel.getSample();
 
@@ -144,8 +144,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage>
                     ),
                   ),
                   AppText(
-                    text: AppLocalizations.of(context)!
-                        .recipe_description,
+                    text: AppLocalizations.of(context)!.recipe_description,
                     size: AppTextSize.subtitle,
                   ),
                   const SizedBox(

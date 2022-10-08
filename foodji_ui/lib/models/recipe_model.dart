@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_adjacent_string_concatenation, prefer_interpolation_to_compose_strings
+
 import 'package:faker/faker.dart';
 
 import 'ingredient_model.dart';
@@ -29,7 +31,6 @@ class RecipeModel {
   // }
 
   toText() =>
-      // ignore: prefer_interpolation_to_compose_strings
       'name: $name\n' +
       'img: $img\n' +
       'category: $category\n' +
@@ -90,7 +91,6 @@ class RecipeDetailsModel {
     required this.serves,
   });
 
-  // ignore: prefer_interpolation_to_compose_strings
   toText() => 'prepTime: $prepTime\ncookTime: $cookTime\nserves: $serves\n';
 
   static RecipeDetailsModel newRecipeModel() {

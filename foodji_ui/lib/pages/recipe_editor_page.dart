@@ -63,7 +63,7 @@ class _RecipeEditorPageState extends State<RecipeEditorPage> {
                   padding: const EdgeInsets.all(10),
                   decoration: const BoxDecoration(
                       color: AppColors.highlightColor2,
-                      borderRadius: BorderRadius.all( Radius.circular(20))),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: AppText(text: _recipe.toText())),
             ),
             Container(
