@@ -37,7 +37,7 @@ namespace DomainTests.Recipes
         }
         
         [Test]
-        public void NoTagNoSubstitutes_Create_ReturnsRecipeIngredient()
+        public void NoTagsNoSubstitutes_Create_InitializesCollections()
         {
             // Arrange ingredient
             var expectedDescription = "expectedDescription";

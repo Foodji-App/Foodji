@@ -12,12 +12,12 @@ namespace DomainTests.Recipes
         public void GivenValidValues_Create_ReturnsMeasurement()
         {
             // Arrange
-            string expectedAlternativeText = "expectedAlternativeText";
-            UnitType expectedUnitType = UnitType.Gram;
-            decimal expectedValue = 10;
+            var expectedAlternativeText = "expectedAlternativeText";
+            var expectedUnitType = UnitType.Gram;
+            var expectedValue = 10;
             
             // Act
-            Measurement actualMeasurement = Measurement.Create(
+            var actualMeasurement = Measurement.Create(
                 expectedUnitType, expectedAlternativeText, expectedValue);
 
             // Assert
@@ -31,12 +31,12 @@ namespace DomainTests.Recipes
         public void WithoutAlternativeText_Create_ReturnsMeasurement()
         {
             // Arrange
-            string expectedAlternativeText = "";
-            UnitType expectedUnitType = UnitType.Gram;
-            decimal expectedValue = 10;
+            var expectedAlternativeText = "";
+            var expectedUnitType = UnitType.Gram;
+            var expectedValue = 10;
             
             // Act
-            Measurement actualMeasurement = Measurement.Create(
+            var actualMeasurement = Measurement.Create(
                 expectedUnitType, value: expectedValue);
 
             // Assert
@@ -50,12 +50,12 @@ namespace DomainTests.Recipes
         public void WithoutValidValue_Create_ReturnsMeasurement()
         {
             // Arrange
-            string expectedAlternativeText = "expectedAlternativeText";
-            UnitType expectedUnitType = UnitType.Cup;
-            decimal expectedValue = 0;
+            var expectedAlternativeText = "expectedAlternativeText";
+            var expectedUnitType = UnitType.Cup;
+            var expectedValue = 0;
             
             // Act
-            Measurement actualMeasurement = Measurement.Create(expectedUnitType, expectedAlternativeText);
+            var actualMeasurement = Measurement.Create(expectedUnitType, expectedAlternativeText);
 
             // Assert
             actualMeasurement.UnitType.Should().Be(expectedUnitType);
@@ -68,9 +68,9 @@ namespace DomainTests.Recipes
         public void Create_invalid_value_alternativeText_ThrowsDomainException()
         {
             // Arrange
-            string expectedAlternativeText = "";
-            UnitType expectedUnitType = UnitType.Cup;
-            decimal expectedValue = 0;
+            var expectedAlternativeText = "";
+            var expectedUnitType = UnitType.Cup;
+            var expectedValue = 0;
             
             // Act
             var act = () => Measurement.Create(

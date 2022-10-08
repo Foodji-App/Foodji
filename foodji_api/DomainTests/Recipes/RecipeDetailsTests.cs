@@ -12,13 +12,13 @@ namespace DomainTests.Recipes
         public void GivenValidValues_Create_ReturnsRecipeDetails()
         {
             // Arrange
-            int expectedCookingTime = 10;
-            int expectedPreparationTime = 20;
-            int expectedRestingTime = 30;
-            int expectedServes = 4;
+            var expectedCookingTime = 10;
+            var expectedPreparationTime = 20;
+            var expectedRestingTime = 30;
+            var expectedServes = 4;
             
             // Act
-            RecipeDetails actualRecipeDetails = RecipeDetails.Create(
+            var actualRecipeDetails = RecipeDetails.Create(
                 expectedCookingTime,
                 expectedPreparationTime,
                 expectedRestingTime,
@@ -38,10 +38,10 @@ namespace DomainTests.Recipes
         public void NoValues_Create_ReturnsRecipeDetails()
         {
             // Arrange
-            int expectedValue = 0;
+            var expectedValue = 0;
             
             // Act
-            RecipeDetails actualRecipeDetails = RecipeDetails.Create();
+            var actualRecipeDetails = RecipeDetails.Create();
 
             // Assert
             actualRecipeDetails.CookingTime.Should().Be(expectedValue);

@@ -12,11 +12,11 @@ namespace DomainTests.Recipes
         public void GivenValidValues_Create_ReturnsRecipeSteps()
         {
             // Arrange
-            string expectedContent = "expectedContent";
-            int expectedIndex = 1;
+            var expectedContent = "expectedContent";
+            var expectedIndex = 1;
             
             // Act
-            RecipeStep actualRecipeStep = RecipeStep.Create(expectedContent, expectedIndex);
+            var actualRecipeStep = RecipeStep.Create(expectedContent, expectedIndex);
 
             // Assert
             actualRecipeStep.Content.Should().Be(expectedContent);
@@ -29,11 +29,11 @@ namespace DomainTests.Recipes
         public void NullContent_Create_ThrowsDomainException()
         {
             // Arrange
-            string? expectedContent = null;
-            int expectedIndex = 1;
+            string? content = null;
+            int index = 1;
             
             // Act
-            var act = () => RecipeStep.Create(expectedContent, expectedIndex);
+            var act = () => RecipeStep.Create(content, index);
 
             // Assert
             act.Should().Throw<DomainException>();
@@ -43,11 +43,11 @@ namespace DomainTests.Recipes
         public void EmptyContent_Create_ThrowsDomainException()
         {
             // Arrange
-            string expectedContent = "";
-            int expectedIndex = 1;
+            var content = "";
+            var index = 1;
             
             // Act
-            var act = () => RecipeStep.Create(expectedContent, expectedIndex);
+            var act = () => RecipeStep.Create(content, index);
 
             // Assert
             act.Should().Throw<DomainException>();
@@ -57,11 +57,11 @@ namespace DomainTests.Recipes
         public void InvalidIndex_Create_ThrowsDomainException()
         {
             // Arrange
-            string expectedContent = "expectedContent";
-            int expectedIndex = -1;
+            var content = "expectedContent";
+            var index = -1;
             
             // Act
-            var act = () => RecipeStep.Create(expectedContent, expectedIndex);
+            var act = () => RecipeStep.Create(content, index);
 
             // Assert
             act.Should().Throw<DomainException>();

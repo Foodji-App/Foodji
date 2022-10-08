@@ -17,7 +17,7 @@ public class Measurement
     
     public static Measurement Create(UnitType unitType, string alternativeText = "", decimal value = 0)
     {
-        if (value == 0 && alternativeText.Equals(""))
+        if (value == 0 && String.IsNullOrEmpty(alternativeText))
         {
             throw new DomainException("Measurement must have a value or alternative text");
         }
