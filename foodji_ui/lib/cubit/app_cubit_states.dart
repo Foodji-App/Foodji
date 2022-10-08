@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:foodji_ui/models/recipe_model.dart';
 
 abstract class CubitStates extends Equatable {}
 
@@ -31,8 +32,10 @@ class AuthentificationRequestState extends CubitStates {
 
 // Once authorized, displays the user's recipes list as the main page
 class AuthentifiedState extends CubitStates {
+  AuthentifiedState(this.recipes);
+  final List<RecipeModel> recipes;
   @override
-  List<Object> get props => throw [];
+  List<Object> get props => throw [recipes];
 }
 
 // When the menu is selected, displays the user's recipes list

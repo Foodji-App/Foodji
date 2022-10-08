@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../models/recipe_model.dart';
 import '../services/data_services.dart';
 import 'app_cubit_states.dart';
 
@@ -10,9 +11,14 @@ class AppCubits extends Cubit<CubitStates> {
 
   final DataServices data;
 
+  // Data ----------------------------------------
+
+  // Recipes
+  List<RecipeModel> recipes = [];
+
   // Getters -------------------------------------
 
-  // Splash screen
+  // Splash page
   void getInitialData() async {
     try {
       emit(AuthentificationRequestState());
@@ -21,19 +27,21 @@ class AppCubits extends Cubit<CubitStates> {
     }
   }
 
-  // Setters -------------------------------------
-
-  // Navigation ----------------------------------
-
-  // To user's recipes list through navigation bar display, once user has
-  // been authorized to proceed
-  void gotoAuthentifiedState() async {
+  // Authentification page
+  void authentify() async {
     try {
-      emit(AuthentifiedState());
+      for (var i = 0; i < 10; i++) {
+        recipes.add(RecipeModel.getSample());
+      }
+      emit(AuthentifiedState(recipes));
     } catch (e) {
       emit(ErrorState());
     }
   }
+
+  // Setters -------------------------------------
+
+  // Navigation ----------------------------------
 
   // To splash screen
   void gotoInit() async {

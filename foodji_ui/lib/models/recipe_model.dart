@@ -58,7 +58,7 @@ class RecipeModel {
 
     return RecipeModel(
       name: faker.food.dish(),
-      img: "https://picsum.photos/200/300",
+      img: "https://picsum.photos/seed/${faker.food.dish()}/200/300",
       category: faker.food.cuisine(),
       desc: faker.lorem.sentences(random.integer(4, min: 1)).join(' '),
       details: RecipeDetailsModel.getSample(),
