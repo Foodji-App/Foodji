@@ -14,7 +14,7 @@ class ShowRecipeSteps extends StatelessWidget {
     // ignore: prefer_const_constructors
     return Center(
       child: ListView.separated(
-          scrollDirection: Axis.vertical,
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: steps.length,
           itemBuilder: (context, index) {
             return ListTile(

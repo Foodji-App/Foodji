@@ -1,6 +1,5 @@
 {
     "Name": "Name",
-    "CreatedAt": "2022-09-30 HH:mm:ss",
     "Category": "Category",
     "Descrition" : "Descrition",
     "Details": {
@@ -21,7 +20,7 @@
             "Descrition": "Farine de blé",
             "Tags": ""
         }
-    }
-    
+    },
+    "CreatedAt": "2022-09-30 HH:mm:ss" 
 }
 
