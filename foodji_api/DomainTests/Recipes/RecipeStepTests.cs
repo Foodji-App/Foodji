@@ -1,4 +1,6 @@
+using Domain;
 using Domain.Recipes;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace DomainTests.Recipes
@@ -6,25 +8,63 @@ namespace DomainTests.Recipes
     [TestFixture]
     public class RecipeStepTests
     {
-        [SetUp]
-        public void Setup()
-        {
-            // TODO - We should call Create() in the setup method if we have to test other methods
-        }
-
         [Test]
-        public void Create()
+        public void GivenValidValues_Create_ReturnsRecipeSteps()
         {
             // Arrange
-            String content = "content";
+            var expectedContent = "expectedContent";
+            var expectedIndex = 1;
+            
+            // Act
+            var actualRecipeStep = RecipeStep.Create(expectedContent, expectedIndex);
+
+            // Assert
+            actualRecipeStep.Content.Should().Be(expectedContent);
+            actualRecipeStep.Index.Should().Be(expectedIndex);
+            actualRecipeStep.Should().BeOfType<RecipeStep>();
+
+        }
+        
+        [Test]
+        public void NullContent_Create_ThrowsDomainException()
+        {
+            // Arrange
+            string? content = null;
             int index = 1;
             
             // Act
-            RecipeStep recipeStep = RecipeStep.Create("content", 1);
+            var act = () => RecipeStep.Create(content, index);
 
             // Assert
-            Assert.That(recipeStep.Content, Is.EqualTo(content));
-            Assert.True(index == recipeStep.Index);
+            act.Should().Throw<DomainException>();
+        }
+        
+        [Test]
+        public void EmptyContent_Create_ThrowsDomainException()
+        {
+            // Arrange
+            var content = "";
+            var index = 1;
+            
+            // Act
+            var act = () => RecipeStep.Create(content, index);
+
+            // Assert
+            act.Should().Throw<DomainException>();
+        }
+        
+        [Test]
+        public void InvalidIndex_Create_ThrowsDomainException()
+        {
+            // Arrange
+            var content = "expectedContent";
+            var index = -1;
+            
+            // Act
+            var act = () => RecipeStep.Create(content, index);
+
+            // Assert
+            act.Should().Throw<DomainException>();
         }
     }
 }

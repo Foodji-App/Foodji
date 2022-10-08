@@ -2,25 +2,26 @@
 
 public class Measurement
 {
+    public string AlternativeText { get; private set; }
+    
     public decimal Value { get; private set; }
     
     public UnitType UnitType { get; private set; }
     
-    public string AlternativeText { get; private set; }
-    
-    private Measurement(decimal value, UnitType unitType, string alternativeText)
+    private Measurement(decimal value, string alternativeText, UnitType unitType)
     {
+        AlternativeText = alternativeText;
         Value = value;
         UnitType = unitType;
-        AlternativeText = alternativeText;
     }
     
-    static Measurement Create(decimal value, UnitType unitType, string alternativeText = "")
+    public static Measurement Create(UnitType unitType, string alternativeText = "", decimal value = 0)
     {
-        // TODO - Implement validation, (value && unitType) || alternativeText
+        if (value == 0 && String.IsNullOrEmpty(alternativeText))
+        {
+            throw new DomainException("Measurement must have a value or alternative text");
+        }
         
-        throw new Exception("Not implemented, should be a Domain Exception");
-        
-        return new Measurement(value, unitType, alternativeText);
+        return new Measurement(value, alternativeText, unitType);
     }
 }

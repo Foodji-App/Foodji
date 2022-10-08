@@ -14,7 +14,7 @@ public class Recipe
     
     public RecipeDetails Details { get; private set; }
     
-    public IEnumerable<FirstLevelRecipeIngredient> Ingredients { get; private set; }
+    public IEnumerable<RecipeIngredient> Ingredients { get; private set; }
     
     public IEnumerable<RecipeStep> Steps { get; private set; }
     
@@ -24,7 +24,7 @@ public class Recipe
         RecipeCategory category, 
         string description, 
         RecipeDetails details, 
-        IEnumerable<FirstLevelRecipeIngredient> ingredients, 
+        IEnumerable<RecipeIngredient> ingredients, 
         IEnumerable<RecipeStep> steps)
     {
         Name = name;
@@ -35,13 +35,13 @@ public class Recipe
         Ingredients = ingredients.ToList();
         Steps = steps.ToList();
     }
-    static Recipe Create(
+    public static Recipe Create(
         String name, 
         DateTime createdAt, 
         RecipeCategory category, 
         string description, 
         RecipeDetails details, 
-        IEnumerable<FirstLevelRecipeIngredient> ingredients, 
+        IEnumerable<RecipeIngredient> ingredients, 
         IEnumerable<RecipeStep> steps)
     {
         return new Recipe(name, createdAt, category, description, details, ingredients, steps);
