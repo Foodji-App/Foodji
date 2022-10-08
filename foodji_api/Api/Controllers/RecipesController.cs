@@ -1,3 +1,5 @@
+using Application.Command;
+using Application.Dto;
 using Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -26,13 +28,10 @@ public class RecipesController : ControllerBase
 
 
     [HttpPost]
-    public async Task CreateRecipe(RecipeDto recipe)
+    public async Task CreateRecipe([FromBody] RecipeDto recipe)
     {
-        
-    }
-}
+        var command = new CreateRecipeCommand(recipe);
 
-public class RecipeDto
-{
-    
+        var result = await _mediator.Send(command);
+    }
 }
