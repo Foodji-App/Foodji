@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodji_ui/pages/detailed_recipe_page.dart';
+import 'package:foodji_ui/pages/recipe_detail_page.dart';
+import 'package:foodji_ui/pages/recipe_editor_page.dart';
 import 'package:foodji_ui/services/data_services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(fontFamily: 'bauhaus'),
       debugShowCheckedModeBanner: false,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const DetailedRecipePage()
+      home: const RecipeDetailPage()
       // home: BlocProvider<AppCubits>(
       //     create: (context) => AppCubits(data: DataServices()),
       //     child: const AppCubitLogics()),

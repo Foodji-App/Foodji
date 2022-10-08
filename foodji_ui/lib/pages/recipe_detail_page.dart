@@ -5,16 +5,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../misc/colors.dart';
 import '../models/recipe_model.dart';
-import '../widgets/dial_button.dart';
+import '../widgets/app_ico_btn.dart';
 
-class DetailedRecipePage extends StatefulWidget {
-  const DetailedRecipePage({Key? key}) : super(key: key);
+class RecipeDetailPage extends StatefulWidget {
+  const RecipeDetailPage({Key? key}) : super(key: key);
 
   @override
-  _DetailedRecipePageState createState() => _DetailedRecipePageState();
+  _RecipeDetailPageState createState() => _RecipeDetailPageState();
 }
 
-class _DetailedRecipePageState extends State<DetailedRecipePage>
+class _RecipeDetailPageState extends State<RecipeDetailPage>
     with TickerProviderStateMixin {
   RecipeModel _recipe = RecipeModel.getSample();
 
@@ -45,10 +45,10 @@ class _DetailedRecipePageState extends State<DetailedRecipePage>
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         // TODO : Connect to router
-        DialButton(icon: Icons.arrow_back_rounded, onPressed: () {}),
+        AppIcoButton(icon: Icons.arrow_back_rounded, onPressed: () {}),
         const Spacer(),
         // TODO : Add edit action
-        DialButton(
+        AppIcoButton(
             icon: Icons.edit_rounded,
             onPressed: () {
               setState(() {

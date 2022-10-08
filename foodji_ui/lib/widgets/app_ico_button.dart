@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:foodji_ui/misc/colors.dart';
 
 // ignore: must_be_immutable
-class DialButton extends StatelessWidget {
+class AppIcoButton extends StatelessWidget {
   IconData icon;
   final Color iconColor;
   final Color backgroundColor;
   Function()? onPressed;
 
-  DialButton(
+  AppIcoButton(
       {Key? key,
       required this.icon,
       this.iconColor = AppColors.textColor,
