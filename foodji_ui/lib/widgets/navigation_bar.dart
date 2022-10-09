@@ -67,6 +67,7 @@ class NavigationBarState extends State<NavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<bool> isDialOpen = ValueNotifier(false);
     return Scaffold(
         appBar: const app_bar_widget.AppBar(),
         backgroundColor: AppColors.backgroundColor,
@@ -140,6 +141,12 @@ class NavigationBarState extends State<NavigationBar> {
           overlayColor: Colors.black,
           overlayOpacity: 0.5,
           elevation: 0,
+          openCloseDial: isDialOpen,
+          onPress: () {
+            lastSelectedSpeedDial != -1
+                ? onSpeedDialTap(lastSelectedSpeedDial)
+                : isDialOpen.value = true;
+          },
           children: [
             SpeedDialChild(
                 child: currentPage == 4
