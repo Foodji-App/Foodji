@@ -11,9 +11,17 @@ import '../cubit/app_cubits.dart';
 import '../cubit/app_globals.dart';
 import 'app_text.dart';
 
-class AppBar extends StatelessWidget with PreferredSizeWidget {
-  const AppBar({super.key});
+class AppBar extends StatefulWidget with PreferredSizeWidget {
+  const AppBar({Key? key}) : super(key: key);
 
+  @override
+  AppBarState createState() => AppBarState();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(40);
+}
+
+class AppBarState extends State<AppBar> {
   String getTitle(context, page) {
     switch (page) {
       case 0:
@@ -43,7 +51,9 @@ class AppBar extends StatelessWidget with PreferredSizeWidget {
     // Observer
     runOnceAndRunForEveryChange(() {
       page = globals.getActivePage();
-      //setState(() {}); // Redraw //TODO
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
     });
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       return material.AppBar(
@@ -66,7 +76,4 @@ class AppBar extends StatelessWidget with PreferredSizeWidget {
               fontFamily: AppFontFamily.bauhaus));
     });
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(40);
 }
