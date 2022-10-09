@@ -19,7 +19,7 @@ public class Recipe
     public IEnumerable<RecipeStep> Steps { get; private set; }
     
     private Recipe(
-        String name, 
+        string name, 
         DateTime createdAt, 
         RecipeCategory category, 
         string description, 
@@ -36,15 +36,14 @@ public class Recipe
         Steps = steps.ToList();
     }
     public static Recipe Create(
-        String name, 
-        DateTime createdAt, 
+        string name, 
         RecipeCategory category, 
         string description, 
         RecipeDetails details, 
         IEnumerable<RecipeIngredient> ingredients, 
         IEnumerable<RecipeStep> steps)
     {
-        return new Recipe(name, createdAt, category, description, details, ingredients, steps);
+        return new Recipe(name, DateTime.Now, category, description, details, ingredients, steps);
     }
     
 }

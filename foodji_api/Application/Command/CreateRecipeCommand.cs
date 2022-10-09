@@ -26,12 +26,11 @@ public class CreateRecipeCommand : IRequest
             _mapper = mapper;
         }
         
-        // TODO - copy pasta shenanigans, we have to redo the method
         public async Task<Unit> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
         {
             var recipe = _mapper.Map<Recipe>(request.RecipeDto);
             
-            _client.Recipes.InsertOne(recipe);
+            await _client.Recipes.InsertOneAsync(recipe, cancellationToken: cancellationToken);
             
             return Unit.Value;
         }

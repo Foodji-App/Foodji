@@ -15,7 +15,7 @@ public class Measurement
         UnitType = unitType;
     }
     
-    public static Measurement Create(UnitType unitType, string alternativeText = "", decimal value = 0)
+    public static Measurement Create(UnitType unitType, string alternativeText, decimal value)
     {
         if (value == 0 && String.IsNullOrEmpty(alternativeText))
         {
