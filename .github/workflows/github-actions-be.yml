@@ -12,7 +12,7 @@ jobs:
       - name: Build
         run: dotnet build foodji_api/FoodjiApi.sln
       - name: Test
-        run: dotnet test --no-build --verbosity normal foodji_api/FoodjiApiTests/FoodjiApiTests.csproj
+        run: dotnet test --no-build --verbosity normal foodji_api/DomainTests/DomainTests.csproj
     
     #- name: Upload a Build Artifact
     #  uses: actions/upload-artifact@v3.1.0

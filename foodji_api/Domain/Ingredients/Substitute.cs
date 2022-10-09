@@ -2,9 +2,9 @@
 
 public class Substitute : IngredientBase
 {
-    public string SubstitutionPrecisions { get; private set; }
+    public string SubstitutionPrecisions { get; protected set; }
 
-    private Substitute(string name)
+    protected Substitute(string name)
         : base(name)
     {
     }

@@ -2,40 +2,43 @@
 
 namespace Domain.Recipes;
 
-public class RecipeIngredient
+public class RecipeIngredient : Ingredient
 {
-    // Recipe-specific fields
     public string Description { get; protected set; }
     
     public Measurement Measurement { get; protected set; }
     
-    
-    // Generic ingredient fields
-    public string Name { get; protected set; }
-
-    public IEnumerable<Tag> Tags { get; protected set; }
-
-    protected RecipeIngredient(
+    // TODO - Refactor method after merge
+    private RecipeIngredient(
         string description,
         Measurement measurement,
-        string name,
-        IEnumerable<Tag> tags)
+        string name)
+            : base(name)
     {
         Description = description;
         Measurement = measurement;
         Name = name;
-        Tags = tags.ToList();
     }
-    static RecipeIngredient Create(
+    
+    public static RecipeIngredient Create(
         Measurement measurement,
         string name,
         string description = "",
-        IEnumerable<Tag>? tags = null)
+        IEnumerable<Tag>? tags = null,
+        IEnumerable<RecipeSubstitute>? substitutes = null)
     {
-        return new RecipeIngredient(
-            description,
-            measurement,
-            name,
-            tags ?? Enumerable.Empty<Tag>());
+        var recipeIngredient = new RecipeIngredient(description, measurement, name);
+
+        if (substitutes != null)
+        {
+            recipeIngredient.Substitutes = substitutes.ToList();
+        }
+
+        if (tags != null)
+        {
+            recipeIngredient.Tags = tags.ToList();
+        }
+        
+        return recipeIngredient;
     }
 }
