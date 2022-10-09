@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:foodji_ui/models/recipe_model.dart';
 
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
@@ -21,7 +22,31 @@ class RecipesPageState extends State<RecipesPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is AuthentifiedState) {
-        var recipes = state.recipes;
+        List<RecipeModel> filteredRecipes = state.filteredRecipes;
+        List<RecipeModel> recipes = state.recipes;
+
+        void filterSearchResults(String query) {
+          if (query.isNotEmpty) {
+            List<RecipeModel> foundRecipes = [];
+            for (var recipe in recipes) {
+              if (recipe.name.toLowerCase().contains(query.toLowerCase()) ||
+                  recipe.category.toLowerCase().contains(query.toLowerCase())) {
+                foundRecipes.add(recipe);
+              }
+            }
+            setState(() {
+              filteredRecipes.clear();
+              filteredRecipes.addAll(foundRecipes);
+            });
+            return;
+          } else {
+            setState(() {
+              filteredRecipes.clear();
+              filteredRecipes.addAll(recipes);
+            });
+          }
+        }
+
         return Scaffold(
             body: Container(
                 width: double.maxFinite,
@@ -42,7 +67,7 @@ class RecipesPageState extends State<RecipesPage> {
                             const BorderRadius.all(Radius.circular(10.0)),
                         child: TextField(
                           onChanged: (value) {
-                            //TODO
+                            filterSearchResults(value);
                           },
                           controller: searchBoxController,
                           decoration: InputDecoration(
@@ -59,7 +84,7 @@ class RecipesPageState extends State<RecipesPage> {
                       )),
                   Expanded(
                       child: ListView.builder(
-                    itemCount: recipes.length,
+                    itemCount: filteredRecipes.length,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) {
                       return Container(
@@ -75,17 +100,18 @@ class RecipesPageState extends State<RecipesPage> {
                                 tileColor: AppColors.backgroundColor,
                                 leading: Container(
                                     width:
-                                        MediaQuery.of(context).size.width / 4,
-                                    height: double.maxFinite,
+                                        MediaQuery.of(context).size.width / 5,
+                                    height:
+                                        MediaQuery.of(context).size.width / 6,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
                                         color: AppColors.textColor,
                                         image: DecorationImage(
                                             image: NetworkImage(
-                                                recipes[index].img),
+                                                filteredRecipes[index].img),
                                             fit: BoxFit.fitWidth))),
-                                title: Text(recipes[index].name),
-                                subtitle: Text(recipes[index].category),
+                                title: Text(filteredRecipes[index].name),
+                                subtitle: Text(filteredRecipes[index].category),
                                 isThreeLine: true,
                               )));
                     },

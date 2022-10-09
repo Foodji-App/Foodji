@@ -33,7 +33,7 @@ class AppCubits extends Cubit<CubitStates> {
       for (var i = 0; i < 10; i++) {
         recipes.add(RecipeModel.getSample());
       }
-      emit(AuthentifiedState(recipes));
+      emit(AuthentifiedState(recipes, [...recipes])); //Deep copy
     } catch (e) {
       emit(ErrorState());
     }
