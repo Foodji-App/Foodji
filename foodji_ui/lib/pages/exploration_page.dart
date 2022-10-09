@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../cubit/app_globals.dart' as globals;
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 
@@ -14,6 +15,7 @@ class ExplorationPage extends StatefulWidget {
 class ExplorationPageState extends State<ExplorationPage> {
   @override
   Widget build(BuildContext context) {
+    globals.setActivePage(2);
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       return Scaffold(
           body: Container(

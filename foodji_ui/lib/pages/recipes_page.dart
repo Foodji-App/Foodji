@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:foodji_ui/models/recipe_model.dart';
 
+import '../cubit/app_globals.dart' as globals;
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
@@ -20,6 +21,7 @@ class RecipesPageState extends State<RecipesPage> {
   TextEditingController searchBoxController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    globals.setActivePage(0);
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is AuthentifiedState) {
         List<RecipeModel> filteredRecipes = state.filteredRecipes;
@@ -29,9 +31,15 @@ class RecipesPageState extends State<RecipesPage> {
           if (query.isNotEmpty) {
             List<RecipeModel> foundRecipes = [];
             for (var recipe in recipes) {
-              if (recipe.name.toLowerCase().contains(query.toLowerCase()) ||
-                  recipe.category.toLowerCase().contains(query.toLowerCase())) {
-                foundRecipes.add(recipe);
+              for (var text in query.split(" ")) {
+                if (text.isNotEmpty &&
+                    (recipe.name.toLowerCase().contains(text.toLowerCase()) ||
+                        recipe.category
+                            .toLowerCase()
+                            .contains(text.toLowerCase()))) {
+                  foundRecipes.add(recipe);
+                  break;
+                }
               }
             }
             setState(() {

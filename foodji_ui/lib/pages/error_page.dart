@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../cubit/app_globals.dart' as globals;
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
@@ -18,6 +19,7 @@ class ErrorPage extends StatefulWidget {
 class ErrorPageState extends State<ErrorPage> {
   @override
   Widget build(BuildContext context) {
+    globals.setActivePage(-1);
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       return Scaffold(
           body: GestureDetector(

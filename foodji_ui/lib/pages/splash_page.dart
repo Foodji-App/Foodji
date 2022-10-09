@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../cubit/app_globals.dart' as globals;
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 
@@ -16,6 +17,7 @@ class SplashPage extends StatefulWidget {
 class SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
+    globals.setActivePage(-1);
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       //Delayed to simulate loading
       Future.delayed(const Duration(seconds: 3),

@@ -4,6 +4,7 @@ import 'package:foodji_ui/misc/colors.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../cubit/app_globals.dart' as globals;
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../widgets/app_text.dart';
@@ -18,6 +19,7 @@ class AuthentificationPage extends StatefulWidget {
 class AuthentificationPageState extends State<AuthentificationPage> {
   @override
   Widget build(BuildContext context) {
+    globals.setActivePage(-1);
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       return Scaffold(
           body: GestureDetector(
