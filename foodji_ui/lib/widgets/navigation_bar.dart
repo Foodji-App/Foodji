@@ -5,6 +5,7 @@ import 'package:foodji_ui/pages/exploration_page.dart';
 import 'package:foodji_ui/pages/ingredients_page.dart';
 import 'package:foodji_ui/pages/profile_page.dart';
 import 'package:foodji_ui/pages/recipes_page.dart';
+import '../widgets/app_bar.dart' as app_bar_widget;
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -67,6 +68,7 @@ class NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: const app_bar_widget.AppBar(),
         backgroundColor: AppColors.backgroundColor,
         body: pages[currentPage],
         bottomNavigationBar: BottomAppBar(
