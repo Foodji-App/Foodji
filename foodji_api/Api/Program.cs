@@ -1,5 +1,4 @@
 using System.Reflection;
-using Application.Queries;
 using Infra.Services;
 using MediatR;
 

@@ -1,7 +1,6 @@
 using Domain.Ingredients;
 using Domain.Recipes;
 using FluentAssertions;
-using Moq;
 using NUnit.Framework;
 
 namespace DomainTests.Recipes

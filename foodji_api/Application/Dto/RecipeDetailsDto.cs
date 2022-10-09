@@ -8,5 +8,5 @@ public record RecipeDetailsDto
     
     public int RestingTime { get; set; } = 0;
     
-    public int Serves { get; set; } = 0;
+    public int Serves { get; set; } = 1;
 }

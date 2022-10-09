@@ -2,15 +2,15 @@
 
 public record RecipeDto
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string Category { get; set; }
+    public string Category { get; set; } = null!;
     
-    public string Description { get; set; }
+    public string Description { get; set; } = null!;
     
-    public RecipeDetailsDto Details { get; set; }
+    public RecipeDetailsDto Details { get; set; } = null!;
     
-    public IEnumerable<RecipeIngredientDto> Ingredients { get; set; }
+    public IEnumerable<RecipeIngredientDto> Ingredients { get; set; } = null!;
     
-    public IEnumerable<RecipeStepDto> Steps { get; set; }
+    public IEnumerable<RecipeStepDto> Steps { get; set; } = null!;
 }
