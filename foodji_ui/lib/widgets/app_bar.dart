@@ -50,10 +50,12 @@ class AppBarState extends State<AppBar> {
     int page = -1;
     // Observer
     runOnceAndRunForEveryChange(() {
-      page = globals.getActivePage();
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {});
-      });
+      if (mounted) {
+        page = globals.getActivePage();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          setState(() {});
+        });
+      }
     });
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       return material.AppBar(

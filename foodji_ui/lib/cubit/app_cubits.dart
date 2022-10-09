@@ -19,6 +19,8 @@ class AppCubits extends Cubit<CubitStates> {
   // Getters -------------------------------------
 
   // Splash page
+  // Gets any data that is not linked to the user and then, the authentification
+  // request state or error state
   void getInitialData() async {
     try {
       emit(AuthentificationRequestState());
@@ -28,6 +30,8 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   // Authentification page
+  // Authentifies the user and returns, gets the data linked to the user and
+  // then, the authentified state or error state
   void authentify() async {
     try {
       for (var i = 0; i < 10; i++) {
@@ -47,6 +51,24 @@ class AppCubits extends Cubit<CubitStates> {
   void gotoInit() async {
     try {
       emit(InitState());
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  // To recipes
+  void gotoRecipes() async {
+    try {
+      emit(AuthentifiedState(recipes, [...recipes]));
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  // To recipe details
+  void gotoRecipeDetails(recipe) async {
+    try {
+      emit(RecipeState(recipe));
     } catch (e) {
       emit(ErrorState());
     }
