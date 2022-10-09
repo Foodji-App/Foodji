@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Converters;
+using AutoMapper;
 using Domain.Ingredients;
 using Domain.Recipes;
 
@@ -8,16 +9,32 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<UnitType, string>()
-           .ConvertUsing(x => x.Name);
-        CreateMap<string, UnitType>()
-           .ConvertUsing(x => UnitType.Create(x));
-           
+        CreateMap<Recipe, RecipeDto>();
+        CreateMap<RecipeDto, Recipe>()
+            .ConvertUsing<RecipeConverter>();
+        
         CreateMap<RecipeCategory, string>()
             .ConvertUsing(x => x.Name);
         CreateMap<string, RecipeCategory>()
             .ConvertUsing(x => RecipeCategory.Create(x));
-
+        
+        CreateMap<RecipeDetails, RecipeDetailsDto>();
+        CreateMap<RecipeDetailsDto, RecipeDetails>()
+            .ConvertUsing(x => 
+                RecipeDetails.Create(x.CookingTime, x.PreparationTime, x.RestingTime, x.Serves));
+        
+        CreateMap<RecipeStep, RecipeStepDto>();
+        CreateMap<RecipeStepDto, RecipeStep>()
+            .ConvertUsing(x => RecipeStep.Create(x.Content, x.Index));
+        
+        CreateMap<RecipeIngredient, RecipeIngredientDto>();
+        CreateMap<RecipeIngredientDto, RecipeIngredient>()
+            .ConvertUsing<RecipeIngredientConverter>();
+        
+        CreateMap<RecipeSubstitute, RecipeSubstituteDto>();
+        CreateMap<RecipeSubstituteDto, RecipeSubstitute>()
+            .ConvertUsing<RecipeSubstituteConverter>();
+    
         CreateMap<Tag, string>()
             .ConvertUsing(x => x.Name);
         CreateMap<string, Tag>()
@@ -30,54 +47,9 @@ public class MappingProfile : Profile
                 x.AlternativeText ?? "",
                 x.Value ?? 0));
         
-        CreateMap<RecipeDetails, RecipeDetailsDto>();
-        CreateMap<RecipeDetailsDto, RecipeDetails>();
-            // .ConvertUsing(x => 
-            //     RecipeDetails.Create(x.CookingTime, x.PreparationTime, x.RestingTime, x.Serves));
-        
-        CreateMap<RecipeStep, RecipeStepDto>();
-        CreateMap<RecipeStepDto, RecipeStep>();
-        // .ConvertUsing(x => RecipeStep.Create(x.Content, x.Index));
-
-        CreateMap<RecipeIngredient, RecipeIngredientDto>();
-        CreateMap<RecipeIngredientDto, RecipeIngredient>();
-
-        CreateMap<Recipe, RecipeDto>();
-        CreateMap<RecipeDto, Recipe>()
-            .ConvertUsing<RecipeConverter>();
-    }
-}
-
-public class RecipeConverter : ITypeConverter<RecipeDto, Recipe>
-{
-    private readonly IMapper _mapper;
-
-    public RecipeConverter(IMapper mapper)
-    {
-        _mapper = mapper;
-    }
-
-    public Recipe Convert(RecipeDto source, Recipe destination, ResolutionContext context)
-    {
-        var category = _mapper.Map<RecipeCategory>(source.Category);
-        var details = _mapper.Map<RecipeDetails>(source.Details);
-        
-        // TODO find proper way to *explicitely* map collections
-        var ingredients = _mapper.Map<IEnumerable<RecipeIngredient>>(source.Ingredients);
-        var steps = _mapper.Map<IEnumerable<RecipeStep>>(source.Steps);
-        // var details = RecipeDetails.Create(
-        //     source?.Details.CookingTime ?? 0,
-        //     source?.Details.PreparationTime ?? 0,
-        //     source?.Details.RestingTime ?? 0,
-        //     source?.Details.Serves ?? 1);
-        
-        // TODO mapped types still seem to be nullable, by their var evaluation
-        return Recipe.Create(
-            source.Name,
-            category,
-            source.Description,
-            details,
-            ingredients,
-            steps);
+        CreateMap<UnitType, string>()
+           .ConvertUsing(x => x.Name);
+        CreateMap<string, UnitType>()
+           .ConvertUsing(x => UnitType.Create(x));
     }
 }
