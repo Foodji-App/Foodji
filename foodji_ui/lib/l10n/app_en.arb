@@ -20,6 +20,9 @@
   "menu_pantry": "Pantry",
   "menu_grocery": "Grocery List",
 
+  "recipe_detail_preparation": "Preparation",
+  "recipe_detail_instructions": "Instructions",
+
   "recipe_description": "Description",
   "recipe_steps": "Steps",
   "recipe_no_steps": "Instructions",

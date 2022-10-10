@@ -168,7 +168,7 @@ class RecipesPageState extends State<RecipesPage> {
                                       title: Text(filteredRecipes[index].name),
                                       subtitle: Text(filteredRecipes[index].category),
                                       isThreeLine: true,
-                                      trailing: IconButton(onPressed: () => updateFavoriteStatus(filteredRecipes[index]), color: filteredRecipes[index].isFavorite ? AppColors.highlightColor3 : AppColors.textColor, icon: filteredRecipes[index].isFavorite ? const Icon(Icons.star) : const Icon(Icons.star_outline))))));
+                                      trailing: IconButton(onPressed: () => updateFavoriteStatus(filteredRecipes[index]), color: filteredRecipes[index].isFavorite ? AppColors.starColor1 : AppColors.textColor, icon: filteredRecipes[index].isFavorite ? const Icon(Icons.star) : const Icon(Icons.star_outline))))));
                     },
                   ))
                 ])));

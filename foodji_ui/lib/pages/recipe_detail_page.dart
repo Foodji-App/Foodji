@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/widgets/app_text.dart';
+import '../widgets/recipe_detail_instructions.dart';
+import '../widgets/recipe_detail_preparation.dart';
 import '../widgets/stateless_app_bar.dart' as stateless_app_bar_widget;
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,11 +19,22 @@ class RecipeDetailPage extends StatefulWidget {
   RecipeDetailPageState createState() => RecipeDetailPageState();
 }
 
-class RecipeDetailPageState extends State<RecipeDetailPage> {
+class RecipeDetailPageState extends State<RecipeDetailPage>
+    with TickerProviderStateMixin {
+  toggleFavoriteStatus(recipe) {
+    setState(() {
+      try {
+        recipe =
+            BlocProvider.of<AppCubits>(context).toggleFavoriteStatus(recipe);
+      } catch (_) {}
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is RecipeState) {
+        TabController tabController = TabController(length: 2, vsync: this);
         RecipeModel recipe = state.recipe;
         return Scaffold(
             appBar: stateless_app_bar_widget.AppBar(
@@ -35,12 +48,24 @@ class RecipeDetailPageState extends State<RecipeDetailPage> {
                     background: Container(
                         width: MediaQuery.of(context).size.width * 0.9,
                         height: MediaQuery.of(context).size.width * 0.35,
-                        padding: const EdgeInsets.all(7),
+                        padding: const EdgeInsets.only(
+                            top: 50, left: 7, right: 7, bottom: 7),
                         child: Image(
                             image: NetworkImage(recipe.img),
                             width: MediaQuery.of(context).size.width))),
-                title: Text(recipe.name, style: const TextStyle(fontSize: 14)),
+                title: AppText(
+                    text: recipe.name,
+                    size: AppTextSize.normal,
+                    color: AppColors.backgroundColor),
                 actions: [
+                  IconButton(
+                      icon: recipe.isFavorite
+                          ? const Icon(Icons.star)
+                          : const Icon(Icons.star_outline),
+                      color: recipe.isFavorite
+                          ? AppColors.starColor1
+                          : AppColors.backgroundColor,
+                      onPressed: () => toggleFavoriteStatus(recipe)),
                   IconButton(
                       icon: const Icon(Icons.edit_rounded),
                       color: AppColors.backgroundColor,
@@ -56,9 +81,36 @@ class RecipeDetailPageState extends State<RecipeDetailPage> {
                 pinned: true,
                 expandedHeight: MediaQuery.of(context).size.height * 0.4,
               ),
+              SliverAppBar(
+                backgroundColor: AppColors.textColor,
+                foregroundColor: AppColors.textColor,
+                title: Material(
+                    color: AppColors.textColor,
+                    child: TabBar(controller: tabController, tabs: <Tab>[
+                      Tab(
+                          text: AppLocalizations.of(context)!
+                              .recipe_detail_preparation),
+                      Tab(
+                          text: AppLocalizations.of(context)!
+                              .recipe_detail_instructions)
+                    ])),
+                pinned: true,
+                toolbarHeight: 50,
+                expandedHeight: 50,
+              ),
               SliverList(
                   delegate: SliverChildListDelegate([
-                Container(height: 800, width: MediaQuery.of(context).size.width)
+                // ignore: sized_box_for_whitespace
+                Container(
+                    // Container is mandatory here, do not remove
+                    width: MediaQuery.of(context).size.width,
+                    height: double.maxFinite,
+                    child: TabBarView(
+                        controller: tabController,
+                        children: <Widget>[
+                          RecipeDetailPreparation(recipe),
+                          RecipeDetailInstructions(recipe)
+                        ]))
               ]))
             ]));
       } else {
