@@ -77,7 +77,7 @@ class NavigationBarState extends State<NavigationBar> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.all(1),
                       child: IconButton(
                           icon: currentPage == 0
                               ? const Icon(Icons.menu_book)
@@ -87,7 +87,7 @@ class NavigationBarState extends State<NavigationBar> {
                               : AppColors.textColor,
                           onPressed: () => onMenuTap(0))),
                   Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.all(1),
                       child: IconButton(
                           icon: currentPage == 1
                               ? const Icon(Icons.travel_explore_outlined)
@@ -97,7 +97,7 @@ class NavigationBarState extends State<NavigationBar> {
                               : AppColors.textColor,
                           onPressed: () => onMenuTap(1))),
                   Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.all(1),
                       child: IconButton(
                           icon: currentPage == 2
                               ? const Icon(Icons.manage_accounts_outlined)
@@ -121,13 +121,13 @@ class NavigationBarState extends State<NavigationBar> {
           activeForegroundColor: currentPage >= 3
               ? AppColors.highlightColor3
               : AppColors.textColor,
-          buttonSize: 50.0,
+          buttonSize: 41.0,
           visible: true,
           closeManually: false,
           marginEnd: (MediaQuery.of(context).size.width - 240) / 6,
           curve: Curves.bounceIn,
           overlayColor: Colors.black,
-          overlayOpacity: 0.5,
+          overlayOpacity: 0.6,
           elevation: 0,
           openCloseDial: isDialOpen,
           onPress: () {

@@ -94,7 +94,8 @@ class RecipesPageState extends State<RecipesPage> {
             body: Container(
                 width: double.maxFinite,
                 height: double.maxFinite,
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(
+                    left: 10, top: 12, right: 10, bottom: 14),
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('img/background-gradient.png'),
@@ -102,8 +103,7 @@ class RecipesPageState extends State<RecipesPage> {
                 alignment: Alignment.center,
                 child: Column(children: <Widget>[
                   Padding(
-                      padding: const EdgeInsets.only(
-                          top: 2, bottom: 10, left: 0, right: 0),
+                      padding: const EdgeInsets.only(bottom: 14),
                       child: Material(
                         color: AppColors.backgroundColor,
                         borderRadius:
@@ -114,6 +114,7 @@ class RecipesPageState extends State<RecipesPage> {
                           },
                           controller: searchBoxController,
                           decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(3),
                               focusColor: AppColors.highlightColor3,
                               hintText:
                                   AppLocalizations.of(context)!.global_filter,

@@ -8,5 +8,5 @@ class AppColors {
   static const Color backgroundColor = Color(0xfffffeef);
   static const Color none = Color(0x00000000);
   static const Color starColor = Color(0xFFe7bb4e);
-
+  static const Color backgroundColor2 = Color(0xFFf9a65d);
 }
