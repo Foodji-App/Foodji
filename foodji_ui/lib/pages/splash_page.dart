@@ -22,8 +22,9 @@ class SplashPageState extends State<SplashPage> {
       //Delayed to simulate loading
       Future.delayed(const Duration(seconds: 3),
           () => BlocProvider.of<AppCubits>(context).getInitialData());
-      return Scaffold(
-          body: Container(
+      return SafeArea(
+          child: Scaffold(
+              body: Container(
         width: double.maxFinite,
         height: double.maxFinite,
         decoration: const BoxDecoration(
@@ -60,7 +61,7 @@ class SplashPageState extends State<SplashPage> {
             ),
           ],
         ),
-      ));
+      )));
     });
   }
 }

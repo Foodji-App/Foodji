@@ -66,137 +66,140 @@ class NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
     ValueNotifier<bool> isDialOpen = ValueNotifier(false);
-    return Scaffold(
-        appBar: const app_bar_widget.AppBar(),
-        backgroundColor: AppColors.backgroundColor,
-        body: pages[currentPage],
-        bottomNavigationBar: BottomAppBar(
-            color: AppColors.backgroundColor,
-            elevation: 0,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.all(1),
-                      child: IconButton(
-                          icon: currentPage == 0
-                              ? const Icon(Icons.menu_book)
-                              : const Icon(Icons.book),
-                          color: currentPage == 0
-                              ? AppColors.highlightColor3
-                              : AppColors.textColor,
-                          onPressed: () => onMenuTap(0))),
-                  Padding(
-                      padding: const EdgeInsets.all(1),
-                      child: IconButton(
-                          icon: currentPage == 1
-                              ? const Icon(Icons.travel_explore_outlined)
-                              : const Icon(Icons.public),
-                          color: currentPage == 1
-                              ? AppColors.highlightColor3
-                              : AppColors.textColor,
-                          onPressed: () => onMenuTap(1))),
-                  Padding(
-                      padding: const EdgeInsets.all(1),
-                      child: IconButton(
-                          icon: currentPage == 2
-                              ? const Icon(Icons.manage_accounts_outlined)
-                              : const Icon(Icons.manage_accounts),
-                          color: currentPage == 2
-                              ? AppColors.highlightColor3
-                              : AppColors.textColor,
-                          onPressed: () => onMenuTap(2))),
-                  const Padding(
-                      padding: EdgeInsets.all(5.0), child: SizedBox(width: 40))
-                ])),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: SpeedDial(
-          icon: getFABPassiveIcon(),
-          activeIcon: Icons.build_outlined,
-          backgroundColor: AppColors.backgroundColor,
-          foregroundColor: currentPage >= 3
-              ? AppColors.highlightColor3
-              : AppColors.textColor,
-          activeBackgroundColor: AppColors.backgroundColor,
-          activeForegroundColor: currentPage >= 3
-              ? AppColors.highlightColor3
-              : AppColors.textColor,
-          buttonSize: 41.0,
-          visible: true,
-          closeManually: false,
-          marginEnd: (MediaQuery.of(context).size.width - 240) / 6,
-          curve: Curves.bounceIn,
-          overlayColor: Colors.black,
-          overlayOpacity: 0.6,
-          elevation: 0,
-          openCloseDial: isDialOpen,
-          onPress: () {
-            lastSelectedSpeedDial != -1
-                ? onSpeedDialTap(lastSelectedSpeedDial)
-                : isDialOpen.value = true;
-          },
-          children: [
-            SpeedDialChild(
-                child: currentPage == 3
-                    ? const Icon(Icons.flip_camera_android_outlined)
-                    : const Icon(Icons.flip_camera_android),
-                backgroundColor: AppColors.backgroundColor,
-                foregroundColor: currentPage == 3
-                    ? AppColors.highlightColor3
-                    : AppColors.textColor,
-                label: AppLocalizations.of(context)!.menu_converter,
-                labelStyle: TextStyle(
-                    fontSize: 12.0,
-                    color: currentPage == 3
+    return SafeArea(
+        child: Scaffold(
+            appBar: const app_bar_widget.AppBar(),
+            backgroundColor: AppColors.backgroundColor,
+            body: pages[currentPage],
+            bottomNavigationBar: BottomAppBar(
+                color: AppColors.backgroundColor,
+                elevation: 0,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.all(1),
+                          child: IconButton(
+                              icon: currentPage == 0
+                                  ? const Icon(Icons.menu_book)
+                                  : const Icon(Icons.book),
+                              color: currentPage == 0
+                                  ? AppColors.highlightColor3
+                                  : AppColors.textColor,
+                              onPressed: () => onMenuTap(0))),
+                      Padding(
+                          padding: const EdgeInsets.all(1),
+                          child: IconButton(
+                              icon: currentPage == 1
+                                  ? const Icon(Icons.travel_explore_outlined)
+                                  : const Icon(Icons.public),
+                              color: currentPage == 1
+                                  ? AppColors.highlightColor3
+                                  : AppColors.textColor,
+                              onPressed: () => onMenuTap(1))),
+                      Padding(
+                          padding: const EdgeInsets.all(1),
+                          child: IconButton(
+                              icon: currentPage == 2
+                                  ? const Icon(Icons.manage_accounts_outlined)
+                                  : const Icon(Icons.manage_accounts),
+                              color: currentPage == 2
+                                  ? AppColors.highlightColor3
+                                  : AppColors.textColor,
+                              onPressed: () => onMenuTap(2))),
+                      const Padding(
+                          padding: EdgeInsets.all(5.0),
+                          child: SizedBox(width: 40))
+                    ])),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.endDocked,
+            floatingActionButton: SpeedDial(
+              icon: getFABPassiveIcon(),
+              activeIcon: Icons.build_outlined,
+              backgroundColor: AppColors.backgroundColor,
+              foregroundColor: currentPage >= 3
+                  ? AppColors.highlightColor3
+                  : AppColors.textColor,
+              activeBackgroundColor: AppColors.backgroundColor,
+              activeForegroundColor: currentPage >= 3
+                  ? AppColors.highlightColor3
+                  : AppColors.textColor,
+              buttonSize: 41.0,
+              visible: true,
+              closeManually: false,
+              marginEnd: (MediaQuery.of(context).size.width - 240) / 6,
+              curve: Curves.bounceIn,
+              overlayColor: Colors.black,
+              overlayOpacity: 0.6,
+              elevation: 0,
+              openCloseDial: isDialOpen,
+              onPress: () {
+                lastSelectedSpeedDial != -1
+                    ? onSpeedDialTap(lastSelectedSpeedDial)
+                    : isDialOpen.value = true;
+              },
+              children: [
+                SpeedDialChild(
+                    child: currentPage == 3
+                        ? const Icon(Icons.flip_camera_android_outlined)
+                        : const Icon(Icons.flip_camera_android),
+                    backgroundColor: AppColors.backgroundColor,
+                    foregroundColor: currentPage == 3
                         ? AppColors.highlightColor3
-                        : AppColors.textColor),
-                onTap: () => onSpeedDialTap(0)),
-            SpeedDialChild(
-                child: currentPage == 4
-                    ? const Icon(Icons.egg_outlined)
-                    : const Icon(Icons.egg),
-                backgroundColor: AppColors.backgroundColor,
-                foregroundColor: currentPage == 4
-                    ? AppColors.highlightColor3
-                    : AppColors.textColor,
-                label: AppLocalizations.of(context)!.menu_ingredients,
-                labelStyle: TextStyle(
-                    fontSize: 12.0,
-                    color: currentPage == 4
+                        : AppColors.textColor,
+                    label: AppLocalizations.of(context)!.menu_converter,
+                    labelStyle: TextStyle(
+                        fontSize: 12.0,
+                        color: currentPage == 3
+                            ? AppColors.highlightColor3
+                            : AppColors.textColor),
+                    onTap: () => onSpeedDialTap(0)),
+                SpeedDialChild(
+                    child: currentPage == 4
+                        ? const Icon(Icons.egg_outlined)
+                        : const Icon(Icons.egg),
+                    backgroundColor: AppColors.backgroundColor,
+                    foregroundColor: currentPage == 4
                         ? AppColors.highlightColor3
-                        : AppColors.textColor),
-                onTap: () => onSpeedDialTap(1)),
-            SpeedDialChild(
-                child: currentPage == 5
-                    ? const Icon(Icons.kitchen_outlined)
-                    : const Icon(Icons.kitchen),
-                backgroundColor: AppColors.backgroundColor,
-                foregroundColor: currentPage == 5
-                    ? AppColors.highlightColor3
-                    : AppColors.textColor,
-                label: AppLocalizations.of(context)!.menu_pantry,
-                labelStyle: TextStyle(
-                    fontSize: 12.0,
-                    color: currentPage == 5
+                        : AppColors.textColor,
+                    label: AppLocalizations.of(context)!.menu_ingredients,
+                    labelStyle: TextStyle(
+                        fontSize: 12.0,
+                        color: currentPage == 4
+                            ? AppColors.highlightColor3
+                            : AppColors.textColor),
+                    onTap: () => onSpeedDialTap(1)),
+                SpeedDialChild(
+                    child: currentPage == 5
+                        ? const Icon(Icons.kitchen_outlined)
+                        : const Icon(Icons.kitchen),
+                    backgroundColor: AppColors.backgroundColor,
+                    foregroundColor: currentPage == 5
                         ? AppColors.highlightColor3
-                        : AppColors.textColor),
-                onTap: () => onSpeedDialTap(2)),
-            SpeedDialChild(
-                child: currentPage == 6
-                    ? const Icon(Icons.local_grocery_store_outlined)
-                    : const Icon(Icons.local_grocery_store),
-                backgroundColor: AppColors.backgroundColor,
-                foregroundColor: currentPage == 6
-                    ? AppColors.highlightColor3
-                    : AppColors.textColor,
-                label: AppLocalizations.of(context)!.menu_grocery,
-                labelStyle: TextStyle(
-                    fontSize: 12.0,
-                    color: currentPage == 6
+                        : AppColors.textColor,
+                    label: AppLocalizations.of(context)!.menu_pantry,
+                    labelStyle: TextStyle(
+                        fontSize: 12.0,
+                        color: currentPage == 5
+                            ? AppColors.highlightColor3
+                            : AppColors.textColor),
+                    onTap: () => onSpeedDialTap(2)),
+                SpeedDialChild(
+                    child: currentPage == 6
+                        ? const Icon(Icons.local_grocery_store_outlined)
+                        : const Icon(Icons.local_grocery_store),
+                    backgroundColor: AppColors.backgroundColor,
+                    foregroundColor: currentPage == 6
                         ? AppColors.highlightColor3
-                        : AppColors.textColor),
-                onTap: () => onSpeedDialTap(3))
-          ],
-        ));
+                        : AppColors.textColor,
+                    label: AppLocalizations.of(context)!.menu_grocery,
+                    labelStyle: TextStyle(
+                        fontSize: 12.0,
+                        color: currentPage == 6
+                            ? AppColors.highlightColor3
+                            : AppColors.textColor),
+                    onTap: () => onSpeedDialTap(3))
+              ],
+            )));
   }
 }

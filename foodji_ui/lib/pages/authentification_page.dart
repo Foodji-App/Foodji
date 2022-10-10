@@ -21,26 +21,27 @@ class AuthentificationPageState extends State<AuthentificationPage> {
   Widget build(BuildContext context) {
     globals.setActivePage(-1);
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
-      return Scaffold(
-          body: GestureDetector(
-              onTap: () => BlocProvider.of<AppCubits>(context).authentify(),
-              child: Container(
-                  width: double.maxFinite,
-                  height: double.maxFinite,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('img/background-gradient.png'),
-                          fit: BoxFit.fill)),
-                  alignment: Alignment.center,
+      return SafeArea(
+          child: Scaffold(
+              body: GestureDetector(
+                  onTap: () => BlocProvider.of<AppCubits>(context).authentify(),
                   child: Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.3,
+                      width: double.maxFinite,
+                      height: double.maxFinite,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('img/background-gradient.png'),
+                              fit: BoxFit.fill)),
                       alignment: Alignment.center,
-                      child: AppText(
-                          text: AppLocalizations.of(context)!.demo_access,
-                          color: AppColors.backgroundColor,
-                          size: AppTextSize.normal,
-                          fontFamily: AppFontFamily.bauhaus)))));
+                      child: Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          alignment: Alignment.center,
+                          child: AppText(
+                              text: AppLocalizations.of(context)!.demo_access,
+                              color: AppColors.backgroundColor,
+                              size: AppTextSize.normal,
+                              fontFamily: AppFontFamily.bauhaus))))));
     });
   }
 }
