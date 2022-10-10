@@ -11,20 +11,14 @@ public class Ingredient : IngredientBase
     
     public static Ingredient Create(
         string name,
-        IEnumerable<Tag>? tags = null,
-        IEnumerable<Substitute>? substitutes = null)
+        IEnumerable<Tag> tags,
+        IEnumerable<Substitute> substitutes)
     {
-        var ingredient = new Ingredient(name);
-        
-        if (tags != null)
-        {
-            ingredient.Tags = tags.ToList();
-        }
-
-        if (substitutes != null)
-        {
-            ingredient.Substitutes = substitutes.ToList();
-        }
+        var ingredient = new Ingredient(name) 
+        { 
+            Tags = tags.ToList(), 
+            Substitutes = substitutes.ToList() 
+        };
 
         return ingredient;
     }

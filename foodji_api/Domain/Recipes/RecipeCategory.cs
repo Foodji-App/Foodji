@@ -8,7 +8,7 @@ public record RecipeCategory
     public static RecipeCategory MainCourse { get; } = new RecipeCategory("Plat principal");
     public static RecipeCategory SideDish { get; } = new RecipeCategory("Accompagnement");
     public static RecipeCategory Appetizer { get; } = new RecipeCategory("Entrée");
-    public static RecipeCategory Breakfast { get; } = new RecipeCategory("Déjeûner");
+    public static RecipeCategory Breakfast { get; } = new RecipeCategory("Déjeuner");
     public static RecipeCategory Soup { get; } = new RecipeCategory("Soupe");
     public static RecipeCategory Beverage { get; } = new RecipeCategory("Breuvage");
     public static RecipeCategory Sauce { get; } = new RecipeCategory("Sauce");
@@ -33,7 +33,6 @@ public record RecipeCategory
             case "entree":
                 return Appetizer;
             case "déjeuner":
-            case "déjeûner":
             case "dejeuner":
                 return Breakfast;
             case "soupe":

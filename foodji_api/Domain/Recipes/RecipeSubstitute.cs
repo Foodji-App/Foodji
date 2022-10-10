@@ -21,19 +21,16 @@ public class RecipeSubstitute : Substitute
     public static RecipeSubstitute Create(
         Measurement measurement,
         string name,
-        string description = "",
-        string substitutionPrecisions = "",
-        IEnumerable<Tag>? tags = null)
+        string description,
+        string substitutionPrecisions,
+        IEnumerable<Tag> tags)
     {
         var recipeSubstitute = new RecipeSubstitute(
-            name, measurement, description);
-
-        recipeSubstitute.SubstitutionPrecisions = substitutionPrecisions;
-
-        if (tags != null)
+            name, measurement, description)
         {
-            recipeSubstitute.Tags = tags.ToList();
-        }
+            SubstitutionPrecisions = substitutionPrecisions,
+            Tags = tags.ToList()
+        };
 
         return recipeSubstitute;
     }

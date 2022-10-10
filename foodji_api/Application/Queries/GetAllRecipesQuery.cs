@@ -1,11 +1,13 @@
-﻿using Infra;
+﻿using Domain.Recipes;
+using Infra;
 using MediatR;
+using MongoDB.Driver;
 
 namespace Application.Queries;
 
-public class GetAllRecipesQuery : IRequest
+public class GetAllRecipesQuery : IRequest<IEnumerable<Recipe>>
 {
-    private class Handler : IRequestHandler<GetAllRecipesQuery>
+    private class Handler : IRequestHandler<GetAllRecipesQuery, IEnumerable<Recipe>>
     {
         private readonly IFoodjiDbClient _client;
 
@@ -15,12 +17,12 @@ public class GetAllRecipesQuery : IRequest
         }
 
 
-        public async Task<Unit> Handle(GetAllRecipesQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Recipe>> Handle(GetAllRecipesQuery request, CancellationToken cancellationToken)
         {
-            var temp = new Dictionary<string, string>();
-            temp.Add("testKey", "testValue");
-
-            return default;
+            var recipes = 
+                await _client.Recipes.FindAsync(_ => true, cancellationToken: cancellationToken);
+            
+            return recipes.ToList(cancellationToken);
         }
     }
 }

@@ -18,19 +18,10 @@ public class RecipeConverter : ITypeConverter<RecipeDto, Recipe>
         var category = _mapper.Map<RecipeCategory>(source.Category);
         var details = _mapper.Map<RecipeDetails>(source.Details);
 
-        // TODO find proper way to *explicitly* map collections
-        var ingredients = new List<RecipeIngredient>();
-        foreach (var ingredient in source.Ingredients)
-        {
-            ingredients.Add(_mapper.Map<RecipeIngredient>(ingredient));
-        }
+        var ingredients = 
+            _mapper.Map<IEnumerable<RecipeIngredientDto>, IEnumerable<RecipeIngredient>>(source.Ingredients);
 
-        var steps = _mapper.Map<IEnumerable<RecipeStep>>(source.Steps);
-        // var details = RecipeDetails.Create(
-        //     source?.Details.CookingTime ?? 0,
-        //     source?.Details.PreparationTime ?? 0,
-        //     source?.Details.RestingTime ?? 0,
-        //     source?.Details.Serves ?? 1);
+        var steps = _mapper.Map<IEnumerable<RecipeStepDto>, IEnumerable<RecipeStep>>(source.Steps);
 
         // TODO mapped types still seem to be nullable, by their var evaluation
         return Recipe.Create(
