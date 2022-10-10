@@ -1,3 +1,4 @@
+using Domain.Ingredients;
 using Domain.Recipes;
 using FluentAssertions;
 using NUnit.Framework;
