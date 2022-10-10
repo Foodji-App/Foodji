@@ -32,24 +32,5 @@ namespace DomainTests.Recipes
                 expectedCookingTime + expectedPreparationTime + expectedRestingTime);
             actualRecipeDetails.Should().BeOfType<RecipeDetails>();
         }
-        
-        [Test]
-        public void NoValues_Create_ReturnsRecipeDetails()
-        {
-            // Arrange
-            var expectedValue = 0;
-            
-            // Act
-            var actualRecipeDetails = RecipeDetails.Create();
-
-            // Assert
-            actualRecipeDetails.CookingTime.Should().Be(expectedValue);
-            actualRecipeDetails.PreparationTime.Should().Be(expectedValue);
-            actualRecipeDetails.RestingTime.Should().Be(expectedValue);
-            actualRecipeDetails.Serves.Should().Be(expectedValue);
-            actualRecipeDetails.TotalTime.Should().Be(
-                expectedValue);
-            actualRecipeDetails.Should().BeOfType<RecipeDetails>();
-        }
     }
 }

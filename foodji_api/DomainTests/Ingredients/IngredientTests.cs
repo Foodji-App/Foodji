@@ -18,6 +18,7 @@ public class IngredientTests
         {
             Substitute.Create(
                 "subName",
+                new List<Tag> { Tag.Vegan, Tag.Vegetarian, Tag.LactoseFree },
                 substitutionPrecisions: "testPrecisions")
         };
         
@@ -29,27 +30,19 @@ public class IngredientTests
         result.Tags.Should().BeEquivalentTo(tags);
         result.Substitutes.Should().BeEquivalentTo(substitutes);
     }
-    
-    [Test]
-    public void GivenNoCollections_Create_CollectionsAreInitialized()
-    {
-        // Arrange
-        var name = "TestName";
-        
-        // Act
-        var result = Ingredient.Create(name);
-        
-        // Assert
-        result.Tags.Should().NotBeNull().And.BeEmpty();
-        result.Substitutes.Should().NotBeNull().And.BeEmpty();
-    }
 
     [Test]
     public void GivenValidSubstituteInEmptyList_AddSubstitute_SubstituteAddedToList()
     {
         // Arrange
-        var substitute = Substitute.Create("subName");
-        var ingredient = Ingredient.Create("ingredientName");
+        var substitute = Substitute.Create(
+            "subName",
+            new List<Tag>(),
+            substitutionPrecisions: "testPrecisions");
+        var ingredient = Ingredient.Create(
+            "ingredientName",
+            new List<Tag>(),
+            new List<Substitute>());
         
         // Act
         ingredient.AddSubstitute(substitute);
@@ -62,8 +55,14 @@ public class IngredientTests
     public void GivenDuplicateSubstitute_AddSubstitute_SubstituteAddedToList()
     {
         // Arrange
-        var substitute = Substitute.Create("subName");
-        var ingredient = Ingredient.Create("ingredientName", substitutes: new List<Substitute> { substitute });
+        var substitute = Substitute.Create(
+            "subName",
+            new List<Tag>(),
+            substitutionPrecisions: "testPrecisions");
+        var ingredient = Ingredient.Create(
+            "ingredientName", 
+            new List<Tag>(),
+            substitutes: new List<Substitute> { substitute });
         
         // Act
         var act = () => ingredient.AddSubstitute(substitute);

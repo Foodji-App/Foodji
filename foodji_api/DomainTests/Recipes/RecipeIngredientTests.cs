@@ -13,14 +13,21 @@ namespace DomainTests.Recipes
         {
             // Arrange substitution
             var expectedRecipeSubstitute = RecipeSubstitute.Create(
-                Measurement.Create(UnitType.Gram, value: 2),
+                Measurement.Create(
+                    UnitType.Gram,
+                    String.Empty,
+                    2),
                 "expectedSubstituteName",
                 "expectedSubstituteDescription",
-                "substitutionPrecisions");
+                "substitutionPrecisions",
+                new List<Tag>());
 
             // Arrange ingredient
             var expectedDescription = "expectedDescription";
-            var expectedMeasurement = Measurement.Create(UnitType.Cup, value: 1);
+            var expectedMeasurement = Measurement.Create(
+                UnitType.Cup,
+                String.Empty,
+                1);
             var expectedName = "expectedName";
             var expectedRecipeSubstitutes = new List<RecipeSubstitute> { expectedRecipeSubstitute };
             var expectedTags = new List<Tag> { Tag.Vegan, Tag.Vegetarian };
@@ -40,25 +47,6 @@ namespace DomainTests.Recipes
             actualRecipeIngredient.Substitutes.Should().BeEquivalentTo(expectedRecipeSubstitutes);
             actualRecipeIngredient.Tags.Should().BeEquivalentTo(expectedTags);
             actualRecipeIngredient.Should().BeOfType<RecipeIngredient>();
-        }
-        
-        [Test]
-        public void NoTagNoSubstitutes_Create_CollectionsAreInitialized()
-        {
-            // Arrange ingredient
-            var expectedDescription = "expectedDescription";
-            var expectedMeasurement = Measurement.Create(UnitType.Cup, value: 1);
-            var expectedName = "expectedName";
-            
-            // Act
-            var actualRecipeIngredient = RecipeIngredient.Create(
-                expectedMeasurement,
-                expectedName,
-                expectedDescription);
-
-            // Assert
-            actualRecipeIngredient.Substitutes.Should().NotBeNull().And.BeEmpty();
-            actualRecipeIngredient.Tags.Should().NotBeNull().And.BeEmpty();
         }
     }
 }
