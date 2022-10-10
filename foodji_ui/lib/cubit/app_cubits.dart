@@ -34,9 +34,7 @@ class AppCubits extends Cubit<CubitStates> {
   // then, the authentified state or error state
   void authentify() async {
     try {
-      for (var i = 0; i < 10; i++) {
-        recipes.add(RecipeModel.getSample());
-      }
+      recipes.addAll(RecipeModel.getSamples(10));
       emit(AuthentifiedState(recipes, [...recipes])); //Deep copy
     } catch (e) {
       emit(ErrorState());
@@ -44,6 +42,13 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   // Setters -------------------------------------
+
+  toggleFavoriteStatus(recipe) {
+    RecipeModel targetRecipe =
+        recipes.firstWhere((element) => element.id == recipe.id);
+    targetRecipe.isFavorite = !targetRecipe.isFavorite;
+    return targetRecipe;
+  }
 
   // Navigation ----------------------------------
 

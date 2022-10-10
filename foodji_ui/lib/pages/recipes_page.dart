@@ -19,6 +19,19 @@ class RecipesPage extends StatefulWidget {
 
 class RecipesPageState extends State<RecipesPage> {
   TextEditingController searchBoxController = TextEditingController();
+  // Class member to be updatable by setState
+  String filterQuery = "";
+  bool favoritesOnly = false;
+
+  toggleFavoriteStatus(recipe) {
+    setState(() {
+      try {
+        recipe =
+            BlocProvider.of<AppCubits>(context).toggleFavoriteStatus(recipe);
+      } catch (_) {}
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     globals.setActivePage(0);
@@ -27,12 +40,17 @@ class RecipesPageState extends State<RecipesPage> {
         List<RecipeModel> filteredRecipes = state.filteredRecipes;
         List<RecipeModel> recipes = state.recipes;
 
+        // Widget method to have access to state
         void filterSearchResults(String query) {
+          setState(() {
+            filterQuery = query;
+          });
           if (query.isNotEmpty) {
             List<RecipeModel> foundRecipes = [];
             for (var recipe in recipes) {
               for (var text in query.split(" ")) {
                 if (text.isNotEmpty &&
+                    (!favoritesOnly || recipe.isFavorite) &&
                     (recipe.name.toLowerCase().contains(text.toLowerCase()) ||
                         recipe.category
                             .toLowerCase()
@@ -50,9 +68,26 @@ class RecipesPageState extends State<RecipesPage> {
           } else {
             setState(() {
               filteredRecipes.clear();
-              filteredRecipes.addAll(recipes);
+              if (favoritesOnly) {
+                filteredRecipes
+                    .addAll(recipes.where((element) => element.isFavorite));
+              } else {
+                filteredRecipes.addAll(recipes);
+              }
             });
           }
+        }
+
+        showFavoritesOnly() {
+          setState(() {
+            favoritesOnly = !favoritesOnly;
+          });
+          filterSearchResults(filterQuery);
+        }
+
+        void updateFavoriteStatus(recipe) {
+          toggleFavoriteStatus(recipe);
+          filterSearchResults(filterQuery);
         }
 
         return Scaffold(
@@ -83,6 +118,14 @@ class RecipesPageState extends State<RecipesPage> {
                               hintText:
                                   AppLocalizations.of(context)!.global_filter,
                               prefixIcon: const Icon(Icons.search),
+                              suffixIcon: IconButton(
+                                  onPressed: () => showFavoritesOnly(),
+                                  color: favoritesOnly
+                                      ? AppColors.highlightColor3
+                                      : AppColors.textColor,
+                                  icon: favoritesOnly
+                                      ? const Icon(Icons.star)
+                                      : const Icon(Icons.star_outline)),
                               border: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10.0)))),
@@ -99,37 +142,32 @@ class RecipesPageState extends State<RecipesPage> {
                           child: Material(
                               color: AppColors.backgroundColor,
                               borderRadius: BorderRadius.circular(10),
-                              //Material required to solve known issue, see https://github.com/flutter/flutter/issues/83108
+                              //Material required to solve known issue with Gesture Detector, see https://github.com/flutter/flutter/issues/83108
                               child: GestureDetector(
-                                  onTap: () =>
-                                      BlocProvider.of<AppCubits>(context)
-                                          .gotoRecipeDetails(
-                                              filteredRecipes[index]),
+                                  onTap: () => BlocProvider.of<AppCubits>(context)
+                                      .gotoRecipeDetails(
+                                          filteredRecipes[index]),
                                   child: ListTile(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    tileColor: AppColors.backgroundColor,
-                                    leading: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                5,
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                6,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: AppColors.textColor,
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    filteredRecipes[index].img),
-                                                fit: BoxFit.fitWidth))),
-                                    title: Text(filteredRecipes[index].name),
-                                    subtitle:
-                                        Text(filteredRecipes[index].category),
-                                    isThreeLine: true,
-                                  ))));
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      tileColor: AppColors.backgroundColor,
+                                      leading: Container(
+                                          width: MediaQuery.of(context).size.width /
+                                              5,
+                                          height: MediaQuery.of(context).size.width /
+                                              6,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: AppColors.textColor,
+                                              image: DecorationImage(
+                                                  image: NetworkImage(filteredRecipes[index].img),
+                                                  fit: BoxFit.fitWidth))),
+                                      title: Text(filteredRecipes[index].name),
+                                      subtitle: Text(filteredRecipes[index].category),
+                                      isThreeLine: true,
+                                      trailing: IconButton(onPressed: () => updateFavoriteStatus(filteredRecipes[index]), color: filteredRecipes[index].isFavorite ? AppColors.highlightColor3 : AppColors.textColor, icon: filteredRecipes[index].isFavorite ? const Icon(Icons.star) : const Icon(Icons.star_outline))))));
                     },
                   ))
                 ])));
