@@ -21,7 +21,10 @@
   "menu_grocery": "Liste d'épicerie",
 
   "recipe_detail_preparation": "Préparation",
+  "recipe_detail_preparation_ingredients" : "Ingrédients",
+
   "recipe_detail_instructions": "Instructions",
+  "recipe_detail_instructions_instructions" : "Instructions",
 
   "recipe_description": "Description",
   "recipe_steps": "Instructions",

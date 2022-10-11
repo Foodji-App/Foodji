@@ -132,7 +132,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                       .gotoRecipes()))
                     ],
                     pinned: true,
-                    expandedHeight: MediaQuery.of(context).size.height * 0.7,
+                    expandedHeight: MediaQuery.of(context).size.height * 0.6,
                   ),
                   SliverAppBar(
                     backgroundColor: AppColors.textColor,
@@ -157,7 +157,8 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                     Container(
                         // Container is mandatory here, do not remove
                         width: MediaQuery.of(context).size.width,
-                        height: double.maxFinite,
+                        // TODO - Height here causes an issue. It cannot be removed, but cannot be set to child size either.
+                        height: MediaQuery.of(context).size.height,
                         child: TabBarView(
                             controller: tabController,
                             children: <Widget>[
