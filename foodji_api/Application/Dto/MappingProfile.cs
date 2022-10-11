@@ -43,7 +43,7 @@ public class MappingProfile : Profile
         CreateMap<Measurement, MeasurementDto>();
         CreateMap<MeasurementDto, Measurement>()
             .ConvertUsing(x => Measurement.Create(
-                !String.IsNullOrEmpty(x.UnitType) ? UnitType.Create(x.UnitType) : UnitType.Millilitre,
+                !String.IsNullOrEmpty(x.UnitType) ? UnitType.Create(x.UnitType) : UnitType.Unit,
                 x.AlternativeText ?? "",
                 x.Value ?? 0));
         
