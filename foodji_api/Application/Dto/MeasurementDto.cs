@@ -2,9 +2,9 @@
 
 public record MeasurementDto
 {
-    public string? AlternativeText { get; set; } = String.Empty;
+    public string? AlternativeText { get; set; }
 
-    public decimal? Value { get; set; } = 0;
+    public decimal? Value { get; set; }
 
-    public string? UnitType { get; set; } = "unit";
+    public string? UnitType { get; set; }
 }

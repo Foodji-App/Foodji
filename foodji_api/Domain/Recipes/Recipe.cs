@@ -1,7 +1,13 @@
-﻿namespace Domain.Recipes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Domain.Recipes;
 
 public class Recipe
 {
+    [BsonId]
+    public ObjectId Id { get; private set; }
+    
     public string Name { get; private set; }
 
     public DateTime CreatedAt { get; private set; }

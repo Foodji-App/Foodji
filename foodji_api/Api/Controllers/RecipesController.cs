@@ -18,12 +18,13 @@ public class RecipesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<string>> GetAllRecipes()
+    public async Task<IEnumerable<RecipeDto>> GetAllRecipes()
     {
         var query = new GetAllRecipesQuery();
+        
         var result =  await _mediator.Send(query);
         
-        return Enumerable.Empty<string>();
+        return result;
     }
 
 
