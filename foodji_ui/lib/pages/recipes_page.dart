@@ -139,35 +139,33 @@ class RecipesPageState extends State<RecipesPage> {
                     itemBuilder: (context, index) {
                       return Container(
                           color: Colors.transparent,
-                          padding: const EdgeInsets.only(bottom: 14),
+                          padding: const EdgeInsets.only(bottom: 6),
                           child: Material(
                               color: AppColors.backgroundColor,
                               borderRadius: BorderRadius.circular(10),
                               //Material required to solve known issue with Gesture Detector, see https://github.com/flutter/flutter/issues/83108
                               child: GestureDetector(
-                                  onTap: () => BlocProvider.of<AppCubits>(context)
-                                      .gotoRecipeDetails(
-                                          filteredRecipes[index]),
+                                  onTap: () => BlocProvider.of<AppCubits>(context).gotoRecipeDetails(
+                                      filteredRecipes[index]),
                                   child: ListTile(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30),
+                                              bottomRight:
+                                                  Radius.circular(30))),
                                       tileColor: AppColors.backgroundColor,
                                       leading: Container(
                                           width: MediaQuery.of(context).size.width /
-                                              5,
-                                          height: MediaQuery.of(context).size.width /
-                                              6,
+                                              4,
                                           decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
+                                              borderRadius: const BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  bottomRight: Radius.circular(10)),
                                               color: AppColors.textColor,
-                                              image: DecorationImage(
-                                                  image: NetworkImage(filteredRecipes[index].img),
-                                                  fit: BoxFit.fitWidth))),
+                                              image: DecorationImage(image: NetworkImage(filteredRecipes[index].img), fit: BoxFit.fill))),
                                       title: Text(filteredRecipes[index].name),
                                       subtitle: Text(filteredRecipes[index].category),
-                                      isThreeLine: true,
+                                      isThreeLine: false,
                                       trailing: IconButton(onPressed: () => updateFavoriteStatus(filteredRecipes[index]), color: filteredRecipes[index].isFavorite ? AppColors.starColor1 : AppColors.textColor, icon: filteredRecipes[index].isFavorite ? const Icon(Icons.star) : const Icon(Icons.star_outline))))));
                     },
                   ))

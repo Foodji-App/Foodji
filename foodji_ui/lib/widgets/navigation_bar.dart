@@ -42,7 +42,7 @@ class NavigationBarState extends State<NavigationBar> {
 
   void onSpeedDialTap(int speedDialIndex) {
     setState(() {
-      currentMenu = 3;
+      currentMenu = 2;
       currentPage = currentMenu + speedDialIndex;
       lastSelectedSpeedDial = speedDialIndex;
     });
@@ -51,12 +51,14 @@ class NavigationBarState extends State<NavigationBar> {
   IconData getFABPassiveIcon() {
     switch (lastSelectedSpeedDial) {
       case 0:
-        return Icons.flip_camera_android_outlined;
+        return Icons.manage_accounts_outlined;
       case 1:
-        return Icons.egg_outlined;
+        return Icons.flip_camera_android_outlined;
       case 2:
-        return Icons.kitchen_outlined;
+        return Icons.egg_outlined;
       case 3:
+        return Icons.kitchen_outlined;
+      case 4:
         return Icons.local_grocery_store_outlined;
       default:
         return Icons.build_circle;
@@ -97,19 +99,9 @@ class NavigationBarState extends State<NavigationBar> {
                                   ? AppColors.highlightColor3
                                   : AppColors.textColor,
                               onPressed: () => onMenuTap(1))),
-                      Padding(
-                          padding: const EdgeInsets.all(1),
-                          child: IconButton(
-                              icon: currentPage == 2
-                                  ? const Icon(Icons.manage_accounts_outlined)
-                                  : const Icon(Icons.manage_accounts),
-                              color: currentPage == 2
-                                  ? AppColors.highlightColor3
-                                  : AppColors.textColor,
-                              onPressed: () => onMenuTap(2))),
                       const Padding(
                           padding: EdgeInsets.all(5.0),
-                          child: SizedBox(width: 40))
+                          child: SizedBox(width: 20))
                     ])),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.endDocked,
@@ -117,11 +109,11 @@ class NavigationBarState extends State<NavigationBar> {
               icon: getFABPassiveIcon(),
               activeIcon: Icons.build_outlined,
               backgroundColor: AppColors.backgroundColor,
-              foregroundColor: currentPage >= 3
+              foregroundColor: currentPage >= 2
                   ? AppColors.highlightColor3
                   : AppColors.textColor,
               activeBackgroundColor: AppColors.backgroundColor,
-              activeForegroundColor: currentPage >= 3
+              activeForegroundColor: currentPage >= 2
                   ? AppColors.highlightColor3
                   : AppColors.textColor,
               buttonSize: 41.0,
@@ -140,6 +132,21 @@ class NavigationBarState extends State<NavigationBar> {
               },
               children: [
                 SpeedDialChild(
+                    child: currentPage == 2
+                        ? const Icon(Icons.manage_accounts_outlined)
+                        : const Icon(Icons.manage_accounts),
+                    backgroundColor: AppColors.backgroundColor,
+                    foregroundColor: currentPage == 2
+                        ? AppColors.highlightColor3
+                        : AppColors.textColor,
+                    label: AppLocalizations.of(context)!.menu_profile,
+                    labelStyle: TextStyle(
+                        fontSize: 12.0,
+                        color: currentPage == 2
+                            ? AppColors.highlightColor3
+                            : AppColors.textColor),
+                    onTap: () => onSpeedDialTap(0)),
+                SpeedDialChild(
                     child: currentPage == 3
                         ? const Icon(Icons.flip_camera_android_outlined)
                         : const Icon(Icons.flip_camera_android),
@@ -153,7 +160,7 @@ class NavigationBarState extends State<NavigationBar> {
                         color: currentPage == 3
                             ? AppColors.highlightColor3
                             : AppColors.textColor),
-                    onTap: () => onSpeedDialTap(0)),
+                    onTap: () => onSpeedDialTap(1)),
                 SpeedDialChild(
                     child: currentPage == 4
                         ? const Icon(Icons.egg_outlined)
@@ -168,7 +175,7 @@ class NavigationBarState extends State<NavigationBar> {
                         color: currentPage == 4
                             ? AppColors.highlightColor3
                             : AppColors.textColor),
-                    onTap: () => onSpeedDialTap(1)),
+                    onTap: () => onSpeedDialTap(2)),
                 SpeedDialChild(
                     child: currentPage == 5
                         ? const Icon(Icons.kitchen_outlined)
@@ -183,7 +190,7 @@ class NavigationBarState extends State<NavigationBar> {
                         color: currentPage == 5
                             ? AppColors.highlightColor3
                             : AppColors.textColor),
-                    onTap: () => onSpeedDialTap(2)),
+                    onTap: () => onSpeedDialTap(3)),
                 SpeedDialChild(
                     child: currentPage == 6
                         ? const Icon(Icons.local_grocery_store_outlined)
@@ -198,7 +205,7 @@ class NavigationBarState extends State<NavigationBar> {
                         color: currentPage == 6
                             ? AppColors.highlightColor3
                             : AppColors.textColor),
-                    onTap: () => onSpeedDialTap(3))
+                    onTap: () => onSpeedDialTap(4))
               ],
             )));
   }

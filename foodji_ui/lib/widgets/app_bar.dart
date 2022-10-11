@@ -71,11 +71,19 @@ class AppBarState extends State<AppBar> {
                 image: DecorationImage(
                     image: AssetImage("img/logo.png"), fit: BoxFit.contain),
               )),
-          title: AppText(
-              text: getTitle(context, page),
-              color: AppColors.backgroundColor,
-              size: AppTextSize.normal,
-              fontFamily: AppFontFamily.bauhaus));
+          actions: [
+            Padding(
+                padding: const EdgeInsets.only(right: 14),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AppText(
+                          text: getTitle(context, page),
+                          color: AppColors.backgroundColor,
+                          size: AppTextSize.normal,
+                          fontFamily: AppFontFamily.bauhaus)
+                    ]))
+          ]);
     });
   }
 }

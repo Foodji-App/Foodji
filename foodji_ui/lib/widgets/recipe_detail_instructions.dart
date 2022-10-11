@@ -51,27 +51,28 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
         shrinkWrap: true,
         itemCount: widget.recipe.steps.length,
         itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  selectedAvatar(index),
-                  const SizedBox(
-                    width: 16,
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Column(children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                selectedAvatar(index),
+                const SizedBox(width: 16),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Column(
+                    children: <Widget>[
+                      AppText(
+                          color: AppColors.textColor,
+                          text: widget.recipe.steps[index]),
+                    ],
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: Column(
-                      children: <Widget>[
-                        AppText(
-                            color: AppColors.textColor,
-                            text: widget.recipe.steps[index]),
-                      ],
-                    ),
-                  ),
-                  const Spacer()
-                ])));
+                ),
+                const Spacer()
+              ]),
+              Row(children: const <Widget>[
+                Expanded(child: Divider(thickness: 1))
+              ])
+            ])));
   }
 
   @override
@@ -80,11 +81,19 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
         padding:
             const EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 30),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          AppText(
-            text: AppLocalizations.of(context)!
-                .recipe_detail_instructions_instructions,
-            size: AppTextSize.subtitle,
-          ),
+          Row(children: <Widget>[
+            const Expanded(
+                child: Divider(
+              thickness: 2,
+              endIndent: 5,
+            )),
+            AppText(
+              text: AppLocalizations.of(context)!
+                  .recipe_detail_instructions_instructions,
+              size: AppTextSize.subtitle,
+            ),
+            const Expanded(child: Divider(thickness: 2, indent: 5)),
+          ]),
           const SizedBox(
             height: 10,
           ),

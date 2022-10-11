@@ -20,6 +20,8 @@
   "menu_pantry": "Garde-Manger",
   "menu_grocery": "Liste d'épicerie",
 
+  "recipe_detail_minutes": "min",
+
   "recipe_detail_preparation": "Préparation",
   "recipe_detail_preparation_ingredients" : "Ingrédients",
 

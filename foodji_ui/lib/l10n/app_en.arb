@@ -20,6 +20,8 @@
   "menu_pantry": "Pantry",
   "menu_grocery": "Grocery List",
 
+  "recipe_detail_minutes": "min",
+
   "recipe_detail_preparation": "Preparation",
   "recipe_detail_preparation_ingredients" : "Ingredients",
 

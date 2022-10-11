@@ -52,12 +52,28 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                           Padding(
                               padding: const EdgeInsets.only(
                                   top: 55, left: 14, right: 14, bottom: 20),
-                              child: Image(
-                                  image: NetworkImage(recipe.img),
-                                  width: MediaQuery.of(context).size.width)),
+                              child: Card(
+                                  elevation: 4.0,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(40),
+                                          bottomRight: Radius.circular(40)),
+                                      side: BorderSide(
+                                          width: 2,
+                                          color: AppColors.backgroundColor)),
+                                  child: Center(
+                                      child: ClipRRect(
+                                          borderRadius: const BorderRadius.only(
+                                              topLeft: Radius.circular(40),
+                                              bottomRight: Radius.circular(40)),
+                                          child: Image(
+                                              image: NetworkImage(recipe.img),
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width))))),
                           Padding(
                               padding: const EdgeInsets.only(
-                                  left: 14, right: 14, bottom: 14),
+                                  left: 16, right: 16, bottom: 14),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -74,25 +90,47 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                       color: AppColors.highlightColor3,
                                     )),
                                   ),
+                                  const Spacer(),
                                   Chip(
                                     clipBehavior: Clip.none,
                                     backgroundColor: AppColors.textColor,
                                     avatar: const CircleAvatar(
                                       backgroundColor: Colors.transparent,
                                       child: Icon(
-                                        Icons.timer_rounded,
+                                        Icons.restaurant_menu_outlined,
                                         color: AppColors.backgroundColor,
                                       ),
                                     ),
                                     label: AppText(
                                         color: AppColors.backgroundColor,
-                                        text:
-                                            '${recipe.details.totalTime} min'),
+                                        text: '${recipe.details.serves}'),
                                     shape: const StadiumBorder(
                                         side: BorderSide(
                                       width: 1,
-                                      color: AppColors.starColor1,
+                                      color: AppColors.highlightColor2,
                                     )),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: Chip(
+                                        clipBehavior: Clip.none,
+                                        backgroundColor: AppColors.textColor,
+                                        avatar: const CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          child: Icon(
+                                            Icons.timer_rounded,
+                                            color: AppColors.backgroundColor,
+                                          ),
+                                        ),
+                                        label: AppText(
+                                            color: AppColors.backgroundColor,
+                                            text:
+                                                '${recipe.details.totalTime} ${AppLocalizations.of(context)!.recipe_detail_minutes}'),
+                                        shape: const StadiumBorder(
+                                            side: BorderSide(
+                                          width: 1,
+                                          color: AppColors.starColor1,
+                                        ))),
                                   ),
                                 ],
                               )),

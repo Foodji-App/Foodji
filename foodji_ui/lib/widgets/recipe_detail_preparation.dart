@@ -66,28 +66,33 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
         shrinkWrap: true,
         itemCount: widget.recipe.ingredients.length,
         itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  selectedAvatar(index),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: Column(children: <Widget>[
-                        AppText(
-                          color: AppColors.textColor,
-                          text: widget.recipe.ingredients[index].name,
-                        )
-                      ])),
-                  const Spacer(),
-                  pantryAvatar(index),
-                  groceryListAvatar(index)
-                ],
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              child: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    selectedAvatar(index),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                        alignment: Alignment.centerLeft,
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Column(children: <Widget>[
+                          AppText(
+                            color: AppColors.textColor,
+                            text: widget.recipe.ingredients[index].name,
+                          )
+                        ])),
+                    const Spacer(),
+                    pantryAvatar(index),
+                    groceryListAvatar(index)
+                  ],
+                ),
+                Row(children: const <Widget>[
+                  Expanded(child: Divider(thickness: 1))
+                ])
+              ]),
             ));
   }
 
@@ -97,11 +102,19 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
         padding:
             const EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 30),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          AppText(
-            text: AppLocalizations.of(context)!
-                .recipe_detail_preparation_ingredients,
-            size: AppTextSize.subtitle,
-          ),
+          Row(children: <Widget>[
+            const Expanded(
+                child: Divider(
+              thickness: 2,
+              endIndent: 5,
+            )),
+            AppText(
+              text: AppLocalizations.of(context)!
+                  .recipe_detail_preparation_ingredients,
+              size: AppTextSize.subtitle,
+            ),
+            const Expanded(child: Divider(thickness: 2, indent: 5)),
+          ]),
           const SizedBox(
             height: 10,
           ),

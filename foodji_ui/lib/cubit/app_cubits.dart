@@ -34,7 +34,7 @@ class AppCubits extends Cubit<CubitStates> {
   // then, the authentified state or error state
   void authentify() async {
     try {
-      recipes.addAll(RecipeModel.getSamples(10));
+      recipes.addAll(RecipeModel.getSamples(20));
       emit(AuthentifiedState(recipes, [...recipes])); //Deep copy
     } catch (e) {
       emit(ErrorState());
