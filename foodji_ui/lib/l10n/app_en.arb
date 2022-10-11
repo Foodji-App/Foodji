@@ -4,8 +4,11 @@
 
   "global_app_name": "FOODJi",
   "global_slogan": "Remix your meals to your heart's content",
+  "global_filter": "Filter",
 
-  "demo_access": "Click here to access the demo",
+  "app_bar_recipe_details": "Recipe details",
+
+  "demo_access": "Press anywhere on the screen to access the demo",
   
   "menu_recipes": "Recipes",
   "menu_exploration": "Explore",
@@ -17,6 +20,14 @@
   "menu_pantry": "Pantry",
   "menu_grocery": "Grocery List",
 
+  "recipe_detail_minutes": "min",
+
+  "recipe_detail_preparation": "Preparation",
+  "recipe_detail_preparation_ingredients" : "Ingredients",
+
+  "recipe_detail_instructions": "Instructions",
+  "recipe_detail_instructions_instructions" : "Instructions",
+
   "recipe_description": "Description",
   "recipe_steps": "Steps",
   "recipe_no_steps": "Instructions",
@@ -24,5 +35,6 @@
   "recipe_no_steps": "Aucune instruction n'a été ajoutée",
   "recipe_no_ingredients": "Aucun ingrédient n'a été ajouté",
 
-  "error_unknown": "An unknown error occured during the execution. Please restart the application."
+  "error_unknown": "An unknown error occured during the execution. Press anywhere to restart the application.",
+  "error_authentification": "An authentication error occured during the execution. To access this feature, press anywhere on this page to restart the application."
 }

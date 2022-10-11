@@ -4,8 +4,11 @@
 
   "global_app_name": "FOODJi",
   "global_slogan": "Remix ta bouffe comme tu l'aimes",
+  "global_filter": "Filtrer",
 
-  "demo_access": "Cliquez pour accéder à la démo",
+"app_bar_recipe_details": "Détails de la recette",
+
+  "demo_access": "Appuyez sur l'écran pour accéder à la démonstration",
 
   "menu_recipes": "Recettes",
   "menu_exploration": "Explorer",
@@ -17,10 +20,19 @@
   "menu_pantry": "Garde-Manger",
   "menu_grocery": "Liste d'épicerie",
 
+  "recipe_detail_minutes": "min",
+
+  "recipe_detail_preparation": "Préparation",
+  "recipe_detail_preparation_ingredients" : "Ingrédients",
+
+  "recipe_detail_instructions": "Instructions",
+  "recipe_detail_instructions_instructions" : "Instructions",
+
   "recipe_description": "Description",
   "recipe_steps": "Instructions",
   "recipe_no_steps": "Aucune instruction n'a été ajoutée",
   "recipe_no_ingredients": "Aucun ingrédient n'a été ajouté",
   
-  "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Veuillez redémarrer l'application."
+  "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Appuyez sur l'écran pour redémarrer l'application.",
+  "error_authentification": "Une erreur d'authentification est survenue durant l'exécution. Pour accéder à cette fonctionnalité, appuyez sur l'écran pour redémarrer l'application."
 }

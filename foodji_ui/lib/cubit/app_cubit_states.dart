@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:foodji_ui/models/recipe_model.dart';
 
 abstract class CubitStates extends Equatable {}
 
@@ -31,59 +32,19 @@ class AuthentificationRequestState extends CubitStates {
 
 // Once authorized, displays the user's recipes list as the main page
 class AuthentifiedState extends CubitStates {
+  AuthentifiedState(this.recipes, this.filteredRecipes);
+  final List<RecipeModel> recipes;
+  final List<RecipeModel> filteredRecipes;
   @override
-  List<Object> get props => throw [];
+  List<Object> get props => throw [recipes, filteredRecipes];
 }
 
-// When the menu is selected, displays the user's recipes list
-class RecipesState extends CubitStates {
+// When a recipe is selected, displays the recipe details
+class RecipeState extends CubitStates {
+  RecipeState(this.recipe);
+  final RecipeModel recipe;
   @override
-  List<Object> get props => throw [];
-}
-
-// When the menu is selected, displays the exploration page where the user's
-// favorite recipes from his or others are displayed
-class ExplorationState extends CubitStates {
-  @override
-  List<Object> get props => throw [];
-}
-
-// When the menu is selected, displays the favorites page where favorite recipes
-// from other users are displayed
-class FavoritesState extends CubitStates {
-  @override
-  List<Object> get props => throw [];
-}
-
-// When the menu is selected, displays the user's profile and the parameters
-// that can be adjusted
-class ProfileState extends CubitStates {
-  @override
-  List<Object> get props => throw [];
-}
-
-// When the speed dial menu is selected, displays the converter tool
-class ConverterState extends CubitStates {
-  @override
-  List<Object> get props => throw [];
-}
-
-// When the speed dial menu is selected, displays the ingredients tool
-class IngredientsState extends CubitStates {
-  @override
-  List<Object> get props => throw [];
-}
-
-// When the speed dial menu is selected, displays the pantry tool
-class PantryState extends CubitStates {
-  @override
-  List<Object> get props => throw [];
-}
-
-// When the speed dial menu is selected, displays the grocery tool
-class GroceryState extends CubitStates {
-  @override
-  List<Object> get props => throw [];
+  List<Object> get props => throw [recipe];
 }
 
 // If any error occurs, redirect to this page that displays the error message,
