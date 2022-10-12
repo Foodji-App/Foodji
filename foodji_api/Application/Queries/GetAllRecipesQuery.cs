@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Application.Dto;
+﻿using Application.Dto;
 using AutoMapper;
 using Domain.Recipes;
 using Infra;
@@ -24,8 +23,7 @@ public class GetAllRecipesQuery : IRequest<IEnumerable<RecipeDto>>
 
         public async Task<IEnumerable<RecipeDto>> Handle(GetAllRecipesQuery request, CancellationToken cancellationToken)
         {
-            var recipes = 
-                await _client.Recipes.FindAsync(_ => true, cancellationToken: cancellationToken);
+            var recipes = await _client.Recipes.FindAsync(_ => true, cancellationToken: cancellationToken);
 
             return _mapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipes.ToList());
         }

@@ -6,7 +6,7 @@ using Domain.Recipes;
 
 namespace Application.Command;
 
-public class CreateRecipeCommand : IRequest
+public class CreateRecipeCommand : IRequest<string>
 {
     public RecipeDto RecipeDto { get; }
     
@@ -15,7 +15,7 @@ public class CreateRecipeCommand : IRequest
         RecipeDto = recipeDto;
     }
     
-    private class Handler : IRequestHandler<CreateRecipeCommand>
+    private class Handler : IRequestHandler<CreateRecipeCommand, string>
     {
         private readonly IFoodjiDbClient _client;
         private readonly IMapper _mapper;
@@ -26,13 +26,13 @@ public class CreateRecipeCommand : IRequest
             _mapper = mapper;
         }
         
-        public async Task<Unit> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
         {
             var recipe = _mapper.Map<Recipe>(request.RecipeDto);
-            
+
             await _client.Recipes.InsertOneAsync(recipe, cancellationToken: cancellationToken);
-            
-            return Unit.Value;
+
+            return recipe.Id.ToString();
         }
     }
 }

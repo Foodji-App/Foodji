@@ -1,7 +1,13 @@
-﻿namespace Domain.Ingredients;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Domain.Ingredients;
 
 public class Ingredient : IngredientBase
 {
+    [BsonId]
+    public ObjectId Id { get; }
+    
     public IEnumerable<Substitute> Substitutes { get; set; } = new List<Substitute>();
 
     protected Ingredient(string name)
