@@ -21,11 +21,7 @@ public class MappingProfile : Profile
         CreateMap<RecipeDetails, RecipeDetailsDto>();
         CreateMap<RecipeDetailsDto, RecipeDetails>()
             .ConvertUsing(x => RecipeDetails.Create(x.CookingTime, x.PreparationTime, x.RestingTime, x.Serves));
-        
-        CreateMap<RecipeStep, RecipeStepDto>();
-        CreateMap<RecipeStepDto, RecipeStep>()
-            .ConvertUsing(x => RecipeStep.Create(x.Content, x.Index));
-        
+
         CreateMap<RecipeIngredient, RecipeIngredientDto>();
         CreateMap<RecipeIngredientDto, RecipeIngredient>()
             .ConvertUsing<RecipeIngredientConverter>();

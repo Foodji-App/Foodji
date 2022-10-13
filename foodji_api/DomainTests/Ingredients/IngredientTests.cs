@@ -1,5 +1,4 @@
-﻿using Domain;
-using Domain.Ingredients;
+﻿using Domain.Ingredients;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -49,25 +48,5 @@ public class IngredientTests
         
         // Assert
         ingredient.Substitutes.Should().BeEquivalentTo(new List<Substitute> { substitute });
-    }
-    
-    [Test]
-    public void GivenDuplicateSubstitute_AddSubstitute_SubstituteAddedToList()
-    {
-        // Arrange
-        var substitute = Substitute.Create(
-            "subName",
-            new List<Tag>(),
-            substitutionPrecisions: "testPrecisions");
-        var ingredient = Ingredient.Create(
-            "ingredientName", 
-            new List<Tag>(),
-            substitutes: new List<Substitute> { substitute });
-        
-        // Act
-        var act = () => ingredient.AddSubstitute(substitute);
-
-        // Assert
-        act.Should().Throw<DomainException>();
     }
 }

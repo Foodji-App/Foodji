@@ -24,6 +24,9 @@ public record Tag
 
     public static Tag Create(string name)
     {
-        return new Tag(name);
+        // TODO: Validate name like in RecipeCategory
+        // TODO: Translate the tags to French
+        
+        return new Tag(name.ToLower());
     }
 }

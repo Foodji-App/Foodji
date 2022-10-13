@@ -11,8 +11,6 @@ public class RecipeSubstitute
     
     public string Name { get; private set; }
 
-
-
     public string SubstitutionPrecisions { get; private set; } = String.Empty;
 
     public string Description { get; protected set; }

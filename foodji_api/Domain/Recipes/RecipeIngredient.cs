@@ -49,13 +49,20 @@ public class RecipeIngredient
         return recipeIngredient;
     }
     
+    public void AddTag(Tag tag)
+    {
+        var newTags = Tags.ToList();
+        if (newTags.Contains(tag))
+        {
+            throw new DomainException($"Ingredient already has tag {tag.Name}");
+        }
+        
+        newTags.Add(tag);
+        Tags = newTags;
+    }
+
     public void AddSubstitute(RecipeSubstitute substitute)
     {
-        if (Substitutes.Any(x => x.Name == substitute.Name))
-        {
-            throw new DomainException("Cannot add a substitute with the same name as another substitute.");
-        }
-
         var newSubstitutes = Substitutes.ToList();
         newSubstitutes.Add(substitute);
 
