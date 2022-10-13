@@ -23,7 +23,6 @@ public class RecipeConverter : ITypeConverter<RecipeDto, Recipe>
 
         var steps = _mapper.Map<IEnumerable<RecipeStepDto>, IEnumerable<RecipeStep>>(source.Steps);
 
-        // TODO mapped types still seem to be nullable, by their var evaluation
         return Recipe.Create(
             source.Name,
             category,

@@ -3,16 +3,23 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain.Ingredients;
 
-public class Ingredient : IngredientBase
+public class Ingredient
 {
     [BsonId]
     public ObjectId Id { get; }
     
+    public string Name { get; private set; }
+    
+    // TODO - will implement later
+    // public IEnumerable<string> Synonyms { get; private set; }
+
+    public IEnumerable<Tag> Tags { get; private set; } = new List<Tag>();
+    
     public IEnumerable<Substitute> Substitutes { get; set; } = new List<Substitute>();
 
-    protected Ingredient(string name)
-        : base (name)
+    private Ingredient(string name)
     {
+        Name = name;
     }
     
     public static Ingredient Create(

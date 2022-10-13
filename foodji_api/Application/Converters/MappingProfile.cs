@@ -1,9 +1,9 @@
-﻿using Application.Converters;
+﻿using Application.Dto;
 using AutoMapper;
 using Domain.Ingredients;
 using Domain.Recipes;
 
-namespace Application.Dto;
+namespace Application.Converters;
 
 public class MappingProfile : Profile
 {
@@ -20,8 +20,7 @@ public class MappingProfile : Profile
         
         CreateMap<RecipeDetails, RecipeDetailsDto>();
         CreateMap<RecipeDetailsDto, RecipeDetails>()
-            .ConvertUsing(x => 
-                RecipeDetails.Create(x.CookingTime, x.PreparationTime, x.RestingTime, x.Serves));
+            .ConvertUsing(x => RecipeDetails.Create(x.CookingTime, x.PreparationTime, x.RestingTime, x.Serves));
         
         CreateMap<RecipeStep, RecipeStepDto>();
         CreateMap<RecipeStepDto, RecipeStep>()
