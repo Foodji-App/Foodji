@@ -9,13 +9,13 @@ public class Ingredient
     public ObjectId Id { get; }
     
     public string Name { get; private set; }
-    
-    // TODO - will implement later
-    // public IEnumerable<string> Synonyms { get; private set; }
 
     public IEnumerable<Tag> Tags { get; private set; } = new List<Tag>();
     
     public IEnumerable<Substitute> Substitutes { get; private set; } = new List<Substitute>();
+    
+    // TODO - will implement later
+    // public IEnumerable<string> Synonyms { get; private set; }
 
     private Ingredient(string name)
     {

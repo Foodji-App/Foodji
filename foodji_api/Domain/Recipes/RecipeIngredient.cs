@@ -24,9 +24,9 @@ public class RecipeIngredient
 
 
     private RecipeIngredient(
+        string name,
         string description,
-        Measurement measurement,
-        string name)
+        Measurement measurement)
     {
         Name = name;
         Description = description;
@@ -34,13 +34,13 @@ public class RecipeIngredient
     }
     
     public static RecipeIngredient Create(
-        Measurement measurement,
         string name,
         string description,
+        Measurement measurement,
         IEnumerable<Tag> tags,
         IEnumerable<RecipeSubstitute> substitutes)
     {
-        var recipeIngredient = new RecipeIngredient(description, measurement, name)
+        var recipeIngredient = new RecipeIngredient(name, description, measurement)
         {
             Substitutes = substitutes.ToList(),
             Tags = tags.ToList()

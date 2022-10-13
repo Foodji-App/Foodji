@@ -1,3 +1,4 @@
+using Domain;
 using Domain.Ingredients;
 using Domain.Recipes;
 using FluentAssertions;
@@ -23,10 +24,10 @@ namespace DomainTests.Recipes
             
             // Act
             var actualRecipeSubstitute = RecipeSubstitute.Create(
-                expectedMeasurement,
                 expectedName,
-                expectedDescription,
                 expectedSubstitutionPrecisions,
+                expectedDescription,
+                expectedMeasurement,
                 expectedTags);
 
             // Assert
@@ -36,6 +37,76 @@ namespace DomainTests.Recipes
             actualRecipeSubstitute.SubstitutionPrecisions.Should().Be(expectedSubstitutionPrecisions);
             actualRecipeSubstitute.Tags.Should().BeEquivalentTo(expectedTags);
             actualRecipeSubstitute.Should().BeOfType<RecipeSubstitute>();
+        }
+        
+        [Test]
+        public void GivenValidTagInEmptyList_AddTag_TagAddedToList()
+        {
+            // Arrange
+            var tag = Tag.Create("vegan");
+
+            var recipeSubstitute = RecipeSubstitute.Create(
+                "substituteName",
+                "substitutionPrecisions",
+                "description",
+                Measurement.Create(
+                    UnitType.Cup,
+                    String.Empty,
+                    1),
+                new List<Tag>());
+            
+            // Act
+            recipeSubstitute.AddTag(tag);
+            
+            // Assert
+            recipeSubstitute.Tags.Should().BeEquivalentTo(new List<Tag> { tag });
+        }
+        
+        [Test]
+        public void GivenValidTagInPopulatedList_AddTag_TagAddedToList()
+        {
+            // Arrange
+            var tagVegan = Tag.Create("vegan");
+            var tagHalal = Tag.Create("halal");
+
+            var recipeSubstitute = RecipeSubstitute.Create(
+                "substituteName",
+                "substitutionPrecisions",
+                "description",
+                Measurement.Create(
+                    UnitType.Cup,
+                    String.Empty,
+                    1),
+                new List<Tag> { tagVegan });
+            
+            // Act
+            recipeSubstitute.AddTag(tagHalal);
+
+            // Assert
+            recipeSubstitute.Tags.Should().BeEquivalentTo(new List<Tag> { tagVegan, tagHalal });
+        }
+        
+        [Test]
+        public void GivenValidTagAlreadyInList_AddTag_ThrowsDomainException()
+        {
+            // Arrange
+            var tag = Tag.Create("vegan");
+            
+            var recipeSubstitute = RecipeSubstitute.Create(
+                "substituteName",
+                "substitutionPrecisions",
+                "description",
+                Measurement.Create(
+                    UnitType.Cup,
+                    String.Empty,
+                    1),
+                new List<Tag> { tag });
+            
+            // Act
+            var act = () => recipeSubstitute.AddTag(tag);
+
+            // Assert
+            act.Should().Throw<DomainException>();
         }
     }
 }

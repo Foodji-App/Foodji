@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace DomainTests.Ingredients;
 
 [TestFixture]
-public class TagsTests
+public class TagTests
 {
     [Test]
     public void Create_ReturnsTag()

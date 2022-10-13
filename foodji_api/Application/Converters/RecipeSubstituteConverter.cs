@@ -20,10 +20,10 @@ public class RecipeSubstituteConverter : ITypeConverter<RecipeSubstituteDto, Rec
         var tags = _mapper.Map<IEnumerable<Tag>>(source.Tags);
 
         return RecipeSubstitute.Create(
-            measurement,
             source.Name,
-            source.Description,
             source.SubstitutionPrecision,
+            source.Description,
+            measurement,
             tags);
     }
 }

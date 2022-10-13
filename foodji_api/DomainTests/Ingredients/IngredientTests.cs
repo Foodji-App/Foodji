@@ -1,4 +1,5 @@
-﻿using Domain.Ingredients;
+﻿using Domain;
+using Domain.Ingredients;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -17,8 +18,8 @@ public class IngredientTests
         {
             Substitute.Create(
                 "subName",
-                new List<Tag> { Tag.Vegan, Tag.Vegetarian, Tag.LactoseFree },
-                substitutionPrecisions: "testPrecisions")
+                substitutionPrecisions: "testPrecisions",
+                new List<Tag> { Tag.Vegan, Tag.Vegetarian, Tag.LactoseFree })
         };
         
         // Act
@@ -29,6 +30,58 @@ public class IngredientTests
         result.Tags.Should().BeEquivalentTo(tags);
         result.Substitutes.Should().BeEquivalentTo(substitutes);
     }
+    
+    [Test]
+    public void GivenValidTagInEmptyList_AddTag_TagAddedToList()
+    {
+        // Arrange
+        var tag = Tag.Create("vegan");
+        var ingredient = Ingredient.Create(
+            "ingredientName",
+            new List<Tag>(),
+            new List<Substitute>());
+        
+        // Act
+        ingredient.AddTag(tag);
+        
+        // Assert
+        ingredient.Tags.Should().BeEquivalentTo(new List<Tag> { tag });
+    }
+    
+    [Test]
+    public void GivenValidTagInPopulatedList_AddTag_TagAddedToList()
+    {
+        // Arrange
+        var tagVegan = Tag.Create("vegan");
+        var tagHalal = Tag.Create("halal");
+        var ingredient = Ingredient.Create(
+            "ingredientName",
+            new List<Tag> { tagVegan },
+            new List<Substitute>());
+        
+        // Act
+        ingredient.AddTag(tagHalal);
+
+        // Assert
+        ingredient.Tags.Should().BeEquivalentTo(new List<Tag> { tagVegan, tagHalal });
+    }
+    
+    [Test]
+    public void GivenValidTagAlreadyInList_AddTag_ThrowsDomainException()
+    {
+        // Arrange
+        var tag = Tag.Create("vegan");
+        var ingredient = Ingredient.Create(
+            "ingredientName",
+            new List<Tag> { tag },
+            new List<Substitute>());
+        
+        // Act
+        var act = () => ingredient.AddTag(tag);
+
+        // Assert
+        act.Should().Throw<DomainException>();
+    }
 
     [Test]
     public void GivenValidSubstituteInEmptyList_AddSubstitute_SubstituteAddedToList()
@@ -36,8 +89,8 @@ public class IngredientTests
         // Arrange
         var substitute = Substitute.Create(
             "subName",
-            new List<Tag>(),
-            substitutionPrecisions: "testPrecisions");
+            "testPrecisions",
+            new List<Tag>());
         var ingredient = Ingredient.Create(
             "ingredientName",
             new List<Tag>(),
@@ -48,5 +101,25 @@ public class IngredientTests
         
         // Assert
         ingredient.Substitutes.Should().BeEquivalentTo(new List<Substitute> { substitute });
+    }
+    
+    [Test]
+    public void GivenValidSubstituteInPopulatedList_AddSubstitute_SubstituteAddedToList()
+    {
+        // Arrange
+        var substitute = Substitute.Create(
+            "subName",
+            "testPrecisions",
+            new List<Tag>());
+        var ingredient = Ingredient.Create(
+            "ingredientName",
+            new List<Tag>(),
+            new List<Substitute> { substitute });
+        
+        // Act
+        ingredient.AddSubstitute(substitute);
+        
+        // Assert
+        ingredient.Substitutes.Should().BeEquivalentTo(new List<Substitute> { substitute, substitute });
     }
 }

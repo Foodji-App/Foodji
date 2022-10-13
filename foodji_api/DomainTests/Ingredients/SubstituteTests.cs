@@ -16,7 +16,7 @@ public class SubstituteTests
         var substitutionPrecisions = "precisions";
         
         // Act
-        var result = Substitute.Create(name, tags, substitutionPrecisions);
+        var result = Substitute.Create(name, substitutionPrecisions, tags);
         
         // Assert
         result.Name.Should().Be(name);
