@@ -11,7 +11,7 @@ class RecipeModel {
   String name;
   String img;
   String category; // tags
-  String desc;
+  String description;
   RecipeDetailsModel details;
   List<IngredientModel> ingredients;
   List<String> steps;
@@ -23,7 +23,7 @@ class RecipeModel {
       required this.name,
       required this.img,
       required this.category,
-      required this.desc,
+      required this.description,
       required this.details,
       required this.ingredients,
       required this.steps,
@@ -37,15 +37,15 @@ class RecipeModel {
 
   toText() =>
       'id: ${id.toString()}\n' +
+      'createdAt: $createdAt\n' +
       'name: $name\n' +
       'img: $img\n' +
       'category: $category\n' +
-      'desc: $desc\n' +
+      'desc: $description\n' +
       'details: ${details.toText()}\n' +
-      'ingredients: \n ${ingredients.join('\n - ')}\n' +
-      'steps: \n ${steps.join('\n - ')}\n' +
-      'createdAt: $createdAt' +
-      'isFavorite: ${isFavorite.toString()}';
+      'isFavorite: ${isFavorite.toString()}' +
+      'ingredients: \n - ${ingredients.join('\n - ')}\n\n' +
+      'steps: \n - ${steps.join('\n - ')}\n';
 
   static RecipeModel newRecipeModel() {
     return RecipeModel(
@@ -53,7 +53,7 @@ class RecipeModel {
         name: '',
         img: '',
         category: '',
-        desc: '',
+        description: '',
         details: RecipeDetailsModel.newRecipeModel(),
         ingredients: [],
         steps: [],
@@ -69,7 +69,7 @@ class RecipeModel {
         name: faker.food.dish(),
         img: "https://picsum.photos/seed/${faker.food.dish()}/500/300",
         category: faker.food.cuisine(),
-        desc: faker.lorem.sentences(random.integer(4, min: 1)).join(' '),
+        description: faker.lorem.sentences(random.integer(4, min: 1)).join(' '),
         details: RecipeDetailsModel.getSample(),
         ingredients: IngredientModel.getSamples(random.integer(10, min: 3)),
         steps: faker.lorem.sentences(random.integer(10, min: 3)),

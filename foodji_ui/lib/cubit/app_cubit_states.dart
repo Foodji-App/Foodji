@@ -47,6 +47,13 @@ class RecipeState extends CubitStates {
   List<Object> get props => throw [recipe];
 }
 
+class RecipeEditorState extends CubitStates {
+  RecipeEditorState(this.recipe);
+  final RecipeModel recipe;
+  @override
+  List<Object> get props => throw [recipe];
+}
+
 // If any error occurs, redirect to this page that displays the error message,
 // and offers to reload the app from the splash screen
 class ErrorState extends CubitStates {

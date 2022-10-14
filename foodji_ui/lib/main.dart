@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       onGenerateTitle: (context) =>
           AppLocalizations.of(context)!.global_app_name,
-      theme: ThemeData(fontFamily: 'bauhaus'),
+      theme: ThemeData(
+          fontFamily: 'bauhaus'),
       debugShowCheckedModeBanner: false,
       scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
       supportedLocales: AppLocalizations.supportedLocales,

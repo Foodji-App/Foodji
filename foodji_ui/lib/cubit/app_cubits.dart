@@ -50,6 +50,13 @@ class AppCubits extends Cubit<CubitStates> {
     return targetRecipe;
   }
 
+  updateRecipe(recipe) {
+    RecipeModel targetRecipe =
+        recipes.firstWhere((element) => element.id == recipe.id);
+    targetRecipe = recipe;
+    return targetRecipe;
+  }
+
   // Navigation ----------------------------------
 
   // To splash screen
@@ -74,6 +81,14 @@ class AppCubits extends Cubit<CubitStates> {
   void gotoRecipeDetails(recipe) async {
     try {
       emit(RecipeState(recipe));
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  void gotoRecipeEditor(recipe) async {
+    try {
+      emit(RecipeEditorState(recipe));
     } catch (e) {
       emit(ErrorState());
     }
