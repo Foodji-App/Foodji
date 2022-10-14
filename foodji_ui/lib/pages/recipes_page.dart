@@ -254,7 +254,7 @@ class RecipesPageState extends State<RecipesPage> {
                         image: AssetImage('img/background-gradient.png'),
                         fit: BoxFit.fill)),
                 alignment: Alignment.center,
-                child: Column(children: <Widget>[
+                child: Column(children: [
                   Padding(
                       padding: const EdgeInsets.only(bottom: 0),
                       child: Material(

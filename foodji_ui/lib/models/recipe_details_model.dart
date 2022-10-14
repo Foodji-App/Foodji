@@ -55,4 +55,21 @@ class RecipeDetailsModel {
     }
     return samples;
   }
+
+  static RecipeDetailsModel deepCopy(RecipeDetailsModel model) {
+    return RecipeDetailsModel(
+        cookingTime: model.cookingTime,
+        preparationTime: model.preparationTime,
+        restingTime: model.restingTime,
+        serves: model.serves,
+        totalTime: model.totalTime);
+  }
+
+  bool equals(RecipeDetailsModel other) {
+    return cookingTime == other.cookingTime &&
+        preparationTime == other.preparationTime &&
+        restingTime == other.restingTime &&
+        serves == other.serves &&
+        totalTime == other.totalTime;
+  }
 }

@@ -35,4 +35,17 @@ class MeasurementModel {
     }
     return samples;
   }
+
+  static MeasurementModel deepCopy(MeasurementModel measurement) {
+    return MeasurementModel(
+        alternativeText: measurement.alternativeText,
+        value: measurement.value,
+        unitType: measurement.unitType);
+  }
+
+  bool equals(MeasurementModel measurement) {
+    return this.alternativeText == measurement.alternativeText &&
+        this.unitType == measurement.unitType &&
+        this.value == measurement.value;
+  }
 }

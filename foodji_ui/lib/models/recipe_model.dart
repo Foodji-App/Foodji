@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:faker/faker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:foodji_ui/models/recipe_details_model.dart';
 
 import 'categories_enum.dart';
@@ -29,8 +30,8 @@ class RecipeModel {
       required this.details,
       required this.ingredients,
       required this.steps,
-      required this.createdAt,
-      required this.isFavorite});
+      required this.isFavorite,
+      this.createdAt});
 
   factory RecipeModel.fromJson(Map<String, dynamic> json) {
     return RecipeModel(
@@ -49,17 +50,49 @@ class RecipeModel {
         isFavorite: Random.secure().nextBool());
   }
 
-  toText() =>
+  String toText() =>
       'id: $id\n' +
       'name: $name\n' +
       'img: $imageUri\n' +
       'category: $category\n' +
-      'desc: $imageUri\n' +
+      'desc: $description\n' +
       'details: ${details.toText()}\n' +
-      'ingredients: \n ${ingredients.join('\n - ')}\n' +
-      'steps: \n ${steps.join('\n - ')}\n' +
-      'createdAt: $createdAt' +
-      'isFavorite: ${isFavorite.toString()}';
+      'isFavorite: ${isFavorite.toString()}' +
+      'ingredients: \n - ${ingredients.join('\n - ')}\n\n' +
+      'steps: \n - ${steps.join('\n - ')}\n';
+
+  bool equals(RecipeModel other) =>
+      id == other.id &&
+      name == other.name &&
+      imageUri == other.imageUri &&
+      category == other.category &&
+      description == other.description &&
+      details == other.details &&
+      _equalsIngredients(other.ingredients) &&
+      _equalsSteps(other.steps) &&
+      isFavorite == other.isFavorite;
+
+  bool _equalsIngredients(List<RecipeIngredientModel> otherIngredients) {
+    if (ingredients.length != otherIngredients.length) {
+      return false;
+    }
+
+    for (var i = 0; i < ingredients.length; i++) {
+      if (!ingredients[i].equals(otherIngredients[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  bool _equalsSteps(List<String> other) {
+    if (steps.length != other.length) return false;
+
+    for (var i = 0; i < steps.length; i++) {
+      if (steps[i] != other[i]) return false;
+    }
+    return true;
+  }
 
   static RecipeModel newRecipeModel() {
     return RecipeModel(
@@ -76,8 +109,20 @@ class RecipeModel {
             totalTime: 0),
         ingredients: [],
         steps: [],
-        createdAt: DateTime.now(),
         isFavorite: false);
+  }
+
+  static RecipeModel deepCopy(RecipeModel model) {
+    return RecipeModel(
+        id: model.id,
+        name: model.name,
+        imageUri: model.imageUri,
+        category: model.category,
+        description: model.description,
+        details: RecipeDetailsModel.deepCopy(model.details),
+        ingredients: RecipeIngredientModel.deepCopy(model.ingredients),
+        steps: model.steps,
+        isFavorite: model.isFavorite);
   }
 
   static RecipeModel getSample() {
@@ -93,7 +138,6 @@ class RecipeModel {
         ingredients:
             RecipeIngredientModel.getSamples(random.integer(10, min: 3)),
         steps: faker.lorem.sentences(random.integer(10, min: 3)),
-        createdAt: faker.date.dateTime(),
         isFavorite: Random().nextInt(2) == 1 ? true : false);
   }
 
