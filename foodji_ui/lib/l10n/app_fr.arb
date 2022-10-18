@@ -6,7 +6,7 @@
   "global_slogan": "Remix ta bouffe comme tu l'aimes",
   "global_filter": "Filtrer",
 
-"app_bar_recipe_details": "Détails de la recette",
+  "app_bar_recipe_details": "Détails de la recette",
 
   "demo_access": "Appuyez sur l'écran pour accéder à la démonstration",
 
@@ -32,6 +32,20 @@
   "recipe_steps": "Instructions",
   "recipe_no_steps": "Aucune instruction n'a été ajoutée",
   "recipe_no_ingredients": "Aucun ingrédient n'a été ajouté",
+
+  "tag_filter": "Filtres avancés",
+  "tag_vegan": "Végétalien",
+  "tag_vegetarian": "Végétarien",
+  "tag_gluten_free": "Sans gluten",
+  "tag_soy_free": "Sans soya",
+  "tag_nut_free": "Sans noix",
+  "tag_peanut_free": "Sans arachide",
+  "tag_lactose_free": "Sans lactose",
+  "tag_milk_free": "Sans produit laitier",
+  "tag_wheat_free": "Sans blé",
+  "tag_seafood_free": "Sans produit de la mer",
+  "tag_halal": "Halal",
+  "tag_kosher": "Kascher",
   
   "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Appuyez sur l'écran pour redémarrer l'application.",
   "error_authentification": "Une erreur d'authentification est survenue durant l'exécution. Pour accéder à cette fonctionnalité, appuyez sur l'écran pour redémarrer l'application."

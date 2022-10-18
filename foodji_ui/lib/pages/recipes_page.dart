@@ -22,6 +22,8 @@ class RecipesPageState extends State<RecipesPage> {
   // Class member to be updatable by setState
   String filterQuery = "";
   bool favoritesOnly = false;
+  List<bool> advancedFilters = List.filled(12, false);
+  bool advancedFilterSelected = false;
 
   toggleFavoriteStatus(recipe) {
     setState(() {
@@ -85,6 +87,23 @@ class RecipesPageState extends State<RecipesPage> {
           filterSearchResults(filterQuery);
         }
 
+        void toggleAdvancedFilter(index) {
+          setState(() {
+            advancedFilters[index] = !advancedFilters[index];
+            if (advancedFilters[index]) {
+              advancedFilterSelected = true;
+            } else {
+              advancedFilterSelected = false;
+              for (var i = 0; i < 12; i++) {
+                if (advancedFilters[i]) {
+                  advancedFilterSelected = true;
+                  break;
+                }
+              }
+            }
+          });
+        }
+
         void updateFavoriteStatus(recipe) {
           toggleFavoriteStatus(recipe);
           filterSearchResults(filterQuery);
@@ -103,11 +122,14 @@ class RecipesPageState extends State<RecipesPage> {
                 alignment: Alignment.center,
                 child: Column(children: <Widget>[
                   Padding(
-                      padding: const EdgeInsets.only(bottom: 14),
+                      padding: const EdgeInsets.only(bottom: 0),
                       child: Material(
                         color: AppColors.backgroundColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20.0),
+                            topRight: Radius.circular(0),
+                            bottomLeft: Radius.circular(0),
+                            bottomRight: Radius.circular(0)),
                         child: TextField(
                           onChanged: (value) {
                             filterSearchResults(value);
@@ -128,10 +150,301 @@ class RecipesPageState extends State<RecipesPage> {
                                       ? const Icon(Icons.star)
                                       : const Icon(Icons.star_outline)),
                               border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)))),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      topRight: Radius.circular(0),
+                                      bottomLeft: Radius.circular(0),
+                                      bottomRight: Radius.circular(0)))),
                         ),
                       )),
+                  Padding(
+                      padding: const EdgeInsets.only(bottom: 14),
+                      child: Material(
+                          color: AppColors.textColor,
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(0),
+                              topRight: Radius.circular(0),
+                              bottomLeft: Radius.circular(0),
+                              bottomRight: Radius.circular(20)),
+                          child: ExpansionTile(
+                              title: AppText(
+                                text: AppLocalizations.of(context)!.tag_filter,
+                                size: AppTextSize.normal,
+                                color: advancedFilterSelected
+                                    ? AppColors.highlightColor3
+                                    : AppColors.backgroundColor,
+                                backgroundColor: Colors.transparent,
+                              ),
+                              iconColor: advancedFilterSelected
+                                  ? AppColors.highlightColor3
+                                  : AppColors.backgroundColor,
+                              collapsedIconColor: advancedFilterSelected
+                                  ? AppColors.highlightColor3
+                                  : AppColors.backgroundColor,
+                              children: <Widget>[
+                                Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height:
+                                        MediaQuery.of(context).size.height / 2,
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_vegan,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[0]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[0]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(0),
+                                          ),
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_vegetarian,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[1]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[1]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(1),
+                                          ),
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_gluten_free,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[2]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[2]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(2),
+                                          ),
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_gluten_free,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[3]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[3]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(3),
+                                          ),
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_nut_free,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[4]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[4]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(4),
+                                          ),
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_peanut_free,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[5]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[5]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(5),
+                                          ),
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_lactose_free,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[6]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[6]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(6),
+                                          ),
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_milk_free,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[7]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[7]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(7),
+                                          ),
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_wheat_free,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[8]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[8]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(8),
+                                          ),
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_seafood_free,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[9]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[9]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(9),
+                                          ),
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_halal,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[10]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[10]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(10),
+                                          ),
+                                          ListTile(
+                                            title: AppText(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .tag_kosher,
+                                              size: AppTextSize.normal,
+                                              color: advancedFilters[11]
+                                                  ? AppColors.highlightColor3
+                                                  : AppColors.backgroundColor,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            trailing: advancedFilters[11]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors
+                                                        .highlightColor3)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                            onTap: () =>
+                                                toggleAdvancedFilter(11),
+                                          ),
+                                        ],
+                                      ),
+                                    ))
+                              ]))),
                   Expanded(
                       child: ListView.builder(
                     itemCount: filteredRecipes.length,
