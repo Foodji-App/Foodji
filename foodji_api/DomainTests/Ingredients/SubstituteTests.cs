@@ -23,19 +23,4 @@ public class SubstituteTests
         result.Tags.Should().BeEquivalentTo(tags);
         result.SubstitutionPrecisions.Should().Be(substitutionPrecisions);
     }
-    
-    [Test]
-    public void GivenNoOptionalParameters_Create_CollectionsAreInitialized()
-    {
-        // Arrange
-        var name = "TestName";
-        
-        // Act
-        var result = Ingredient.Create(name);
-        
-        // Assert
-        result.Name.Should().Be(name);
-        result.Tags.Should().NotBeNull().And.BeEmpty();
-        result.Substitutes.Should().NotBeNull().And.BeEmpty();
-    }
 }

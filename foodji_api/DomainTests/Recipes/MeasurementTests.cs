@@ -28,16 +28,16 @@ namespace DomainTests.Recipes
         }
         
         [Test]
-        public void WithoutAlternativeText_Create_ReturnsMeasurement()
+        public void GivenInvalidAlternativeText_Create_ReturnsMeasurement()
         {
             // Arrange
-            var expectedAlternativeText = "";
+            var expectedAlternativeText = String.Empty;
             var expectedUnitType = UnitType.Gram;
             var expectedValue = 10;
             
             // Act
             var actualMeasurement = Measurement.Create(
-                expectedUnitType, value: expectedValue);
+                expectedUnitType, expectedAlternativeText, expectedValue);
 
             // Assert
             actualMeasurement.UnitType.Should().Be(expectedUnitType);
@@ -46,16 +46,18 @@ namespace DomainTests.Recipes
             actualMeasurement.Should().BeOfType<Measurement>();
         }
         
+                
         [Test]
-        public void WithoutValidValue_Create_ReturnsMeasurement()
+        public void GivenInvalidValue_Create_ReturnsMeasurement()
         {
             // Arrange
             var expectedAlternativeText = "expectedAlternativeText";
-            var expectedUnitType = UnitType.Cup;
+            var expectedUnitType = UnitType.Gram;
             var expectedValue = 0;
             
             // Act
-            var actualMeasurement = Measurement.Create(expectedUnitType, expectedAlternativeText);
+            var actualMeasurement = Measurement.Create(
+                expectedUnitType, expectedAlternativeText, expectedValue);
 
             // Assert
             actualMeasurement.UnitType.Should().Be(expectedUnitType);
@@ -63,9 +65,9 @@ namespace DomainTests.Recipes
             actualMeasurement.Value.Should().Be(expectedValue);
             actualMeasurement.Should().BeOfType<Measurement>();
         }
-        
+
         [Test]
-        public void Create_invalid_value_alternativeText_ThrowsDomainException()
+        public void GivenInvalidValueAlternativeText_Create_ThrowsDomainException()
         {
             // Arrange
             var expectedAlternativeText = "";

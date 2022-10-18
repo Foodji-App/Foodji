@@ -1,7 +1,6 @@
 using Domain.Ingredients;
 using Domain.Recipes;
 using FluentAssertions;
-using Moq;
 using NUnit.Framework;
 
 namespace DomainTests.Recipes
@@ -14,9 +13,14 @@ namespace DomainTests.Recipes
         {
             // Arrange ingredient
             var expectedIngredient = RecipeIngredient.Create(
-                Measurement.Create(UnitType.Gram, value: 2),
-                "expectedSubstituteName",
-                "expectedSubstituteDescription");
+                Measurement.Create(
+                    UnitType.Gram,
+                    String.Empty,
+                    2),
+                "expectedIngredientName",
+                "expectedIngredientDescription",
+                new List<Tag>(),
+                new List<RecipeSubstitute>());
 
             // Arrange recipe
             var expectedName = "expectedName";
@@ -30,7 +34,6 @@ namespace DomainTests.Recipes
             // Act
             var actualRecipe = Recipe.Create(
                 expectedName,
-                expectedCreatedAt,
                 expectedCategory,
                 expectedDescription,
                 expectedDetails,
@@ -39,7 +42,6 @@ namespace DomainTests.Recipes
 
             // Assert
             actualRecipe.Name.Should().Be(expectedName);
-            actualRecipe.CreatedAt.Should().Be(expectedCreatedAt);
             actualRecipe.Category.Should().Be(expectedCategory);
             actualRecipe.Description.Should().Be(expectedDescription);
             actualRecipe.Details.Should().Be(expectedDetails);

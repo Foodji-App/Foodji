@@ -12,8 +12,6 @@ public class RecipeDetails
     
     public int TotalTime => CookingTime + PreparationTime + RestingTime;
 
-    // TODO - Determine if recipe difficulty should be stored.
-    
     private RecipeDetails(int cookingTime, int preparationTime, int restingTime, int serves)
     {
         CookingTime = cookingTime;
@@ -22,11 +20,11 @@ public class RecipeDetails
         Serves = serves;
     }
     
-    static public RecipeDetails Create(
-        int cookingTime = 0, 
-        int preparationTime = 0, 
-        int restingTime = 0, 
-        int serves = 0)
+    public static RecipeDetails Create(
+        int cookingTime, 
+        int preparationTime, 
+        int restingTime, 
+        int serves)
     {
         return new RecipeDetails(
             cookingTime, 

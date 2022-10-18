@@ -1,7 +1,6 @@
 using Domain.Ingredients;
 using Domain.Recipes;
 using FluentAssertions;
-using Moq;
 using NUnit.Framework;
 
 namespace DomainTests.Recipes
@@ -14,7 +13,10 @@ namespace DomainTests.Recipes
         {
             // Arrange ingredient
             var expectedDescription = "expectedDescription";
-            var expectedMeasurement = Measurement.Create(UnitType.Cup, value: 1);
+            var expectedMeasurement = Measurement.Create(
+                UnitType.Cup,
+                String.Empty,
+                value: 1);
             var expectedName = "expectedName";
             var expectedTags = new List<Tag> { Tag.Vegan, Tag.Vegetarian };
             var expectedSubstitutionPrecisions = "expectedSubstitutionPrecisions";
@@ -33,27 +35,6 @@ namespace DomainTests.Recipes
             actualRecipeSubstitute.Name.Should().Be(expectedName);
             actualRecipeSubstitute.SubstitutionPrecisions.Should().Be(expectedSubstitutionPrecisions);
             actualRecipeSubstitute.Tags.Should().BeEquivalentTo(expectedTags);
-            actualRecipeSubstitute.Should().BeOfType<RecipeSubstitute>();
-        }
-        
-        [Test]
-        public void NoTagsNoSubstitutes_Create_InitializesCollections()
-        {
-            // Arrange ingredient
-            var expectedDescription = "expectedDescription";
-            var expectedMeasurement = Measurement.Create(UnitType.Cup, value: 1);
-            var expectedName = "expectedName";
-            var expectedSubstitutionPrecisions = "expectedSubstitutionPrecisions";
-
-            // Act
-            var actualRecipeSubstitute = RecipeSubstitute.Create(
-                expectedMeasurement,
-                expectedName,
-                expectedDescription,
-                expectedSubstitutionPrecisions);
-
-            // Assert
-            actualRecipeSubstitute.Tags.Should().NotBeNull().And.BeEmpty();
             actualRecipeSubstitute.Should().BeOfType<RecipeSubstitute>();
         }
     }

@@ -1,5 +1,4 @@
 using System.Reflection;
-using Application.Queries;
 using Infra.Services;
 using MediatR;
 
@@ -18,6 +17,7 @@ builder.Services.SetupInfra(
     builder.Configuration.GetSection("Database:MongoDB")["ConnectionString"]);
 
 builder.Services.AddMediatR(Assembly.Load("Application"));
+builder.Services.AddAutoMapper(Assembly.Load("Application"));
 
 var app = builder.Build();
 
