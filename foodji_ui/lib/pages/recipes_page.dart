@@ -3,12 +3,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:foodji_ui/models/recipe_model.dart';
+import 'package:foodji_ui/models/tags_enum.dart';
 
 import '../cubit/app_globals.dart' as globals;
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
+import '../models/ingredient_model.dart';
+import '../models/substitution_model.dart';
 import '../widgets/app_text.dart';
+
+// Inner class only needed here
+class TagsWithColor {
+  final Tags tag;
+  final bool isIngredients;
+  TagsWithColor({required this.tag, required this.isIngredients});
+}
 
 class RecipesPage extends StatefulWidget {
   const RecipesPage({Key? key}) : super(key: key);
@@ -43,12 +53,33 @@ class RecipesPageState extends State<RecipesPage> {
         List<RecipeModel> recipes = state.recipes;
 
         // Widget method to have access to state
+        List<RecipeModel> applyAdvancedFilters(recipes) {
+          if (advancedFilterSelected) {
+            for (var i = 0; i < 12; i++) {
+              if (advancedFilters[i]) {
+                setState(() {
+                  recipes = recipes
+                      .where((RecipeModel r) => r.ingredients.any(
+                          (IngredientModel ig) =>
+                              ig.tags.any(
+                                  (t1) => t1.name == Tags.values[i].name) ||
+                              ig.substitutions.any((SubstitutionModel s) =>
+                                  s.tags.any(
+                                      (t2) => t2.name == Tags.values[i].name))))
+                      .toList();
+                });
+              }
+            }
+          }
+          return recipes;
+        }
+
         void filterSearchResults(String query) {
           setState(() {
             filterQuery = query;
           });
+          List<RecipeModel> foundRecipes = [];
           if (query.isNotEmpty) {
-            List<RecipeModel> foundRecipes = [];
             for (var recipe in recipes) {
               for (var text in query.split(" ")) {
                 if (text.isNotEmpty &&
@@ -63,18 +94,20 @@ class RecipesPageState extends State<RecipesPage> {
               }
             }
             setState(() {
+              foundRecipes = applyAdvancedFilters(foundRecipes);
               filteredRecipes.clear();
               filteredRecipes.addAll(foundRecipes);
             });
             return;
           } else {
             setState(() {
+              foundRecipes = applyAdvancedFilters(recipes);
               filteredRecipes.clear();
               if (favoritesOnly) {
-                filteredRecipes
-                    .addAll(recipes.where((element) => element.isFavorite));
+                filteredRecipes.addAll(
+                    foundRecipes.where((element) => element.isFavorite));
               } else {
-                filteredRecipes.addAll(recipes);
+                filteredRecipes.addAll(foundRecipes);
               }
             });
           }
@@ -102,11 +135,58 @@ class RecipesPageState extends State<RecipesPage> {
               }
             }
           });
+          filterSearchResults(filterQuery);
         }
 
         void updateFavoriteStatus(recipe) {
           toggleFavoriteStatus(recipe);
           filterSearchResults(filterQuery);
+        }
+
+        String getTagString(tag) {
+          if (tag == Tags.vegan) {
+            return AppLocalizations.of(context)!.tag_vegan;
+          } else if (tag == Tags.vegetarian) {
+            return AppLocalizations.of(context)!.tag_vegetarian;
+          } else if (tag == Tags.glutenFree) {
+            return AppLocalizations.of(context)!.tag_gluten_free;
+          } else if (tag == Tags.soyFree) {
+            return AppLocalizations.of(context)!.tag_soy_free;
+          } else if (tag == Tags.nutFree) {
+            return AppLocalizations.of(context)!.tag_nut_free;
+          } else if (tag == Tags.peanutFree) {
+            return AppLocalizations.of(context)!.tag_peanut_free;
+          } else if (tag == Tags.lactoseFree) {
+            return AppLocalizations.of(context)!.tag_lactose_free;
+          } else if (tag == Tags.milkFree) {
+            return AppLocalizations.of(context)!.tag_milk_free;
+          } else if (tag == Tags.wheatFree) {
+            return AppLocalizations.of(context)!.tag_wheat_free;
+          } else if (tag == Tags.seafoodFree) {
+            return AppLocalizations.of(context)!.tag_seafood_free;
+          } else if (tag == Tags.halal) {
+            return AppLocalizations.of(context)!.tag_halal;
+          } else if (tag == Tags.kosher) {
+            return AppLocalizations.of(context)!.tag_kosher;
+          } else {
+            return "";
+          }
+        }
+
+        List<TagsWithColor> tagsWithColors(recipe) {
+          List<TagsWithColor> tags = [];
+          for (var i = 0; i < 12; i++) {
+            if (recipe.ingredients.any((IngredientModel ig) =>
+                ig.tags.any((t) => t.name == Tags.values[i].name))) {
+              tags.add(TagsWithColor(tag: Tags.values[i], isIngredients: true));
+            } else if (recipe.ingredients.any((IngredientModel ig) =>
+                ig.substitutions.any((SubstitutionModel s) =>
+                    s.tags.any((t) => t.name == Tags.values[i].name)))) {
+              tags.add(
+                  TagsWithColor(tag: Tags.values[i], isIngredients: false));
+            }
+          }
+          return tags;
         }
 
         return Scaffold(
@@ -182,10 +262,10 @@ class RecipesPageState extends State<RecipesPage> {
                                   ? AppColors.highlightColor3
                                   : AppColors.backgroundColor,
                               children: <Widget>[
-                                Container(
+                                SizedBox(
                                     width: MediaQuery.of(context).size.width,
-                                    height:
-                                        MediaQuery.of(context).size.height / 2,
+                                    height: MediaQuery.of(context).size.height /
+                                        2.5,
                                     child: SingleChildScrollView(
                                       child: Column(
                                         children: [
@@ -256,7 +336,7 @@ class RecipesPageState extends State<RecipesPage> {
                                             title: AppText(
                                               text:
                                                   AppLocalizations.of(context)!
-                                                      .tag_gluten_free,
+                                                      .tag_soy_free,
                                               size: AppTextSize.normal,
                                               color: advancedFilters[3]
                                                   ? AppColors.highlightColor3
@@ -458,8 +538,10 @@ class RecipesPageState extends State<RecipesPage> {
                               borderRadius: BorderRadius.circular(10),
                               //Material required to solve known issue with Gesture Detector, see https://github.com/flutter/flutter/issues/83108
                               child: GestureDetector(
-                                  onTap: () => BlocProvider.of<AppCubits>(context).gotoRecipeDetails(
-                                      filteredRecipes[index]),
+                                  onTap: () =>
+                                      BlocProvider.of<AppCubits>(context)
+                                          .gotoRecipeDetails(
+                                              filteredRecipes[index]),
                                   child: ListTile(
                                       shape: const RoundedRectangleBorder(
                                           borderRadius: BorderRadius.only(
@@ -468,16 +550,56 @@ class RecipesPageState extends State<RecipesPage> {
                                                   Radius.circular(30))),
                                       tileColor: AppColors.backgroundColor,
                                       leading: Container(
-                                          width: MediaQuery.of(context).size.width /
-                                              4,
+                                          width:
+                                              MediaQuery.of(context).size.width /
+                                                  4,
                                           decoration: BoxDecoration(
                                               borderRadius: const BorderRadius.only(
                                                   topLeft: Radius.circular(10),
-                                                  bottomRight: Radius.circular(10)),
+                                                  bottomRight:
+                                                      Radius.circular(10)),
                                               color: AppColors.textColor,
-                                              image: DecorationImage(image: NetworkImage(filteredRecipes[index].img), fit: BoxFit.fill))),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(filteredRecipes[index].img),
+                                                  fit: BoxFit.fill))),
                                       title: Text(filteredRecipes[index].name),
-                                      subtitle: Text(filteredRecipes[index].category),
+                                      subtitle: SizedBox(
+                                          child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Text(filteredRecipes[index].category),
+                                        SizedBox(
+                                            height: 20,
+                                            child: ListView.builder(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemCount: tagsWithColors(
+                                                        filteredRecipes[index])
+                                                    .length,
+                                                itemBuilder:
+                                                    (context, indexSecondary) {
+                                                  return AppText(
+                                                      size: AppTextSize.small,
+                                                      color: tagsWithColors(
+                                                                      filteredRecipes[
+                                                                          index])[
+                                                                  indexSecondary]
+                                                              .isIngredients
+                                                          ? AppColors
+                                                              .highlightColor3
+                                                          : AppColors
+                                                              .starColor1,
+                                                      text: indexSecondary <
+                                                              tagsWithColors(filteredRecipes[
+                                                                          index])
+                                                                      .length -
+                                                                  1
+                                                          ? "${getTagString(tagsWithColors(filteredRecipes[index])[indexSecondary].tag)}, "
+                                                          : getTagString(
+                                                              tagsWithColors(filteredRecipes[
+                                                                          index])[
+                                                                      indexSecondary]
+                                                                  .tag));
+                                                }))
+                                      ])),
                                       isThreeLine: false,
                                       trailing: IconButton(onPressed: () => updateFavoriteStatus(filteredRecipes[index]), color: filteredRecipes[index].isFavorite ? AppColors.starColor1 : AppColors.textColor, icon: filteredRecipes[index].isFavorite ? const Icon(Icons.star) : const Icon(Icons.star_outline))))));
                     },
