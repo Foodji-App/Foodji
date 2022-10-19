@@ -262,14 +262,16 @@ class RecipesPageState extends State<RecipesPage> {
                               hintText:
                                   AppLocalizations.of(context)!.global_filter,
                               prefixIcon: const Icon(Icons.search),
-                              suffixIcon: IconButton(
-                                  onPressed: () => showFavoritesOnly(),
-                                  color: favoritesOnly
-                                      ? AppColors.highlightColor3
-                                      : AppColors.textColor,
-                                  icon: favoritesOnly
-                                      ? const Icon(Icons.star)
-                                      : const Icon(Icons.star_outline)),
+                              suffixIcon: Padding(
+                                  padding: const EdgeInsets.only(right: 7),
+                                  child: IconButton(
+                                      onPressed: () => showFavoritesOnly(),
+                                      color: favoritesOnly
+                                          ? AppColors.highlightColor3
+                                          : AppColors.textColor,
+                                      icon: favoritesOnly
+                                          ? const Icon(Icons.star)
+                                          : const Icon(Icons.star_outline))),
                               border: const OutlineInputBorder(
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(20.0),

@@ -7,7 +7,7 @@ import '../models/recipe_model.dart';
 import 'app_text.dart';
 
 class RecipeDetailPreparation extends StatefulWidget {
-  RecipeDetailPreparation(this.recipe, this.isSelected, {super.key});
+  const RecipeDetailPreparation(this.recipe, this.isSelected, {super.key});
   final RecipeModel recipe;
   final List<bool> isSelected;
   @override
