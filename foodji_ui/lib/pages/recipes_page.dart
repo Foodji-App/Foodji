@@ -16,7 +16,7 @@ import '../widgets/app_text.dart';
 
 // Inner class only needed here
 class TagsWithColor {
-  final Tags tag;
+  final String tag;
   final bool isIngredients;
   TagsWithColor({required this.tag, required this.isIngredients});
 }
@@ -141,8 +141,8 @@ class RecipesPageState extends State<RecipesPage> {
 
         void toggleCategoryFilter(index) {
           setState(() {
-            if (category != Categories.values[index]) {
-              category = Categories.values[index];
+            if (category != Categories.values[index].name) {
+              category = Categories.values[index].name;
             } else {
               category = null;
             }
@@ -156,29 +156,29 @@ class RecipesPageState extends State<RecipesPage> {
         }
 
         String getTagString(tag) {
-          if (tag == Tags.vegan) {
+          if (tag == Tags.vegan.name) {
             return AppLocalizations.of(context)!.tag_vegan;
-          } else if (tag == Tags.vegetarian) {
+          } else if (tag == Tags.vegetarian.name) {
             return AppLocalizations.of(context)!.tag_vegetarian;
-          } else if (tag == Tags.glutenFree) {
+          } else if (tag == Tags.glutenFree.name) {
             return AppLocalizations.of(context)!.tag_gluten_free;
-          } else if (tag == Tags.soyFree) {
+          } else if (tag == Tags.soyFree.name) {
             return AppLocalizations.of(context)!.tag_soy_free;
-          } else if (tag == Tags.nutFree) {
+          } else if (tag == Tags.nutFree.name) {
             return AppLocalizations.of(context)!.tag_nut_free;
-          } else if (tag == Tags.peanutFree) {
+          } else if (tag == Tags.peanutFree.name) {
             return AppLocalizations.of(context)!.tag_peanut_free;
-          } else if (tag == Tags.lactoseFree) {
+          } else if (tag == Tags.lactoseFree.name) {
             return AppLocalizations.of(context)!.tag_lactose_free;
-          } else if (tag == Tags.milkFree) {
+          } else if (tag == Tags.milkFree.name) {
             return AppLocalizations.of(context)!.tag_milk_free;
-          } else if (tag == Tags.wheatFree) {
+          } else if (tag == Tags.wheatFree.name) {
             return AppLocalizations.of(context)!.tag_wheat_free;
-          } else if (tag == Tags.seafoodFree) {
+          } else if (tag == Tags.seafoodFree.name) {
             return AppLocalizations.of(context)!.tag_seafood_free;
-          } else if (tag == Tags.halal) {
+          } else if (tag == Tags.halal.name) {
             return AppLocalizations.of(context)!.tag_halal;
-          } else if (tag == Tags.kosher) {
+          } else if (tag == Tags.kosher.name) {
             return AppLocalizations.of(context)!.tag_kosher;
           } else {
             return "";
@@ -208,12 +208,13 @@ class RecipesPageState extends State<RecipesPage> {
           for (var i = 0; i < 12; i++) {
             if (recipe.ingredients.any((IngredientModel ig) =>
                 ig.tags.any((t) => t == Tags.values[i].name))) {
-              tags.add(TagsWithColor(tag: Tags.values[i], isIngredients: true));
+              tags.add(
+                  TagsWithColor(tag: Tags.values[i].name, isIngredients: true));
             } else if (recipe.ingredients.any((IngredientModel ig) =>
                 ig.substitutions.any((SubstitutionModel s) =>
                     s.tags.any((t) => t == Tags.values[i].name)))) {
-              tags.add(
-                  TagsWithColor(tag: Tags.values[i], isIngredients: false));
+              tags.add(TagsWithColor(
+                  tag: Tags.values[i].name, isIngredients: false));
             }
           }
           return tags;
@@ -302,20 +303,20 @@ class RecipesPageState extends State<RecipesPage> {
                                       return ListTile(
                                         title: AppText(
                                           text: getCategoryString(
-                                              Categories.values[index]),
+                                              Categories.values[index].name),
                                           size: AppTextSize.normal,
                                           color: category ==
-                                                  Categories.values[index]
+                                                  Categories.values[index].name
                                               ? AppColors.textColor
                                               : AppColors.backgroundColor,
                                           backgroundColor: Colors.transparent,
                                         ),
-                                        trailing:
-                                            category == Categories.values[index]
-                                                ? const Icon(Icons.check,
-                                                    color: AppColors.textColor)
-                                                : const SizedBox(
-                                                    width: 0, height: 0),
+                                        trailing: category ==
+                                                Categories.values[index].name
+                                            ? const Icon(Icons.check,
+                                                color: AppColors.textColor)
+                                            : const SizedBox(
+                                                width: 0, height: 0),
                                         onTap: () =>
                                             toggleCategoryFilter(index),
                                       );
@@ -358,8 +359,8 @@ class RecipesPageState extends State<RecipesPage> {
                                     itemBuilder: (context, index) {
                                       return ListTile(
                                         title: AppText(
-                                          text:
-                                              getTagString(Tags.values[index]),
+                                          text: getTagString(
+                                              Tags.values[index].name),
                                           size: AppTextSize.normal,
                                           color: advancedFilters[index]
                                               ? AppColors.highlightColor3
