@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/widgets/app_text.dart';
+import '../models/ingredient_model.dart';
+import '../models/substitution_model.dart';
+import '../models/tags_enum.dart';
 import '../widgets/recipe_detail_instructions.dart';
 import '../widgets/recipe_detail_preparation.dart';
 import '../widgets/stateless_app_bar.dart' as stateless_app_bar_widget;
@@ -11,6 +14,13 @@ import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
 import '../models/recipe_model.dart';
+
+// Inner class only needed here
+class TagsWithColor {
+  final Tags tag;
+  final bool isIngredients;
+  TagsWithColor({required this.tag, required this.isIngredients});
+}
 
 class RecipeDetailPage extends StatefulWidget {
   const RecipeDetailPage({Key? key}) : super(key: key);
@@ -36,6 +46,53 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
       if (state is RecipeState) {
         TabController tabController = TabController(length: 2, vsync: this);
         RecipeModel recipe = state.recipe;
+
+        String getTagString(tag) {
+          if (tag == Tags.vegan) {
+            return AppLocalizations.of(context)!.tag_vegan;
+          } else if (tag == Tags.vegetarian) {
+            return AppLocalizations.of(context)!.tag_vegetarian;
+          } else if (tag == Tags.glutenFree) {
+            return AppLocalizations.of(context)!.tag_gluten_free;
+          } else if (tag == Tags.soyFree) {
+            return AppLocalizations.of(context)!.tag_soy_free;
+          } else if (tag == Tags.nutFree) {
+            return AppLocalizations.of(context)!.tag_nut_free;
+          } else if (tag == Tags.peanutFree) {
+            return AppLocalizations.of(context)!.tag_peanut_free;
+          } else if (tag == Tags.lactoseFree) {
+            return AppLocalizations.of(context)!.tag_lactose_free;
+          } else if (tag == Tags.milkFree) {
+            return AppLocalizations.of(context)!.tag_milk_free;
+          } else if (tag == Tags.wheatFree) {
+            return AppLocalizations.of(context)!.tag_wheat_free;
+          } else if (tag == Tags.seafoodFree) {
+            return AppLocalizations.of(context)!.tag_seafood_free;
+          } else if (tag == Tags.halal) {
+            return AppLocalizations.of(context)!.tag_halal;
+          } else if (tag == Tags.kosher) {
+            return AppLocalizations.of(context)!.tag_kosher;
+          } else {
+            return "";
+          }
+        }
+
+        List<TagsWithColor> tagsWithColors(recipe) {
+          List<TagsWithColor> tags = [];
+          for (var i = 0; i < 12; i++) {
+            if (recipe.ingredients.any((IngredientModel ig) =>
+                ig.tags.any((t) => t.name == Tags.values[i].name))) {
+              tags.add(TagsWithColor(tag: Tags.values[i], isIngredients: true));
+            } else if (recipe.ingredients.any((IngredientModel ig) =>
+                ig.substitutions.any((SubstitutionModel s) =>
+                    s.tags.any((t) => t.name == Tags.values[i].name)))) {
+              tags.add(
+                  TagsWithColor(tag: Tags.values[i], isIngredients: false));
+            }
+          }
+          return tags;
+        }
+
         return SafeArea(
             child: Scaffold(
                 appBar: stateless_app_bar_widget.AppBar(
@@ -73,7 +130,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                                   .width))))),
                           Padding(
                               padding: const EdgeInsets.only(
-                                  left: 16, right: 16, bottom: 14),
+                                  left: 16, right: 16, bottom: 16),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -82,6 +139,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                     clipBehavior: Clip.none,
                                     backgroundColor: AppColors.textColor,
                                     label: AppText(
+                                        size: AppTextSize.small,
                                         color: AppColors.backgroundColor,
                                         text: recipe.category),
                                     shape: const StadiumBorder(
@@ -134,6 +192,30 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                   ),
                                 ],
                               )),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 14, right: 14, bottom: 14),
+                              child: SizedBox(
+                                  height: 20,
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: tagsWithColors(recipe).length,
+                                      itemBuilder: (context, index) {
+                                        return AppText(
+                                            size: AppTextSize.normal,
+                                            color: tagsWithColors(recipe)[index]
+                                                    .isIngredients
+                                                ? AppColors.highlightColor3
+                                                : AppColors.starColor1,
+                                            text: index <
+                                                    tagsWithColors(recipe)
+                                                            .length -
+                                                        1
+                                                ? "${getTagString(tagsWithColors(recipe)[index].tag)}, "
+                                                : getTagString(tagsWithColors(
+                                                        recipe)[index]
+                                                    .tag));
+                                      }))),
                           Padding(
                               padding:
                                   const EdgeInsets.only(left: 14, right: 14),
