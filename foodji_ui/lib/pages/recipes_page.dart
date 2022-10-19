@@ -55,6 +55,16 @@ class RecipesPageState extends State<RecipesPage> {
         List<RecipeModel> recipes = state.recipes;
 
         // Widget method to have access to state
+        List<RecipeModel> applyCategoryFilter(recipes) {
+          setState(() {
+            recipes = recipes
+                .where((RecipeModel r) =>
+                    category == null || r.category == category)
+                .toList();
+          });
+          return recipes;
+        }
+
         List<RecipeModel> applyAdvancedFilters(recipes) {
           if (advancedFilterSelected) {
             for (var i = 0; i < 12; i++) {
@@ -95,14 +105,14 @@ class RecipesPageState extends State<RecipesPage> {
               }
             }
             setState(() {
-              foundRecipes = applyAdvancedFilters(foundRecipes);
               filteredRecipes.clear();
-              filteredRecipes.addAll(foundRecipes);
+              filteredRecipes.addAll(
+                  applyAdvancedFilters(applyCategoryFilter(foundRecipes)));
             });
             return;
           } else {
             setState(() {
-              foundRecipes = applyAdvancedFilters(recipes);
+              foundRecipes = applyAdvancedFilters(applyCategoryFilter(recipes));
               filteredRecipes.clear();
               if (favoritesOnly) {
                 filteredRecipes.addAll(
