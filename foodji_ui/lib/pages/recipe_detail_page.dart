@@ -279,12 +279,13 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                         width: MediaQuery.of(context).size.width,
                         // TODO - Height here causes an issue. It cannot be removed, but cannot be set to child size either.
                         height: MediaQuery.of(context).size.height,
-                        child: TabBarView(
-                            controller: tabController,
-                            children: <Widget>[
-                              RecipeDetailPreparation(recipe),
-                              RecipeDetailInstructions(recipe)
-                            ]))
+                        child: TabBarView(controller: tabController, children: <
+                            Widget>[
+                          RecipeDetailPreparation(recipe,
+                              List.filled(recipe.ingredients.length, false)),
+                          RecipeDetailInstructions(
+                              recipe, List.filled(recipe.steps.length, false))
+                        ]))
                   ]))
                 ])));
       } else {
