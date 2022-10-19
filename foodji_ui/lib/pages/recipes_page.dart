@@ -9,6 +9,7 @@ import '../cubit/app_globals.dart' as globals;
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
+import '../models/categories_enum.dart';
 import '../models/ingredient_model.dart';
 import '../models/substitution_model.dart';
 import '../widgets/app_text.dart';
@@ -32,6 +33,7 @@ class RecipesPageState extends State<RecipesPage> {
   // Class member to be updatable by setState
   String filterQuery = "";
   bool favoritesOnly = false;
+  dynamic category;
   List<bool> advancedFilters = List.filled(12, false);
   bool advancedFilterSelected = false;
 
@@ -61,11 +63,10 @@ class RecipesPageState extends State<RecipesPage> {
                   recipes = recipes
                       .where((RecipeModel r) => r.ingredients.any(
                           (IngredientModel ig) =>
-                              ig.tags.any(
-                                  (t1) => t1.name == Tags.values[i].name) ||
-                              ig.substitutions.any((SubstitutionModel s) =>
-                                  s.tags.any(
-                                      (t2) => t2.name == Tags.values[i].name))))
+                              ig.tags.any((t1) => t1 == Tags.values[i].name) ||
+                              ig.substitutions.any((SubstitutionModel s) => s
+                                  .tags
+                                  .any((t2) => t2 == Tags.values[i].name))))
                       .toList();
                 });
               }
@@ -138,6 +139,17 @@ class RecipesPageState extends State<RecipesPage> {
           filterSearchResults(filterQuery);
         }
 
+        void toggleCategoryFilter(index) {
+          setState(() {
+            if (category != Categories.values[index]) {
+              category = Categories.values[index];
+            } else {
+              category = null;
+            }
+          });
+          filterSearchResults(filterQuery);
+        }
+
         void updateFavoriteStatus(recipe) {
           toggleFavoriteStatus(recipe);
           filterSearchResults(filterQuery);
@@ -173,15 +185,33 @@ class RecipesPageState extends State<RecipesPage> {
           }
         }
 
+        String getCategoryString(category) {
+          if (category == Categories.breakfast.name) {
+            return AppLocalizations.of(context)!.category_breakfast;
+          } else if (category == Categories.lunch.name) {
+            return AppLocalizations.of(context)!.category_lunch;
+          } else if (category == Categories.diner.name) {
+            return AppLocalizations.of(context)!.category_diner;
+          } else if (category == Categories.dessert.name) {
+            return AppLocalizations.of(context)!.category_dessert;
+          } else if (category == Categories.snack.name) {
+            return AppLocalizations.of(context)!.category_snack;
+          } else if (category == Categories.beverage.name) {
+            return AppLocalizations.of(context)!.category_beverage;
+          } else {
+            return "";
+          }
+        }
+
         List<TagsWithColor> tagsWithColors(recipe) {
           List<TagsWithColor> tags = [];
           for (var i = 0; i < 12; i++) {
             if (recipe.ingredients.any((IngredientModel ig) =>
-                ig.tags.any((t) => t.name == Tags.values[i].name))) {
+                ig.tags.any((t) => t == Tags.values[i].name))) {
               tags.add(TagsWithColor(tag: Tags.values[i], isIngredients: true));
             } else if (recipe.ingredients.any((IngredientModel ig) =>
                 ig.substitutions.any((SubstitutionModel s) =>
-                    s.tags.any((t) => t.name == Tags.values[i].name)))) {
+                    s.tags.any((t) => t == Tags.values[i].name)))) {
               tags.add(
                   TagsWithColor(tag: Tags.values[i], isIngredients: false));
             }
@@ -235,6 +265,62 @@ class RecipesPageState extends State<RecipesPage> {
                                       topRight: Radius.circular(0),
                                       bottomLeft: Radius.circular(0),
                                       bottomRight: Radius.circular(0)))),
+                        ),
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Material(
+                        color: AppColors.highlightColor3,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(0)),
+                        child: ExpansionTile(
+                          title: AppText(
+                            text: category == null
+                                ? AppLocalizations.of(context)!.category_filter
+                                : getCategoryString(category),
+                            size: AppTextSize.normal,
+                            color: category != null
+                                ? AppColors.textColor
+                                : AppColors.backgroundColor,
+                            backgroundColor: Colors.transparent,
+                          ),
+                          iconColor: category != null
+                              ? AppColors.textColor
+                              : AppColors.backgroundColor,
+                          collapsedIconColor: category != null
+                              ? AppColors.textColor
+                              : AppColors.backgroundColor,
+                          children: <Widget>[
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height / 2.7,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: 6,
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                        title: AppText(
+                                          text: getCategoryString(
+                                              Categories.values[index]),
+                                          size: AppTextSize.normal,
+                                          color: category ==
+                                                  Categories.values[index]
+                                              ? AppColors.textColor
+                                              : AppColors.backgroundColor,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                        trailing:
+                                            category == Categories.values[index]
+                                                ? const Icon(Icons.check,
+                                                    color: AppColors.textColor)
+                                                : const SizedBox(
+                                                    width: 0, height: 0),
+                                        onTap: () =>
+                                            toggleCategoryFilter(index),
+                                      );
+                                    }))
+                          ],
                         ),
                       )),
                   Padding(
@@ -333,7 +419,8 @@ class RecipesPageState extends State<RecipesPage> {
                                       title: Text(filteredRecipes[index].name),
                                       subtitle: SizedBox(
                                           child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                        Text(filteredRecipes[index].category),
+                                        Text(getCategoryString(
+                                            filteredRecipes[index].category)),
                                         SizedBox(
                                             height: 20,
                                             child: ListView.builder(

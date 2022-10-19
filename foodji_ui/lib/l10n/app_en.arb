@@ -47,6 +47,14 @@
   "tag_halal": "Halal",
   "tag_kosher": "Kosher",
 
+  "category_filter": "Category",
+  "category_breakfast": "Breakfast",
+  "category_lunch": "Lunch",
+  "category_diner": "Diner",
+  "category_dessert": "Dessert",
+  "category_snack": "Snack",
+  "category_beverage": "Beverage",
+
   "error_unknown": "An unknown error occured during the execution. Press anywhere to restart the application.",
   "error_authentification": "An authentication error occured during the execution. To access this feature, press anywhere on this page to restart the application."
 }

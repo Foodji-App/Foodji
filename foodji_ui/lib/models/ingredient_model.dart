@@ -5,7 +5,7 @@ import 'package:foodji_ui/models/substitution_model.dart';
 class IngredientModel {
   String name;
   int qte;
-  List<Tags> tags;
+  List<String> tags;
   List<SubstitutionModel> substitutions;
 
   IngredientModel(
@@ -21,8 +21,8 @@ class IngredientModel {
         name: faker.food.cuisine(),
         qte: faker.randomGenerator.integer(10),
         tags: {
-          faker.randomGenerator.element(Tags.values),
-          faker.randomGenerator.element(Tags.values)
+          faker.randomGenerator.element(Tags.values).name,
+          faker.randomGenerator.element(Tags.values).name
         }.toList(),
         substitutions: SubstitutionModel.getSamples(random.integer(2, min: 0)));
   }

@@ -4,13 +4,14 @@ import 'dart:math';
 
 import 'package:faker/faker.dart';
 
+import 'categories_enum.dart';
 import 'ingredient_model.dart';
 
 class RecipeModel {
   int id;
   String name;
   String img;
-  String category; // tags
+  String category;
   String desc;
   RecipeDetailsModel details;
   List<IngredientModel> ingredients;
@@ -68,7 +69,7 @@ class RecipeModel {
         id: faker.guid.random.integer(99999999), // Not Fail Safe
         name: faker.food.dish(),
         img: "https://picsum.photos/seed/${faker.food.dish()}/500/300",
-        category: faker.food.cuisine(),
+        category: Categories.values[random.integer(5, min: 0)].name,
         desc: faker.lorem.sentences(random.integer(4, min: 1)).join(' '),
         details: RecipeDetailsModel.getSample(),
         ingredients: IngredientModel.getSamples(random.integer(10, min: 3)),

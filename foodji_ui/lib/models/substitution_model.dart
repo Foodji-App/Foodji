@@ -4,7 +4,7 @@ import 'package:foodji_ui/models/tags_enum.dart';
 class SubstitutionModel {
   String name;
   int qte;
-  List<Tags> tags;
+  List<String> tags;
 
   SubstitutionModel(
       {required this.name, required this.qte, required this.tags});
@@ -16,8 +16,8 @@ class SubstitutionModel {
         name: faker.food.cuisine(),
         qte: faker.randomGenerator.integer(10),
         tags: {
-          faker.randomGenerator.element(Tags.values),
-          faker.randomGenerator.element(Tags.values)
+          faker.randomGenerator.element(Tags.values).name,
+          faker.randomGenerator.element(Tags.values).name
         }.toList());
   }
 

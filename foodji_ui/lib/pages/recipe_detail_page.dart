@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/widgets/app_text.dart';
+import '../models/categories_enum.dart';
 import '../models/ingredient_model.dart';
 import '../models/substitution_model.dart';
 import '../models/tags_enum.dart';
@@ -77,15 +78,33 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
           }
         }
 
+        String getCategoryString(category) {
+          if (category == Categories.breakfast.name) {
+            return AppLocalizations.of(context)!.category_breakfast;
+          } else if (category == Categories.lunch.name) {
+            return AppLocalizations.of(context)!.category_lunch;
+          } else if (category == Categories.diner.name) {
+            return AppLocalizations.of(context)!.category_diner;
+          } else if (category == Categories.dessert.name) {
+            return AppLocalizations.of(context)!.category_dessert;
+          } else if (category == Categories.snack.name) {
+            return AppLocalizations.of(context)!.category_snack;
+          } else if (category == Categories.beverage.name) {
+            return AppLocalizations.of(context)!.category_beverage;
+          } else {
+            return "";
+          }
+        }
+
         List<TagsWithColor> tagsWithColors(recipe) {
           List<TagsWithColor> tags = [];
           for (var i = 0; i < 12; i++) {
             if (recipe.ingredients.any((IngredientModel ig) =>
-                ig.tags.any((t) => t.name == Tags.values[i].name))) {
+                ig.tags.any((t) => t == Tags.values[i].name))) {
               tags.add(TagsWithColor(tag: Tags.values[i], isIngredients: true));
             } else if (recipe.ingredients.any((IngredientModel ig) =>
                 ig.substitutions.any((SubstitutionModel s) =>
-                    s.tags.any((t) => t.name == Tags.values[i].name)))) {
+                    s.tags.any((t) => t == Tags.values[i].name)))) {
               tags.add(
                   TagsWithColor(tag: Tags.values[i], isIngredients: false));
             }
@@ -141,7 +160,8 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                     label: AppText(
                                         size: AppTextSize.small,
                                         color: AppColors.backgroundColor,
-                                        text: recipe.category),
+                                        text:
+                                            getCategoryString(recipe.category)),
                                     shape: const StadiumBorder(
                                         side: BorderSide(
                                       width: 1,
