@@ -21,14 +21,13 @@ public class RecipeConverter : ITypeConverter<RecipeDto, Recipe>
         var ingredients = 
             _mapper.Map<IEnumerable<RecipeIngredientDto>, IEnumerable<RecipeIngredient>>(source.Ingredients);
 
-        var steps = _mapper.Map<IEnumerable<RecipeStepDto>, IEnumerable<RecipeStep>>(source.Steps);
-
         return Recipe.Create(
             source.Name,
             category,
             source.Description,
             details,
             ingredients,
-            steps);
+            source.Steps.ToList(),
+            source.ImageUri);
     }
 }

@@ -11,8 +11,6 @@ public class RecipeSubstitute
     
     public string Name { get; private set; }
 
-
-
     public string SubstitutionPrecisions { get; private set; } = String.Empty;
 
     public string Description { get; protected set; }
@@ -26,8 +24,8 @@ public class RecipeSubstitute
 
     private RecipeSubstitute(
         string name,
-        Measurement measurement,
-        string description)
+        string description,
+        Measurement measurement)
     {
         Name = name;
         Description = description;
@@ -35,19 +33,31 @@ public class RecipeSubstitute
     }
 
     public static RecipeSubstitute Create(
-        Measurement measurement,
         string name,
-        string description,
         string substitutionPrecisions,
+        string description,
+        Measurement measurement,
         IEnumerable<Tag> tags)
     {
         var recipeSubstitute = new RecipeSubstitute(
-            name, measurement, description)
+            name, description, measurement)
         {
             SubstitutionPrecisions = substitutionPrecisions,
             Tags = tags.ToList()
         };
 
         return recipeSubstitute;
+    }
+    
+    public void AddTag(Tag tag)
+    {
+        var newTags = Tags.ToList();
+        if (newTags.Contains(tag))
+        {
+            throw new DomainException($"Substitute ingredient already has tag {tag.Name}");
+        }
+        
+        newTags.Add(tag);
+        Tags = newTags;
     }
 }

@@ -14,5 +14,7 @@ public record RecipeDto
     
     public IEnumerable<RecipeIngredientDto> Ingredients { get; set; } = null!;
     
-    public IEnumerable<RecipeStepDto> Steps { get; set; } = null!;
+    public IEnumerable<string> Steps { get; set; } = null!;
+    
+    public Uri ImageUri { get; set; } = null!;
 }

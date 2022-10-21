@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.Diagnostics.Tracing;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain.Recipes;
@@ -22,7 +23,9 @@ public class Recipe
     
     public IEnumerable<RecipeIngredient> Ingredients { get; private set; }
     
-    public IEnumerable<RecipeStep> Steps { get; private set; }
+    public IEnumerable<string> Steps { get; private set; }
+    
+    public Uri ImageUri { get; private set; }
     
     private Recipe(
         string name, 
@@ -31,7 +34,8 @@ public class Recipe
         string description, 
         RecipeDetails details, 
         IEnumerable<RecipeIngredient> ingredients, 
-        IEnumerable<RecipeStep> steps)
+        IEnumerable<string> steps,
+        Uri imageUri)
     {
         Name = name;
         CreatedAt = createdAt;
@@ -40,6 +44,7 @@ public class Recipe
         Description = description;
         Ingredients = ingredients.ToList();
         Steps = steps.ToList();
+        ImageUri = imageUri;
     }
     public static Recipe Create(
         string name, 
@@ -47,9 +52,35 @@ public class Recipe
         string description, 
         RecipeDetails details, 
         IEnumerable<RecipeIngredient> ingredients, 
-        IEnumerable<RecipeStep> steps)
+        IEnumerable<string> steps,
+        Uri imageUri)
     {
-        return new Recipe(name, DateTime.Now, category, description, details, ingredients, steps);
+        return new Recipe(name, DateTime.Now, category, description, details, ingredients, steps, imageUri);
     }
     
+    public void AddIngredient(RecipeIngredient ingredient)
+    {
+        var newIngredients = Ingredients.ToList();
+        newIngredients.Add(ingredient);
+
+        Ingredients = newIngredients;
+    }
+    
+    public void AddStep(string step)
+    {
+        var newSteps = Steps.ToList();
+        newSteps.Add(step);
+
+        Steps = newSteps;
+    }
+    
+    public void UpdateStepsOrder(int oldIndex, int newIndex)
+    {
+        var newSteps = Steps.ToList();
+        var step = newSteps[oldIndex];
+        newSteps.RemoveAt(oldIndex);
+        newSteps.Insert(newIndex, step);
+
+        Steps = newSteps;
+    }
 }

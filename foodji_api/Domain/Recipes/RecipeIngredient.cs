@@ -24,9 +24,9 @@ public class RecipeIngredient
 
 
     private RecipeIngredient(
+        string name,
         string description,
-        Measurement measurement,
-        string name)
+        Measurement measurement)
     {
         Name = name;
         Description = description;
@@ -34,13 +34,13 @@ public class RecipeIngredient
     }
     
     public static RecipeIngredient Create(
-        Measurement measurement,
         string name,
         string description,
+        Measurement measurement,
         IEnumerable<Tag> tags,
         IEnumerable<RecipeSubstitute> substitutes)
     {
-        var recipeIngredient = new RecipeIngredient(description, measurement, name)
+        var recipeIngredient = new RecipeIngredient(name, description, measurement)
         {
             Substitutes = substitutes.ToList(),
             Tags = tags.ToList()
@@ -49,13 +49,20 @@ public class RecipeIngredient
         return recipeIngredient;
     }
     
+    public void AddTag(Tag tag)
+    {
+        var newTags = Tags.ToList();
+        if (newTags.Contains(tag))
+        {
+            throw new DomainException($"Ingredient already has tag {tag.Name}");
+        }
+        
+        newTags.Add(tag);
+        Tags = newTags;
+    }
+
     public void AddSubstitute(RecipeSubstitute substitute)
     {
-        if (Substitutes.Any(x => x.Name == substitute.Name))
-        {
-            throw new DomainException("Cannot add a substitute with the same name as another substitute.");
-        }
-
         var newSubstitutes = Substitutes.ToList();
         newSubstitutes.Add(substitute);
 
