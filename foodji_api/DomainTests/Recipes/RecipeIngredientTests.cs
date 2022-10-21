@@ -18,17 +18,17 @@ namespace DomainTests.Recipes
                 "substitutionPrecisions",
                 "expectedSubstituteDescription",
                 Measurement.Create(
+                    2,
                     UnitType.Gram,
-                    String.Empty,
-                    2),
+                    String.Empty),
                 new List<Tag>());
 
             // Arrange ingredient
             var expectedDescription = "expectedDescription";
             var expectedMeasurement = Measurement.Create(
+                1,
                 UnitType.Cup,
-                String.Empty,
-                1);
+                String.Empty);
             var expectedName = "expectedName";
             var expectedRecipeSubstitutes = new List<RecipeSubstitute> { expectedRecipeSubstitute };
             var expectedTags = new List<Tag> { Tag.Vegan, Tag.Vegetarian };
@@ -60,9 +60,9 @@ namespace DomainTests.Recipes
                 "ingredientName",
                 "description",
                 Measurement.Create(
+                    1,
                     UnitType.Cup,
-                    String.Empty,
-                    1),
+                    String.Empty),
                 new List<Tag>(),
                 new List<RecipeSubstitute>());
             
@@ -84,9 +84,9 @@ namespace DomainTests.Recipes
                 "ingredientName",
                 "description",
                 Measurement.Create(
+                    1,
                     UnitType.Cup,
-                    String.Empty,
-                    1),
+                    String.Empty),
                 new List<Tag> { tagVegan },
                 new List<RecipeSubstitute>());
             
@@ -107,9 +107,9 @@ namespace DomainTests.Recipes
                 "ingredientName",
                 "description",
                 Measurement.Create(
+                    1,
                     UnitType.Cup,
-                    String.Empty,
-                    1),
+                    String.Empty),
                 new List<Tag> { tag },
                 new List<RecipeSubstitute>());
             
@@ -129,18 +129,18 @@ namespace DomainTests.Recipes
                 "substitutionPrecisions",
                 "description",
                 Measurement.Create(
+                    1,
                     UnitType.Cup,
-                    String.Empty,
-                    1),
+                    String.Empty),
                 new List<Tag>());
             
             var recipeIngredient = RecipeIngredient.Create(
                 "ingredientName",
                 "description",
                 Measurement.Create(
+                    1,
                     UnitType.Cup,
-                    String.Empty,
-                    1),
+                    String.Empty),
                 new List<Tag>(),
                 new List<RecipeSubstitute>());
             
@@ -161,18 +161,18 @@ namespace DomainTests.Recipes
                 "substitutionPrecisions",
                 "description",
                 Measurement.Create(
+                    1,
                     UnitType.Cup,
-                    String.Empty,
-                    1),
+                    String.Empty),
                 new List<Tag>());
             
             var recipeIngredient = RecipeIngredient.Create(
                 "ingredientName",
                 "description",
                 Measurement.Create(
+                    1,
                     UnitType.Cup,
-                    String.Empty,
-                    1),
+                    String.Empty),
                 new List<Tag>(),
                 new List<RecipeSubstitute> { recipeSubstitute });
             

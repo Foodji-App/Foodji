@@ -16,9 +16,9 @@ namespace DomainTests.Recipes
                 "expectedIngredientName",
                 "expectedIngredientDescription",
                 Measurement.Create(
+                    2,
                     UnitType.Gram,
-                    String.Empty,
-                    2),
+                    String.Empty),
                 new List<Tag>(),
                 new List<RecipeSubstitute>());
 
@@ -29,7 +29,7 @@ namespace DomainTests.Recipes
             var expectedDetails = RecipeDetails.Create(0,0,0,0);
             var expectedRecipeIngredients = new List<RecipeIngredient> { expectedIngredient };
             var expectedRecipeSteps = new List<string> { "expectedStep" };
-            var expectedImageUri = new Uri("https://www.google.ca"); // Copilot proposed me this lol
+            var expectedImageUri = new Uri("https://www.google.ca");
             
             // Act
             var actualRecipe = Recipe.Create(
@@ -60,9 +60,9 @@ namespace DomainTests.Recipes
                 "ingredientName",
                 "ingredientDescription",
                 Measurement.Create(
+                    2,
                     UnitType.Gram,
-                    String.Empty,
-                    2),
+                    String.Empty),
                 new List<Tag>(),
                 new List<RecipeSubstitute>());
             
@@ -84,16 +84,16 @@ namespace DomainTests.Recipes
         }
         
         [Test]
-        public void GivenValidSubstituteInPopulatedList_AddSubstitute_SubstituteAddedToList()
+        public void GivenValidIngredientInPopulatedList_AddIngredient_IngredientAddedToList()
         {
             // Arrange
             var ingredient = RecipeIngredient.Create(
                 "ingredientName",
                 "ingredientDescription",
                 Measurement.Create(
+                    2,
                     UnitType.Gram,
-                    String.Empty,
-                    2),
+                    String.Empty),
                 new List<Tag>(),
                 new List<RecipeSubstitute>());
             

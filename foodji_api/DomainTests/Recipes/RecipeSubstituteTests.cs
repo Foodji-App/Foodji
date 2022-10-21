@@ -15,9 +15,9 @@ namespace DomainTests.Recipes
             // Arrange ingredient
             var expectedDescription = "expectedDescription";
             var expectedMeasurement = Measurement.Create(
+                1,
                 UnitType.Cup,
-                String.Empty,
-                value: 1);
+                String.Empty);
             var expectedName = "expectedName";
             var expectedTags = new List<Tag> { Tag.Vegan, Tag.Vegetarian };
             var expectedSubstitutionPrecisions = "expectedSubstitutionPrecisions";
@@ -50,9 +50,9 @@ namespace DomainTests.Recipes
                 "substitutionPrecisions",
                 "description",
                 Measurement.Create(
+                    1,
                     UnitType.Cup,
-                    String.Empty,
-                    1),
+                    String.Empty),
                 new List<Tag>());
             
             // Act
@@ -74,9 +74,9 @@ namespace DomainTests.Recipes
                 "substitutionPrecisions",
                 "description",
                 Measurement.Create(
+                    1,
                     UnitType.Cup,
-                    String.Empty,
-                    1),
+                    String.Empty),
                 new List<Tag> { tagVegan });
             
             // Act
@@ -97,9 +97,9 @@ namespace DomainTests.Recipes
                 "substitutionPrecisions",
                 "description",
                 Measurement.Create(
+                    1,
                     UnitType.Cup,
-                    String.Empty,
-                    1),
+                    String.Empty),
                 new List<Tag> { tag });
             
             // Act

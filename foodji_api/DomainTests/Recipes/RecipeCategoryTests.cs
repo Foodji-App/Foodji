@@ -13,10 +13,10 @@ public class RecipeCategoryTests
     public void ValidName_Create_ReturnsRecipeCategory()
     {
         // Arrange
-        var expectedName = "dessert";
+        var expectedName = "Dessert";
         
         // Act
-        var result = Tag.Create(expectedName);
+        var result = RecipeCategory.Create(expectedName);
         
         // Assert
         result.Name.Should().Be(expectedName);
