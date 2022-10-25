@@ -17,4 +17,6 @@ public record RecipeDto
     public IEnumerable<string> Steps { get; set; } = null!;
     
     public Uri ImageUri { get; set; } = null!;
+    
+    public string Author { get; set; } = null!;
 }

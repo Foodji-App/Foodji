@@ -30,7 +30,8 @@ namespace DomainTests.Recipes
             var expectedIngredients = new List<RecipeIngredient> { expectedIngredient };
             var expectedRecipeSteps = new List<string> { "expectedStep" };
             var expectedImageUri = new Uri("https://www.google.ca");
-            
+            var expectedAuthor = "expectedAuthor";
+
             // Act
             var actualRecipe = Recipe.Create(
                 expectedName,
@@ -39,7 +40,8 @@ namespace DomainTests.Recipes
                 expectedDetails,
                 expectedIngredients,
                 expectedRecipeSteps,
-                expectedImageUri);
+                expectedImageUri,
+                expectedAuthor);
 
             // Assert
             actualRecipe.Name.Should().Be(expectedName);
@@ -49,6 +51,7 @@ namespace DomainTests.Recipes
             actualRecipe.Ingredients.Should().BeEquivalentTo(expectedIngredients);
             actualRecipe.Steps.Should().BeEquivalentTo(expectedRecipeSteps);
             actualRecipe.ImageUri.Should().Be(expectedImageUri);
+            actualRecipe.Author.Should().Be(expectedAuthor);
             actualRecipe.Should().BeOfType<Recipe>();
         }
         
@@ -73,7 +76,8 @@ namespace DomainTests.Recipes
                 RecipeDetails.Create(0,0,0,0),
                 new List<RecipeIngredient>(),
                 new List<string>(),
-                new Uri("https://www.google.ca"));
+                new Uri("https://www.google.ca"),
+                "authorId");
             
             // Act
             recipe.AddIngredient(ingredient);
@@ -104,7 +108,8 @@ namespace DomainTests.Recipes
                 RecipeDetails.Create(0,0,0,0),
                 new List<RecipeIngredient> { ingredient },
                 new List<string>(),
-                new Uri("https://www.google.ca"));
+                new Uri("https://www.google.ca"),
+                "authorId");
             
             // Act
             recipe.AddIngredient(ingredient);

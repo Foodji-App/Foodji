@@ -44,6 +44,23 @@ public class RecipesController : ControllerBase
 
         return Ok(result);
     }
+    
+    [HttpGet("users/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RecipeDto>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllRecipesFromUser([FromRoute] string id)
+    {
+        var query = new GetAllRecipesFromUserQuery(id);
+
+        var result = await _mediator.Send(query);
+
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
 
     [HttpPost]
     // [ProducesResponseType(StatusCodes.Status201Created)]
