@@ -162,7 +162,7 @@ class RecipesPageState extends State<RecipesPage> {
                                                   topLeft: Radius.circular(10),
                                                   bottomRight: Radius.circular(10)),
                                               color: AppColors.textColor,
-                                              image: DecorationImage(image: NetworkImage(filteredRecipes[index].img), fit: BoxFit.fill))),
+                                              image: DecorationImage(image: NetworkImage(filteredRecipes[index].imageUri), fit: BoxFit.fill))),
                                       title: Text(filteredRecipes[index].name),
                                       subtitle: Text(filteredRecipes[index].category),
                                       isThreeLine: false,

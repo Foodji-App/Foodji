@@ -68,7 +68,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                               topLeft: Radius.circular(40),
                                               bottomRight: Radius.circular(40)),
                                           child: Image(
-                                              image: NetworkImage(recipe.img),
+                                              image: NetworkImage(recipe.imageUri),
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width))))),

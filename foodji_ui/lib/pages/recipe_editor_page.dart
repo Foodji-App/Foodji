@@ -7,6 +7,7 @@ import '../misc/colors.dart';
 import '../models/ingredient_model.dart';
 import '../models/recipe_model.dart';
 import '../widgets/app_text.dart';
+import '../widgets/recipe_form/app_reorderable_text_form_fields.dart';
 import 'error_page.dart';
 
 class RecipeEditorPage extends StatefulWidget {
@@ -30,15 +31,17 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
 
   final _tileShape = const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30), bottomRight: Radius.circular(30)));
+          topLeft: Radius.circular(15), bottomRight: Radius.circular(15)));
 
   final _formKey = GlobalKey<FormState>();
+
+  final _scrollController = ScrollController();
 
   _updateRecipe() {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        _savedRecipe = _currentRecipe;
         BlocProvider.of<AppCubits>(context).updateRecipe(_savedRecipe);
+        _savedRecipe = RecipeModel.deepCopy(_currentRecipe);
         _formKey.currentState!.save();
       });
       return "Recipe updated"; // TODO : i10n
@@ -46,55 +49,90 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     return "Form not valid"; // TODO : i10n
   }
 
+  _discardRecipe() {
+    // TODO : fix Discard notification
+    if (!_savedRecipe.equals(_currentRecipe)) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const AppText(text: 'Discard changes?'),
+              actions: [
+                TextButton(
+                  child: const AppText(text: 'Cancel'),
+                  onPressed: () {},
+                ),
+                TextButton(
+                  child: const AppText(text: 'Discard'),
+                  onPressed: () => _updateRecipe(),
+                ),
+              ],
+            );
+          });
+    }
+    BlocProvider.of<AppCubits>(context).gotoRecipeDetails(_savedRecipe);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is RecipeEditorState) {
-        _savedRecipe = state.recipe;
-        _currentRecipe = _savedRecipe;
+        _savedRecipe = RecipeModel.deepCopy(state.recipe);
+        _currentRecipe = RecipeModel.deepCopy(_savedRecipe);
         return Scaffold(
           appBar: _appBar(),
-          body: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('img/background-gradient.png'),
-                    fit: BoxFit.fill)),
-            child: Form(
-                key: _formKey,
-                child: ListView(
-                  padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-                  shrinkWrap: true,
-                  children: [
-                    ListTile(
-                        shape: _tileShape,
-                        title: Column(
-                          children: [
-                            _buildName(),
-                            _buildDescription(),
-                            _buildCategory(),
-                            // _uploadImage(),
-                          ],
-                        )),
-                    const SizedBox(height: 20),
-                    _buildIngredients(),
-                    const SizedBox(height: 20),
-                    _buildSteps(),
-                    const SizedBox(height: 200),
-                    Positioned(
-                      // TODO: remove after debug
-                      top: MediaQuery.of(context).size.height * 0.2,
-                      child: Container(
-                          padding: const EdgeInsets.all(10),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: const BoxDecoration(
-                              color: AppColors.highlightColor2,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: AppText(text: _currentRecipe.toText())),
-                    ),
-                  ],
-                )),
+          body: SingleChildScrollView(
+            controller: _scrollController,
+            child: Container(
+              padding: const EdgeInsets.only(
+                  left: 10, top: 12, right: 10, bottom: 14),
+              width: double.maxFinite,
+              height: double.maxFinite,
+              // BUG : overflow le background des tiles
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('img/background-gradient.png'),
+                      fit: BoxFit.fill)),
+              child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      ListTile(
+                          tileColor: AppColors.highlightColor1,
+                          shape: _tileShape,
+                          title: Column(
+                            children: [
+                              _buildName(),
+                              _buildDescription(),
+                              Row(
+                                children: [
+                                  Expanded(flex: 2, child: _buildCategory()),
+                                  const SizedBox(width: 15),
+                                  Expanded(flex: 1, child: _buildServes()),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          )),
+                      const SizedBox(height: 20),
+                      // ingredients
+                      _buildIngredients(),
+                      // steps
+                      Expanded(
+                          child: ReorderableTextFormFields(
+                        scrollController: _scrollController,
+                        items: _currentRecipe.steps,
+                        onChanged: (items) => _currentRecipe.steps = items,
+                        validator: (value) => (value == null || value.isEmpty)
+                            ? 'Please enter some text' // TODO : i10n
+                            : null,
+                      )),
+                      // _buildSteps(),
+                      const SizedBox(height: 20),
+                    ],
+                  )),
+            ),
           ),
         );
       } else {
@@ -103,7 +141,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     });
   }
 
-  _appBar() {
+  AppBar _appBar() {
     return AppBar(
         title: const AppText(
             text: 'Recipe Editor',
@@ -117,32 +155,12 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
           Container(
               margin: const EdgeInsets.only(right: 4),
               child: IconButton(
-                  icon: const Icon(Icons.arrow_back_rounded),
-                  color: AppColors.backgroundColor,
-                  onPressed: () {
-                    // TODO : fix Discard notification
-                    // if (_currentRecipe != _savedRecipe) {
-                    //   showDialog(
-                    //       context: context,
-                    //       builder: (BuildContext context) {
-                    //         return AlertDialog(
-                    //           title: const AppText(text: 'Discard changes?'),
-                    //           actions: [
-                    //             TextButton(
-                    //               child: const AppText(text: 'Cancel'),
-                    //               onPressed: () {},
-                    //             ),
-                    //             TextButton(
-                    //               child: const AppText(text: 'Discard'),
-                    //               onPressed: () => _updateRecipe(),
-                    //             ),
-                    //           ],
-                    //         );
-                    //       });
-                    // }
-                    BlocProvider.of<AppCubits>(context)
-                        .gotoRecipeDetails(_savedRecipe);
-                  }))
+                icon: const Icon(Icons.arrow_back_rounded),
+                color: AppColors.backgroundColor,
+                onPressed: () => BlocProvider.of<AppCubits>(context)
+                    .gotoRecipeDetails(_savedRecipe),
+                // TODO: Use _discardRecipe() after fixing rendering bugs,
+              ))
         ]);
   }
 
@@ -190,15 +208,20 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     );
   }
 
-  _buidService() {
+  Widget _buildServes() {
     // TODO : implement
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      initialValue: _currentRecipe.details.serves.toString(),
+      decoration: const InputDecoration(hintText: 'Serves'), // TODO : i10n
+      validator: (String? value) =>
+          (value!.isEmpty) ? 'Name is Required' : null, // TODO : i10n
+      onSaved: (String? value) =>
+          _currentRecipe.details.serves = int.parse(value!),
+    );
   }
 
-  _uploadImage() {
-    // TODO : implement
-  }
-
-  _buildIngredients() {
+  Widget _buildIngredients() {
     return ExpansionTile(
       title: const Text('Ingredients'), // TODO : i10n
       children: [
@@ -219,12 +242,10 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     );
   }
 
-  Widget _ingredientBuilder(IngredientModel ingredient) {
+  ListTile _ingredientBuilder(IngredientModel ingredient) {
     return ListTile(
       key: ValueKey(ingredient),
-      autofocus: true,
-      focusColor: AppColors.backgroundColor,
-      tileColor: AppColors.backgroundColor60,
+      tileColor: AppColors.highlightColor3,
       shape: _tileShape,
       title: Column(
         children: [
@@ -232,7 +253,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
           TextFormField(
               initialValue: ingredient.name,
               decoration: const InputDecoration(
-                hintText: 'Name',
+                hintText: 'Ingredient',
               ),
               validator: (value) => (value == null || value.isEmpty)
                   ? 'Please enter some text' // TODO : i10n
@@ -281,68 +302,15 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
               )
             ],
           ),
+          const SizedBox(
+            height: 10,
+          ),
         ],
       ),
       trailing: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () =>
               setState(() => _currentRecipe.ingredients.remove(ingredient))),
-    );
-  }
-
-  _buildSteps() {
-    return ExpansionTile(
-      title: const Text('Steps'), // TODO : i10n
-      children: [
-        // TODO : ReorderableListView
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: _currentRecipe.steps.length,
-          itemBuilder: (context, index) {
-            return _stepBuilder(_currentRecipe.steps[index]);
-          },
-          // onReorder: (oldIndex, newIndex) {
-          //   setState(() {
-          //     if (newIndex > oldIndex) {
-          //       newIndex -= 1;
-          //     }
-          //     final item = _currentRecipe.steps.removeAt(oldIndex);
-          //     _currentRecipe.steps.insert(newIndex, item);
-          //   });
-          // },
-        ),
-        ElevatedButton(
-          onPressed: () => setState(() => _currentRecipe.steps.add('')),
-          child: const AppText(text: 'Add Step'), // TODO : i10n
-        ),
-      ],
-    );
-  }
-
-  _stepBuilder(String stepName) {
-    return ListTile(
-      key: ValueKey(stepName),
-      autofocus: true,
-      focusColor: AppColors.backgroundColor,
-      tileColor: AppColors.backgroundColor60,
-      shape: _tileShape,
-      title: TextFormField(
-          initialValue: stepName,
-          decoration: const InputDecoration(
-            hintText: 'Step', // TODO : i10n
-          ),
-          maxLength: 300,
-          minLines: 1,
-          maxLines: 6,
-          validator: (value) => (value == null || value.isEmpty)
-              ? 'Please enter some text' // TODO : i10n
-              : null,
-          onSaved: (value) => stepName = value!),
-      trailing: IconButton(
-          icon: const Icon(Icons.delete),
-          onPressed: () =>
-              setState(() => _currentRecipe.steps.remove(stepName))),
     );
   }
 }
