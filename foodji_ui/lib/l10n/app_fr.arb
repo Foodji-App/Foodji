@@ -33,6 +33,8 @@
   "recipe_no_steps": "Aucune instruction n'a été ajoutée",
   "recipe_no_ingredients": "Aucun ingrédient n'a été ajouté",
 
+  "ingredient_substitutions": "Substitutions",
+
   "tag_filter": "Filtres avancés",
   "tag_vegan": "Végétalien",
   "tag_vegetarian": "Végétarien",

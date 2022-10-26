@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../models/ingredient_model.dart';
 import '../models/recipe_model.dart';
 import '../services/data_services.dart';
 import 'app_cubit_states.dart';
@@ -15,6 +16,9 @@ class AppCubits extends Cubit<CubitStates> {
 
   // Recipes
   List<RecipeModel> recipes = [];
+
+  // Ingredients
+  List<IngredientModel> ingredients = [];
 
   // Getters -------------------------------------
 
@@ -35,7 +39,9 @@ class AppCubits extends Cubit<CubitStates> {
   void authentify() async {
     try {
       recipes.addAll(RecipeModel.getSamples(20));
-      emit(AuthentifiedState(recipes, [...recipes])); //Deep copy
+      ingredients.addAll(IngredientModel.getSamples(20));
+      emit(AuthentifiedState(
+          recipes, [...recipes], ingredients, [...ingredients])); //Deep copy
     } catch (e) {
       emit(ErrorState());
     }
@@ -64,7 +70,8 @@ class AppCubits extends Cubit<CubitStates> {
   // To recipes
   void gotoRecipes() async {
     try {
-      emit(AuthentifiedState(recipes, [...recipes]));
+      emit(AuthentifiedState(
+          recipes, [...recipes], ingredients, [...ingredients]));
     } catch (e) {
       emit(ErrorState());
     }
@@ -74,6 +81,25 @@ class AppCubits extends Cubit<CubitStates> {
   void gotoRecipeDetails(recipe) async {
     try {
       emit(RecipeState(recipe));
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  // To ingredients
+  void gotoIngredients() async {
+    try {
+      emit(AuthentifiedState(
+          recipes, [...recipes], ingredients, [...ingredients]));
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  // To recipe details
+  void gotoIngredientDetails(recipe) async {
+    try {
+      emit(IngredientState(recipe));
     } catch (e) {
       emit(ErrorState());
     }
