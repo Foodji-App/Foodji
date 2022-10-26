@@ -18,7 +18,7 @@ namespace DomainTests.Recipes
             
             // Act
             var actualMeasurement = Measurement.Create(
-                expectedUnitType, expectedAlternativeText, expectedValue);
+                expectedValue, expectedUnitType, expectedAlternativeText);
 
             // Assert
             actualMeasurement.UnitType.Should().Be(expectedUnitType);
@@ -37,7 +37,7 @@ namespace DomainTests.Recipes
             
             // Act
             var actualMeasurement = Measurement.Create(
-                expectedUnitType, expectedAlternativeText, expectedValue);
+                expectedValue, expectedUnitType, expectedAlternativeText);
 
             // Assert
             actualMeasurement.UnitType.Should().Be(expectedUnitType);
@@ -57,7 +57,7 @@ namespace DomainTests.Recipes
             
             // Act
             var actualMeasurement = Measurement.Create(
-                expectedUnitType, expectedAlternativeText, expectedValue);
+                expectedValue, expectedUnitType, expectedAlternativeText);
 
             // Assert
             actualMeasurement.UnitType.Should().Be(expectedUnitType);
@@ -76,7 +76,7 @@ namespace DomainTests.Recipes
             
             // Act
             var act = () => Measurement.Create(
-                expectedUnitType, expectedAlternativeText, expectedValue);
+                expectedValue, expectedUnitType, expectedAlternativeText);
 
             // Assert
             act.Should().Throw<DomainException>();
