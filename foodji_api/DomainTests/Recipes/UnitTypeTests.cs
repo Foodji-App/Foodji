@@ -12,7 +12,7 @@ public class UnitTypeTests
     public void ValidName_Create_ReturnsUnitType()
     {
         // Arrange
-        var expectedName = "unité";
+        var expectedName = "unit";
         
         // Act
         var result = UnitType.Create(expectedName);
