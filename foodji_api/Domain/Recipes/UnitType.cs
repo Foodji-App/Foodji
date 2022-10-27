@@ -23,7 +23,7 @@ public record UnitType
 
     public static UnitType Create(string name)
     {
-        switch (name)
+        switch (name.ToLower())
         {
             // As in "one banana" - avoid adding additional arbitrary measures as much as possible, they are not uniform.
             // "A can" can be entirely different from one area to another, from a year to another (e.g. shrinkflation), etc.

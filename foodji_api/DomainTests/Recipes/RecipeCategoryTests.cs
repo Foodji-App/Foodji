@@ -14,6 +14,19 @@ public class RecipeCategoryTests
     {
         // Arrange
         var expectedName = "dessert";
+
+        // Act
+        var result = RecipeCategory.Create(expectedName);
+
+        // Assert
+        result.Name.Should().Be(expectedName);
+    }
+
+    [Test]
+    public void ValidName_Create_ReturnsRecipeCategoryUpperCase()
+    {
+        // Arrange
+        var expectedName = "Dessert";
         
         // Act
         var result = RecipeCategory.Create(expectedName);
