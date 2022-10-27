@@ -12,7 +12,7 @@ public record RecipeDto
     
     public RecipeDetailsDto Details { get; set; } = null!;
     
-    public IEnumerable<RecipeIngredientDto> RecipeIngredients { get; set; } = null!;
+    public IEnumerable<RecipeIngredientDto> Ingredients { get; set; } = null!;
     
     public IEnumerable<string> Steps { get; set; } = null!;
     

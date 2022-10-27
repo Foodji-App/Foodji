@@ -22,13 +22,13 @@ public record RecipeCategory
 
     public static RecipeCategory Create(string name)
     {
-        switch (name)
+        switch (name.ToLower())
         {
             case "dessert":
                 return Dessert;
-            case "mainCourse":
+            case "maincourse":
                 return MainCourse;
-            case "sideDish":
+            case "sidedish":
                 return SideDish;
             case "appetizer":
                 return Appetizer;

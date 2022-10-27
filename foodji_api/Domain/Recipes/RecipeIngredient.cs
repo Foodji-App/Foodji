@@ -20,7 +20,7 @@ public class RecipeIngredient
 
     public IEnumerable<Tag> Tags { get; private set; } = new List<Tag>();
 
-    public IEnumerable<RecipeSubstitute> RecipeSubstitutes { get; private set; } = new List<RecipeSubstitute>();
+    public IEnumerable<RecipeSubstitute> Substitutes { get; private set; } = new List<RecipeSubstitute>();
 
 
     private RecipeIngredient(
@@ -38,11 +38,11 @@ public class RecipeIngredient
         string description,
         Measurement measurement,
         IEnumerable<Tag> tags,
-        IEnumerable<RecipeSubstitute> recipeSubstitutes)
+        IEnumerable<RecipeSubstitute> substitutes)
     {
         var recipeIngredient = new RecipeIngredient(name, description, measurement)
         {
-            RecipeSubstitutes = recipeSubstitutes.ToList(),
+            Substitutes = substitutes.ToList(),
             Tags = tags.ToList()
         };
 
@@ -61,11 +61,11 @@ public class RecipeIngredient
         Tags = newTags;
     }
 
-    public void AddSubstitute(RecipeSubstitute recipeSubstitute)
+    public void AddSubstitute(RecipeSubstitute substitute)
     {
-        var newRecipeSubstitutes = RecipeSubstitutes.ToList();
-        newRecipeSubstitutes.Add(recipeSubstitute);
+        var newSubstitutes = Substitutes.ToList();
+        newSubstitutes.Add(substitute);
 
-        RecipeSubstitutes = newRecipeSubstitutes;
+        Substitutes = newSubstitutes;
     }
 }

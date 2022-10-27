@@ -62,7 +62,7 @@ class IngredientsPageState extends State<IngredientsPage> {
                   recipes = recipes
                       .where((RecipeIngredientModel ig) =>
                           ig.tags.any((t1) => t1 == Tags.values[i].name) ||
-                          ig.recipeSubstitutes.any((RecipeSubstituteModel s) =>
+                          ig.substitutes.any((RecipeSubstituteModel s) =>
                               s.tags.any((t2) => t2 == Tags.values[i].name)))
                       .toList();
                 });

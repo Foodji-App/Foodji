@@ -19,14 +19,14 @@ public class RecipeIngredientConverter : ITypeConverter<RecipeIngredientDto, Rec
         var measurement = _mapper.Map<Measurement>(source.Measurement);
         var tags = _mapper.Map<IEnumerable<Tag>>(source.Tags);
 
-        var recipeSubstitutes = 
-            _mapper.Map<IEnumerable<RecipeSubstituteDto>, IEnumerable<RecipeSubstitute>>(source.RecipeSubstitutes);
+        var substitutes = 
+            _mapper.Map<IEnumerable<RecipeSubstituteDto>, IEnumerable<RecipeSubstitute>>(source.Substitutes);
 
         return RecipeIngredient.Create(
             source.Name,
             source.Description,
             measurement,
             tags,
-            recipeSubstitutes);
+            substitutes);
     }
 }

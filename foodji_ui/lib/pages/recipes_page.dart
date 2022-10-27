@@ -71,12 +71,12 @@ class RecipesPageState extends State<RecipesPage> {
               if (advancedFilters[i]) {
                 setState(() {
                   recipes = recipes
-                      .where((RecipeModel r) => r.recipeIngredients.any(
+                      .where((RecipeModel r) => r.ingredients.any(
                           (RecipeIngredientModel ig) =>
                               ig.tags.any((t1) => t1 == Tags.values[i].name) ||
-                              ig.recipeSubstitutes.any(
-                                  (RecipeSubstituteModel s) => s.tags
-                                      .any((t2) => t2 == Tags.values[i].name))))
+                              ig.substitutes.any((RecipeSubstituteModel s) => s
+                                  .tags
+                                  .any((t2) => t2 == Tags.values[i].name))))
                       .toList();
                 });
               }
@@ -228,13 +228,14 @@ class RecipesPageState extends State<RecipesPage> {
         List<TagsWithColor> tagsWithColors(recipe) {
           List<TagsWithColor> tags = [];
           for (var i = 0; i < 13; i++) {
-            if (recipe.recipeIngredients.any((RecipeIngredientModel ig) =>
+            if (recipe.ingredients.any((RecipeIngredientModel ig) =>
                 ig.tags.any((t) => t == Tags.values[i].name))) {
               tags.add(
                   TagsWithColor(tag: Tags.values[i].name, isIngredients: true));
-            } else if (recipe.recipeIngredients.any((RecipeIngredientModel ig) =>
-                ig.recipeSubstitutes.any((RecipeSubstituteModel s) =>
-                    s.tags.any((t) => t == Tags.values[i].name)))) {
+            } else if (recipe.ingredients.any(
+                (RecipeIngredientModel ig) => ig.substitutes.any(
+                    (RecipeSubstituteModel s) =>
+                        s.tags.any((t) => t == Tags.values[i].name)))) {
               tags.add(TagsWithColor(
                   tag: Tags.values[i].name, isIngredients: false));
             }

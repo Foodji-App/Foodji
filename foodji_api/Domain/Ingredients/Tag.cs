@@ -6,7 +6,7 @@ public record Tag
 
     public static Tag Vegan { get; } = new("vegan");
     public static Tag Vegetarian { get; } = new("vegetarian");
-    public static Tag GlutenFree { get; } = new("glutenFreen");
+    public static Tag GlutenFree { get; } = new("glutenFree");
     public static Tag SoyFree { get; } = new("soyFree");
     public static Tag EggFree { get; } = new("eggFree");
     public static Tag NutFree { get; } = new("nutFree");

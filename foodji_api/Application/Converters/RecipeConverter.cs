@@ -18,15 +18,15 @@ public class RecipeConverter : ITypeConverter<RecipeDto, Recipe>
         var category = _mapper.Map<RecipeCategory>(source.Category);
         var details = _mapper.Map<RecipeDetails>(source.Details);
 
-        var recipeIngredients = 
-            _mapper.Map<IEnumerable<RecipeIngredientDto>, IEnumerable<RecipeIngredient>>(source.RecipeIngredients);
+        var ingredients = 
+            _mapper.Map<IEnumerable<RecipeIngredientDto>, IEnumerable<RecipeIngredient>>(source.Ingredients);
 
         return Recipe.Create(
             source.Name,
             category,
             source.Description,
             details,
-            recipeIngredients,
+            ingredients,
             source.Steps.ToList(),
             source.ImageUri);
     }

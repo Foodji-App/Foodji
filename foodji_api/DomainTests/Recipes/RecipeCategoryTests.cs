@@ -23,18 +23,19 @@ public class RecipeCategoryTests
     }
 
     [Test]
-    public void ValidName_Create_ReturnsRecipeCategoryUpperCase()
+    public void ValidName_Create_ReturnsRecipeCategoryExistingUpperCase()
     {
         // Arrange
-        var expectedName = "Dessert";
-        
+        var expectedName = "dessert";
+        var creationName = "Dessert";
+
         // Act
-        var result = RecipeCategory.Create(expectedName);
+        var result = RecipeCategory.Create(creationName);
         
         // Assert
         result.Name.Should().Be(expectedName);
     }
-    
+
     [Test]
     public void InvalidName_Create_ThrowsDomainException()
     {

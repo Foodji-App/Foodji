@@ -111,14 +111,13 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
         List<TagsWithColor> tagsWithColors(recipe) {
           List<TagsWithColor> tags = [];
           for (var i = 0; i < 12; i++) {
-            if (recipe.recipeIngredients.any((RecipeIngredientModel ig) =>
+            if (recipe.ingredients.any((RecipeIngredientModel ig) =>
                 ig.tags.any((t) => t == Tags.values[i].name))) {
               tags.add(
                   TagsWithColor(tag: Tags.values[i].name, isIngredients: true));
-            } else if (recipe.recipeIngredients.any(
-                (RecipeIngredientModel ig) => ig.recipeSubstitutes.any(
-                    (RecipeSubstituteModel s) =>
-                        s.tags.any((t) => t == Tags.values[i].name)))) {
+            } else if (recipe.ingredients.any((RecipeIngredientModel ig) =>
+                ig.substitutes.any((RecipeSubstituteModel s) =>
+                    s.tags.any((t) => t == Tags.values[i].name)))) {
               tags.add(TagsWithColor(
                   tag: Tags.values[i].name, isIngredients: false));
             }
@@ -314,16 +313,13 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                         width: MediaQuery.of(context).size.width,
                         // TODO - Height here causes an issue. It cannot be removed, but cannot be set to child size either.
                         height: MediaQuery.of(context).size.height,
-                        child: TabBarView(
-                            controller: tabController,
-                            children: <Widget>[
-                              RecipeDetailPreparation(
-                                  recipe,
-                                  List.filled(
-                                      recipe.recipeIngredients.length, false)),
-                              RecipeDetailInstructions(recipe,
-                                  List.filled(recipe.steps.length, false))
-                            ]))
+                        child: TabBarView(controller: tabController, children: <
+                            Widget>[
+                          RecipeDetailPreparation(recipe,
+                              List.filled(recipe.ingredients.length, false)),
+                          RecipeDetailInstructions(
+                              recipe, List.filled(recipe.steps.length, false))
+                        ]))
                   ]))
                 ])));
       } else {

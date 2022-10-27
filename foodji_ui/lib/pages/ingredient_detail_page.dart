@@ -1,5 +1,3 @@
-// TODO : replace recipeIngredient by ingredient and recipeSubstitute by substitute
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/widgets/app_text.dart';

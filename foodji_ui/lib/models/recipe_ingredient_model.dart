@@ -10,7 +10,7 @@ class RecipeIngredientModel {
   String? description;
   MeasurementModel measurement;
   List<String> tags;
-  List<RecipeSubstituteModel> recipeSubstitutes;
+  List<RecipeSubstituteModel> substitutes;
 
   RecipeIngredientModel(
       {required this.id,
@@ -18,7 +18,7 @@ class RecipeIngredientModel {
       required this.description,
       required this.measurement,
       required this.tags,
-      required this.recipeSubstitutes});
+      required this.substitutes});
 
   factory RecipeIngredientModel.fromJson(Map<String, dynamic> json) {
     return RecipeIngredientModel(
@@ -26,7 +26,7 @@ class RecipeIngredientModel {
         name: json['name'],
         description: json['description'],
         measurement: MeasurementModel.fromJson(json['measurement']),
-        recipeSubstitutes: json['recipeSubstitutes']
+        substitutes: json['substitutes']
             .map<RecipeSubstituteModel>(
                 (e) => RecipeSubstituteModel.fromJson(e))
             .toList(),
@@ -45,7 +45,7 @@ class RecipeIngredientModel {
           faker.randomGenerator.element(Tags.values).name,
           faker.randomGenerator.element(Tags.values).name
         }.toList(),
-        recipeSubstitutes:
+        substitutes:
             RecipeSubstituteModel.getSamples(random.integer(2, min: 0)));
   }
 

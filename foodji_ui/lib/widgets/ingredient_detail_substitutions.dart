@@ -19,7 +19,7 @@ class IngredientDetailSubstitutionsState
   ingredients(BuildContext context) {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: widget.ingredient.recipeSubstitutes.length,
+        itemCount: widget.ingredient.substitutes.length,
         itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Column(children: [
@@ -32,8 +32,7 @@ class IngredientDetailSubstitutionsState
                     children: <Widget>[
                       AppText(
                           color: AppColors.textColor,
-                          text:
-                              widget.ingredient.recipeSubstitutes[index].name),
+                          text: widget.ingredient.substitutes[index].name),
                     ],
                   ),
                 ),
@@ -67,7 +66,7 @@ class IngredientDetailSubstitutionsState
           const SizedBox(
             height: 10,
           ),
-          widget.ingredient.recipeSubstitutes.isNotEmpty
+          widget.ingredient.substitutes.isNotEmpty
               ? ingredients(context)
               : AppText(
                   text: AppLocalizations.of(context)!.recipe_no_ingredients)

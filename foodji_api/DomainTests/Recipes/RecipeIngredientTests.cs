@@ -13,7 +13,7 @@ namespace DomainTests.Recipes
         public void GivenValidValues_Create_ReturnsRecipeIngredient()
         {
             // Arrange substitution
-            var expectedRecipeSubstitute = RecipeSubstitute.Create(
+            var expectedSubstitute = RecipeSubstitute.Create(
                 "expectedSubstituteName",
                 "substitutionPrecisions",
                 "expectedSubstituteDescription",
@@ -30,7 +30,7 @@ namespace DomainTests.Recipes
                 UnitType.Cup,
                 String.Empty);
             var expectedName = "expectedName";
-            var expectedRecipeSubstitutes = new List<RecipeSubstitute> { expectedRecipeSubstitute };
+            var expectedSubstitutes = new List<RecipeSubstitute> { expectedSubstitute };
             var expectedTags = new List<Tag> { Tag.Vegan, Tag.Vegetarian };
 
             // Act
@@ -39,13 +39,13 @@ namespace DomainTests.Recipes
                 expectedDescription,
                 expectedMeasurement,
                 expectedTags,
-                expectedRecipeSubstitutes);
+                expectedSubstitutes);
 
             // Assert
             actualRecipeIngredient.Description.Should().Be(expectedDescription);
             actualRecipeIngredient.Measurement.Should().BeEquivalentTo(expectedMeasurement);
             actualRecipeIngredient.Name.Should().Be(expectedName);
-            actualRecipeIngredient.RecipeSubstitutes.Should().BeEquivalentTo(expectedRecipeSubstitutes);
+            actualRecipeIngredient.Substitutes.Should().BeEquivalentTo(expectedSubstitutes);
             actualRecipeIngredient.Tags.Should().BeEquivalentTo(expectedTags);
             actualRecipeIngredient.Should().BeOfType<RecipeIngredient>();
         }
@@ -148,7 +148,7 @@ namespace DomainTests.Recipes
             recipeIngredient.AddSubstitute(recipeSubstitute);
             
             // Assert
-            recipeIngredient.RecipeSubstitutes.Should().BeEquivalentTo(
+            recipeIngredient.Substitutes.Should().BeEquivalentTo(
                 new List<RecipeSubstitute> { recipeSubstitute });
         }
         
@@ -180,7 +180,7 @@ namespace DomainTests.Recipes
             recipeIngredient.AddSubstitute(recipeSubstitute);
             
             // Assert
-            recipeIngredient.RecipeSubstitutes.Should().BeEquivalentTo(
+            recipeIngredient.Substitutes.Should().BeEquivalentTo(
                 new List<RecipeSubstitute> { recipeSubstitute, recipeSubstitute });
         }
     }

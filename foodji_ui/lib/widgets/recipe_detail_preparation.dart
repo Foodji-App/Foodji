@@ -64,7 +64,7 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
 
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: widget.recipe.recipeIngredients.length,
+        itemCount: widget.recipe.ingredients.length,
         itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),
               child: Column(children: [
@@ -81,7 +81,7 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
                         child: Column(children: <Widget>[
                           AppText(
                             color: AppColors.textColor,
-                            text: widget.recipe.recipeIngredients[index].name,
+                            text: widget.recipe.ingredients[index].name,
                           )
                         ])),
                     const Spacer(),
@@ -118,7 +118,7 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
           const SizedBox(
             height: 10,
           ),
-          widget.recipe.recipeIngredients.isNotEmpty
+          widget.recipe.ingredients.isNotEmpty
               ? ingredients(context)
               : AppText(
                   text: AppLocalizations.of(context)!.recipe_no_ingredients)

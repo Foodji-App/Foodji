@@ -15,7 +15,7 @@ class RecipeModel {
   String category;
   String description;
   RecipeDetailsModel details;
-  List<RecipeIngredientModel> recipeIngredients;
+  List<RecipeIngredientModel> ingredients;
   List<String> steps;
   DateTime? createdAt;
   bool isFavorite;
@@ -27,7 +27,7 @@ class RecipeModel {
       required this.category,
       required this.description,
       required this.details,
-      required this.recipeIngredients,
+      required this.ingredients,
       required this.steps,
       required this.createdAt,
       required this.isFavorite});
@@ -40,7 +40,7 @@ class RecipeModel {
         category: json['category'],
         description: json['description'],
         details: RecipeDetailsModel.fromJson(json['details']),
-        recipeIngredients: json['recipeIngredients']
+        ingredients: json['ingredients']
             .map<RecipeIngredientModel>(
                 (e) => RecipeIngredientModel.fromJson(e))
             .toList(),
@@ -56,7 +56,7 @@ class RecipeModel {
       'category: $category\n' +
       'desc: $imageUri\n' +
       'details: ${details.toText()}\n' +
-      'ingredients: \n ${recipeIngredients.join('\n - ')}\n' +
+      'ingredients: \n ${ingredients.join('\n - ')}\n' +
       'steps: \n ${steps.join('\n - ')}\n' +
       'createdAt: $createdAt' +
       'isFavorite: ${isFavorite.toString()}';
@@ -74,7 +74,7 @@ class RecipeModel {
             restingTime: 0,
             serves: 0,
             totalTime: 0),
-        recipeIngredients: [],
+        ingredients: [],
         steps: [],
         createdAt: DateTime.now(),
         isFavorite: false);
@@ -90,7 +90,7 @@ class RecipeModel {
         category: Categories.values[random.integer(5, min: 0)].name,
         description: faker.lorem.sentences(random.integer(4, min: 1)).join(' '),
         details: RecipeDetailsModel.getSample(),
-        recipeIngredients:
+        ingredients:
             RecipeIngredientModel.getSamples(random.integer(10, min: 3)),
         steps: faker.lorem.sentences(random.integer(10, min: 3)),
         createdAt: faker.date.dateTime(),
