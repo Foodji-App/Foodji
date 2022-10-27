@@ -97,7 +97,7 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
           const SizedBox(
             height: 10,
           ),
-          widget.recipe.ingredients.isNotEmpty
+          widget.recipe.recipeIngredients.isNotEmpty
               ? ingredients(context)
               : AppText(
                   text: AppLocalizations.of(context)!.recipe_no_ingredients)

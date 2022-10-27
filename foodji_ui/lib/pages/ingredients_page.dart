@@ -1,15 +1,17 @@
+// TODO : replace recipeIngredient by ingredient and recipeSubstitute by substitute
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:foodji_ui/models/ingredient_model.dart';
+import 'package:foodji_ui/models/recipe_ingredient_model.dart';
 import 'package:foodji_ui/models/tags_enum.dart';
 
 import '../cubit/app_globals.dart' as globals;
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
-import '../models/substitution_model.dart';
+import '../models/recipe_substitute_model.dart';
 import '../widgets/app_text.dart';
 
 // Inner class only needed here
@@ -30,7 +32,7 @@ class IngredientsPageState extends State<IngredientsPage> {
   TextEditingController searchBoxController = TextEditingController();
   // Class member to be updatable by setState
   String filterQuery = "";
-  List<bool> advancedFilters = List.filled(12, false);
+  List<bool> advancedFilters = List.filled(13, false);
   bool advancedFilterSelected = false;
 
   toggleFavoriteStatus(recipe) {
@@ -47,19 +49,20 @@ class IngredientsPageState extends State<IngredientsPage> {
     globals.setActivePage(5);
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is AuthentifiedState) {
-        List<IngredientModel> filteredIngredients = state.filteredIngredients;
-        List<IngredientModel> ingredients = state.ingredients;
+        List<RecipeIngredientModel> filteredIngredients =
+            state.filteredIngredients;
+        List<RecipeIngredientModel> ingredients = state.ingredients;
 
         // Widget method to have access to state
-        List<IngredientModel> applyAdvancedFilters(recipes) {
+        List<RecipeIngredientModel> applyAdvancedFilters(recipes) {
           if (advancedFilterSelected) {
-            for (var i = 0; i < 12; i++) {
+            for (var i = 0; i < 13; i++) {
               if (advancedFilters[i]) {
                 setState(() {
                   recipes = recipes
-                      .where((IngredientModel ig) =>
+                      .where((RecipeIngredientModel ig) =>
                           ig.tags.any((t1) => t1 == Tags.values[i].name) ||
-                          ig.substitutions.any((SubstitutionModel s) =>
+                          ig.recipeSubstitutes.any((RecipeSubstituteModel s) =>
                               s.tags.any((t2) => t2 == Tags.values[i].name)))
                       .toList();
                 });
@@ -73,7 +76,7 @@ class IngredientsPageState extends State<IngredientsPage> {
           setState(() {
             filterQuery = query;
           });
-          List<IngredientModel> foundIngredients = [];
+          List<RecipeIngredientModel> foundIngredients = [];
           if (query.isNotEmpty) {
             for (var ingredient in ingredients) {
               for (var text in query.split(" ")) {
@@ -107,7 +110,7 @@ class IngredientsPageState extends State<IngredientsPage> {
               advancedFilterSelected = true;
             } else {
               advancedFilterSelected = false;
-              for (var i = 0; i < 12; i++) {
+              for (var i = 0; i < 13; i++) {
                 if (advancedFilters[i]) {
                   advancedFilterSelected = true;
                   break;
@@ -127,6 +130,8 @@ class IngredientsPageState extends State<IngredientsPage> {
             return AppLocalizations.of(context)!.tag_gluten_free;
           } else if (tag == Tags.soyFree.name) {
             return AppLocalizations.of(context)!.tag_soy_free;
+          } else if (tag == Tags.eggFree.name) {
+            return AppLocalizations.of(context)!.tag_egg_free;
           } else if (tag == Tags.nutFree.name) {
             return AppLocalizations.of(context)!.tag_nut_free;
           } else if (tag == Tags.peanutFree.name) {
@@ -144,17 +149,17 @@ class IngredientsPageState extends State<IngredientsPage> {
           } else if (tag == Tags.kosher.name) {
             return AppLocalizations.of(context)!.tag_kosher;
           } else {
-            return "";
+            return tag;
           }
         }
 
         List<TagsWithColor> tagsWithColors(ingredient) {
           List<TagsWithColor> tags = [];
-          for (var i = 0; i < 12; i++) {
+          for (var i = 0; i < 13; i++) {
             if (ingredient.tags.any((t) => t == Tags.values[i].name)) {
               tags.add(
                   TagsWithColor(tag: Tags.values[i].name, isIngredients: true));
-            } else if (ingredient.substitutions.any((SubstitutionModel s) =>
+            } else if (ingredient.substitutions.any((RecipeSubstituteModel s) =>
                 s.tags.any((t) => t == Tags.values[i].name))) {
               tags.add(TagsWithColor(
                   tag: Tags.values[i].name, isIngredients: false));
@@ -234,7 +239,7 @@ class IngredientsPageState extends State<IngredientsPage> {
                                     MediaQuery.of(context).size.height / 2.5,
                                 child: ListView.builder(
                                     scrollDirection: Axis.vertical,
-                                    itemCount: 12,
+                                    itemCount: 13,
                                     itemBuilder: (context, index) {
                                       return ListTile(
                                         title: AppText(

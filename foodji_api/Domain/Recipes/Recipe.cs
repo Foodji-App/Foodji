@@ -21,7 +21,7 @@ public class Recipe
     
     public RecipeDetails Details { get; private set; }
     
-    public IEnumerable<RecipeIngredient> Ingredients { get; private set; }
+    public IEnumerable<RecipeIngredient> RecipeIngredients { get; private set; }
     
     public IEnumerable<string> Steps { get; private set; }
     
@@ -33,7 +33,7 @@ public class Recipe
         RecipeCategory category, 
         string description, 
         RecipeDetails details, 
-        IEnumerable<RecipeIngredient> ingredients, 
+        IEnumerable<RecipeIngredient> recipeIngredients, 
         IEnumerable<string> steps,
         Uri imageUri)
     {
@@ -42,7 +42,7 @@ public class Recipe
         Category = category;
         Details = details;
         Description = description;
-        Ingredients = ingredients.ToList();
+        RecipeIngredients = recipeIngredients.ToList();
         Steps = steps.ToList();
         ImageUri = imageUri;
     }
@@ -51,19 +51,19 @@ public class Recipe
         RecipeCategory category, 
         string description, 
         RecipeDetails details, 
-        IEnumerable<RecipeIngredient> ingredients, 
+        IEnumerable<RecipeIngredient> recipeIngredients, 
         IEnumerable<string> steps,
         Uri imageUri)
     {
-        return new Recipe(name, DateTime.Now, category, description, details, ingredients, steps, imageUri);
+        return new Recipe(name, DateTime.Now, category, description, details, recipeIngredients, steps, imageUri);
     }
     
-    public void AddIngredient(RecipeIngredient ingredient)
+    public void AddIngredient(RecipeIngredient recipeIngredient)
     {
-        var newIngredients = Ingredients.ToList();
-        newIngredients.Add(ingredient);
+        var newRecipeIngredients = RecipeIngredients.ToList();
+        newRecipeIngredients.Add(recipeIngredient);
 
-        Ingredients = newIngredients;
+        RecipeIngredients = newRecipeIngredients;
     }
     
     public void AddStep(string step)

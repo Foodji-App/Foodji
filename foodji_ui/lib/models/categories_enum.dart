@@ -1,1 +1,13 @@
-enum Categories { breakfast, lunch, diner, dessert, snack, beverage }
+enum Categories {
+  mainCourse,
+  sideDish,
+  appetizer,
+  dessert,
+  lunch,
+  breakfast,
+  beverage,
+  soup,
+  sauce,
+  bread,
+  snack
+}

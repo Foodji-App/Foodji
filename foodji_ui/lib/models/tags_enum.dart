@@ -3,6 +3,7 @@ enum Tags {
   vegetarian,
   glutenFree,
   soyFree,
+  eggFree,
   nutFree,
   peanutFree,
   lactoseFree,

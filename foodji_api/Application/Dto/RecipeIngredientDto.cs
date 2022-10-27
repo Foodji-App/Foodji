@@ -8,7 +8,7 @@ public record RecipeIngredientDto
     
     public MeasurementDto Measurement { get; set; } = null!;
     
-    public IEnumerable<RecipeSubstituteDto> Substitutes { get; set; } = null!;
+    public IEnumerable<RecipeSubstituteDto> RecipeSubstitutes { get; set; } = null!;
     
     public IEnumerable<string> Tags { get; set; } = null!;
 }

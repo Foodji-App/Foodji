@@ -46,7 +46,7 @@ namespace DomainTests.Recipes
             actualRecipe.Category.Should().Be(expectedCategory);
             actualRecipe.Description.Should().Be(expectedDescription);
             actualRecipe.Details.Should().Be(expectedDetails);
-            actualRecipe.Ingredients.Should().BeEquivalentTo(expectedRecipeIngredients);
+            actualRecipe.RecipeIngredients.Should().BeEquivalentTo(expectedRecipeIngredients);
             actualRecipe.Steps.Should().BeEquivalentTo(expectedRecipeSteps);
             actualRecipe.ImageUri.Should().Be(expectedImageUri);
             actualRecipe.Should().BeOfType<Recipe>();
@@ -79,7 +79,7 @@ namespace DomainTests.Recipes
             recipe.AddIngredient(ingredient);
             
             // Assert
-            recipe.Ingredients.Should().BeEquivalentTo(
+            recipe.RecipeIngredients.Should().BeEquivalentTo(
                 new List<RecipeIngredient> { ingredient });
         }
         
@@ -110,7 +110,7 @@ namespace DomainTests.Recipes
             recipe.AddIngredient(ingredient);
             
             // Assert
-            recipe.Ingredients.Should().BeEquivalentTo(
+            recipe.RecipeIngredients.Should().BeEquivalentTo(
                 new List<RecipeIngredient> { ingredient, ingredient });
         }
     }

@@ -1,8 +1,10 @@
+// TODO : replace recipeIngredient by ingredient and recipeSubstitute by substitute
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/widgets/app_text.dart';
-import '../models/ingredient_model.dart';
-import '../models/substitution_model.dart';
+import '../models/recipe_ingredient_model.dart';
+import '../models/recipe_substitute_model.dart';
 import '../models/tags_enum.dart';
 import '../widgets/ingredient_detail_substitutions.dart';
 import '../widgets/stateless_app_bar.dart' as stateless_app_bar_widget;
@@ -34,7 +36,7 @@ class IngredientDetailPageState extends State<IngredientDetailPage>
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is IngredientState) {
         TabController tabController = TabController(length: 2, vsync: this);
-        IngredientModel ingredient = state.ingredient;
+        RecipeIngredientModel ingredient = state.ingredient;
 
         String getTagString(tag) {
           if (tag == Tags.vegan.name) {
@@ -45,6 +47,8 @@ class IngredientDetailPageState extends State<IngredientDetailPage>
             return AppLocalizations.of(context)!.tag_gluten_free;
           } else if (tag == Tags.soyFree.name) {
             return AppLocalizations.of(context)!.tag_soy_free;
+          } else if (tag == Tags.eggFree.name) {
+            return AppLocalizations.of(context)!.tag_egg_free;
           } else if (tag == Tags.nutFree.name) {
             return AppLocalizations.of(context)!.tag_nut_free;
           } else if (tag == Tags.peanutFree.name) {
@@ -62,7 +66,7 @@ class IngredientDetailPageState extends State<IngredientDetailPage>
           } else if (tag == Tags.kosher.name) {
             return AppLocalizations.of(context)!.tag_kosher;
           } else {
-            return "";
+            return tag;
           }
         }
 
@@ -72,7 +76,7 @@ class IngredientDetailPageState extends State<IngredientDetailPage>
             if (ingredient.tags.any((t) => t == Tags.values[i].name)) {
               tags.add(
                   TagsWithColor(tag: Tags.values[i].name, isIngredients: true));
-            } else if (ingredient.substitutions.any((SubstitutionModel s) =>
+            } else if (ingredient.substitutions.any((RecipeSubstituteModel s) =>
                 s.tags.any((t) => t == Tags.values[i].name))) {
               tags.add(TagsWithColor(
                   tag: Tags.values[i].name, isIngredients: false));

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:foodji_ui/models/recipe_model.dart';
 
-import '../models/ingredient_model.dart';
+import '../models/recipe_ingredient_model.dart';
 
 abstract class CubitStates extends Equatable {}
 
@@ -38,8 +38,8 @@ class AuthentifiedState extends CubitStates {
       this.filteredIngredients);
   final List<RecipeModel> recipes;
   final List<RecipeModel> filteredRecipes;
-  final List<IngredientModel> ingredients;
-  final List<IngredientModel> filteredIngredients;
+  final List<RecipeIngredientModel> ingredients;
+  final List<RecipeIngredientModel> filteredIngredients;
   @override
   List<Object> get props => throw [recipes, filteredRecipes];
 }
@@ -55,7 +55,7 @@ class RecipeState extends CubitStates {
 // When an ingredient is selected, displays the ingredient details
 class IngredientState extends CubitStates {
   IngredientState(this.ingredient);
-  final IngredientModel ingredient;
+  final RecipeIngredientModel ingredient;
   @override
   List<Object> get props => throw [ingredient];
 }

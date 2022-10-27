@@ -4,16 +4,17 @@ public record RecipeCategory
 {
     public string Name { get; private set; }
 
-    public static RecipeCategory Dessert { get; } = new RecipeCategory("Dessert");
-    public static RecipeCategory MainCourse { get; } = new RecipeCategory("Plat principal");
-    public static RecipeCategory SideDish { get; } = new RecipeCategory("Accompagnement");
-    public static RecipeCategory Appetizer { get; } = new RecipeCategory("Entrée");
-    public static RecipeCategory Breakfast { get; } = new RecipeCategory("Déjeuner");
-    public static RecipeCategory Soup { get; } = new RecipeCategory("Soupe");
-    public static RecipeCategory Beverage { get; } = new RecipeCategory("Breuvage");
-    public static RecipeCategory Sauce { get; } = new RecipeCategory("Sauce");
-    public static RecipeCategory Bread { get; } = new RecipeCategory("Pain");
-    public static RecipeCategory Snack { get; } = new RecipeCategory("Collation");
+    public static RecipeCategory MainCourse { get; } = new RecipeCategory("mainCourse");
+    public static RecipeCategory SideDish { get; } = new RecipeCategory("sideDish");
+    public static RecipeCategory Appetizer { get; } = new RecipeCategory("appetizer");
+    public static RecipeCategory Dessert { get; } = new RecipeCategory("dessert");
+    public static RecipeCategory Lunch { get; } = new RecipeCategory("lunch");
+    public static RecipeCategory Breakfast { get; } = new RecipeCategory("breakfast");
+    public static RecipeCategory Beverage { get; } = new RecipeCategory("beverage");
+    public static RecipeCategory Soup { get; } = new RecipeCategory("soup");
+    public static RecipeCategory Sauce { get; } = new RecipeCategory("sauce");
+    public static RecipeCategory Bread { get; } = new RecipeCategory("bread");
+    public static RecipeCategory Snack { get; } = new RecipeCategory("snack");
     private RecipeCategory(string name)
     {
         Name = name;
@@ -21,29 +22,29 @@ public record RecipeCategory
 
     public static RecipeCategory Create(string name)
     {
-        switch (name.ToLower())
+        switch (name)
         {
             case "dessert":
                 return Dessert;
-            case "plat principal":
+            case "mainCourse":
                 return MainCourse;
-            case "accompagnement":
+            case "sideDish":
                 return SideDish;
-            case "entrée":
-            case "entree":
+            case "appetizer":
                 return Appetizer;
-            case "déjeuner":
-            case "dejeuner":
+            case "lunch":
+                return Lunch;
+            case "breakfast":
                 return Breakfast;
-            case "soupe":
+            case "soup":
                 return Soup;
-            case "breuvage":
+            case "beverage":
                 return Beverage;
             case "sauce":
                 return Sauce;
-            case "pain":
+            case "bread":
                 return Bread;
-            case "collation":
+            case "snack":
                 return Snack;
             default:
                 throw new DomainException($"Invalid recipe category {name}");
