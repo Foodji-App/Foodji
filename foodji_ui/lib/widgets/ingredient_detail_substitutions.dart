@@ -3,58 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../misc/colors.dart';
-import '../models/recipe_model.dart';
+import '../models/ingredient_model.dart';
 import 'app_text.dart';
 
-class RecipeDetailInstructions extends StatefulWidget {
-  const RecipeDetailInstructions(this.recipe, this.isSelected, {super.key});
-  final RecipeModel recipe;
-  final List<bool> isSelected;
+class IngredientDetailSubstitutions extends StatefulWidget {
+  const IngredientDetailSubstitutions(this.ingredient, {super.key});
+  final IngredientModel ingredient;
   @override
-  RecipeDetailInstructionsState createState() =>
-      RecipeDetailInstructionsState();
+  IngredientDetailSubstitutionsState createState() =>
+      IngredientDetailSubstitutionsState();
 }
 
-class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
+class IngredientDetailSubstitutionsState
+    extends State<IngredientDetailSubstitutions> {
   ingredients(BuildContext context) {
-    void toggleSelected(index) async {
-      setState(() {
-        widget.isSelected[index] = !widget.isSelected[index];
-      });
-    }
-
-    CircleAvatar selectedAvatar(index) {
-      return CircleAvatar(
-          backgroundColor: AppColors.backgroundColor,
-          child: GestureDetector(
-              onTap: () => toggleSelected(index),
-              child: Chip(
-                clipBehavior: Clip.none,
-                backgroundColor: AppColors.backgroundColor,
-                label: AppText(
-                  color: widget.isSelected[index]
-                      ? AppColors.highlightColor3
-                      : AppColors.highlightColor2,
-                  text: (index + 1).toString(),
-                ),
-                shape: StadiumBorder(
-                    side: BorderSide(
-                  width: 2,
-                  color: widget.isSelected[index]
-                      ? AppColors.highlightColor3
-                      : AppColors.highlightColor2,
-                )),
-              )));
-    }
-
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: widget.recipe.steps.length,
+        itemCount: widget.ingredient.substitutions.length,
         itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Column(children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                selectedAvatar(index),
                 const SizedBox(width: 16),
                 Container(
                   alignment: Alignment.centerLeft,
@@ -63,7 +32,7 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
                     children: <Widget>[
                       AppText(
                           color: AppColors.textColor,
-                          text: widget.recipe.steps[index]),
+                          text: widget.ingredient.substitutions[index].name),
                     ],
                   ),
                 ),
@@ -97,7 +66,7 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
           const SizedBox(
             height: 10,
           ),
-          widget.recipe.ingredients.isNotEmpty
+          widget.ingredient.substitutions.isNotEmpty
               ? ingredients(context)
               : AppText(
                   text: AppLocalizations.of(context)!.recipe_no_ingredients)
