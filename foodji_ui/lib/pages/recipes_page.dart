@@ -10,8 +10,8 @@ import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
 import '../models/categories_enum.dart';
-import '../models/ingredient_model.dart';
-import '../models/substitution_model.dart';
+import '../models/recipe_ingredient_model.dart';
+import '../models/recipe_substitute_model.dart';
 import '../widgets/app_text.dart';
 
 // Inner class only needed here
@@ -34,7 +34,8 @@ class RecipesPageState extends State<RecipesPage> {
   String filterQuery = "";
   bool favoritesOnly = false;
   dynamic category;
-  List<bool> advancedFilters = List.filled(12, false);
+  // Les advancedFilters sont les tags de base, lesquels sont au nombre de 13.
+  List<bool> advancedFilters = List.filled(13, false);
   bool advancedFilterSelected = false;
 
   toggleFavoriteStatus(recipe) {
@@ -67,14 +68,14 @@ class RecipesPageState extends State<RecipesPage> {
 
         List<RecipeModel> applyAdvancedFilters(recipes) {
           if (advancedFilterSelected) {
-            for (var i = 0; i < 12; i++) {
+            for (var i = 0; i < 13; i++) {
               if (advancedFilters[i]) {
                 setState(() {
                   recipes = recipes
                       .where((RecipeModel r) => r.ingredients.any(
-                          (IngredientModel ig) =>
+                          (RecipeIngredientModel ig) =>
                               ig.tags.any((t1) => t1 == Tags.values[i].name) ||
-                              ig.substitutions.any((SubstitutionModel s) => s
+                              ig.substitutes.any((RecipeSubstituteModel s) => s
                                   .tags
                                   .any((t2) => t2 == Tags.values[i].name))))
                       .toList();
@@ -138,7 +139,7 @@ class RecipesPageState extends State<RecipesPage> {
               advancedFilterSelected = true;
             } else {
               advancedFilterSelected = false;
-              for (var i = 0; i < 12; i++) {
+              for (var i = 0; i < 13; i++) {
                 if (advancedFilters[i]) {
                   advancedFilterSelected = true;
                   break;
@@ -174,6 +175,8 @@ class RecipesPageState extends State<RecipesPage> {
             return AppLocalizations.of(context)!.tag_gluten_free;
           } else if (tag == Tags.soyFree.name) {
             return AppLocalizations.of(context)!.tag_soy_free;
+          } else if (tag == Tags.eggFree.name) {
+            return AppLocalizations.of(context)!.tag_egg_free;
           } else if (tag == Tags.nutFree.name) {
             return AppLocalizations.of(context)!.tag_nut_free;
           } else if (tag == Tags.peanutFree.name) {
@@ -191,23 +194,33 @@ class RecipesPageState extends State<RecipesPage> {
           } else if (tag == Tags.kosher.name) {
             return AppLocalizations.of(context)!.tag_kosher;
           } else {
-            return "";
+            return tag;
           }
         }
 
         String getCategoryString(category) {
-          if (category == Categories.breakfast.name) {
-            return AppLocalizations.of(context)!.category_breakfast;
-          } else if (category == Categories.lunch.name) {
-            return AppLocalizations.of(context)!.category_lunch;
-          } else if (category == Categories.diner.name) {
-            return AppLocalizations.of(context)!.category_diner;
+          if (category == Categories.mainCourse.name) {
+            return AppLocalizations.of(context)!.category_main_course;
+          } else if (category == Categories.sideDish.name) {
+            return AppLocalizations.of(context)!.category_side_dish;
+          } else if (category == Categories.appetizer.name) {
+            return AppLocalizations.of(context)!.category_appetizer;
           } else if (category == Categories.dessert.name) {
             return AppLocalizations.of(context)!.category_dessert;
-          } else if (category == Categories.snack.name) {
-            return AppLocalizations.of(context)!.category_snack;
+          } else if (category == Categories.lunch.name) {
+            return AppLocalizations.of(context)!.category_lunch;
+          } else if (category == Categories.breakfast.name) {
+            return AppLocalizations.of(context)!.category_breakfast;
           } else if (category == Categories.beverage.name) {
             return AppLocalizations.of(context)!.category_beverage;
+          } else if (category == Categories.soup.name) {
+            return AppLocalizations.of(context)!.category_soup;
+          } else if (category == Categories.sauce.name) {
+            return AppLocalizations.of(context)!.category_sauce;
+          } else if (category == Categories.bread.name) {
+            return AppLocalizations.of(context)!.category_bread;
+          } else if (category == Categories.snack.name) {
+            return AppLocalizations.of(context)!.category_snack;
           } else {
             return "";
           }
@@ -215,13 +228,13 @@ class RecipesPageState extends State<RecipesPage> {
 
         List<TagsWithColor> tagsWithColors(recipe) {
           List<TagsWithColor> tags = [];
-          for (var i = 0; i < 12; i++) {
-            if (recipe.ingredients.any((IngredientModel ig) =>
+          for (var i = 0; i < 13; i++) {
+            if (recipe.ingredients.any((RecipeIngredientModel ig) =>
                 ig.tags.any((t) => t == Tags.values[i].name))) {
               tags.add(
                   TagsWithColor(tag: Tags.values[i].name, isIngredients: true));
-            } else if (recipe.ingredients.any((IngredientModel ig) =>
-                ig.substitutions.any((SubstitutionModel s) =>
+            } else if (recipe.ingredients.any((RecipeIngredientModel ig) =>
+                ig.substitutes.any((RecipeSubstituteModel s) =>
                     s.tags.any((t) => t == Tags.values[i].name)))) {
               tags.add(TagsWithColor(
                   tag: Tags.values[i].name, isIngredients: false));
@@ -310,7 +323,7 @@ class RecipesPageState extends State<RecipesPage> {
                                     MediaQuery.of(context).size.height / 2.7,
                                 child: ListView.builder(
                                     scrollDirection: Axis.vertical,
-                                    itemCount: 6,
+                                    itemCount: 11,
                                     itemBuilder: (context, index) {
                                       return ListTile(
                                         title: AppText(
@@ -367,7 +380,7 @@ class RecipesPageState extends State<RecipesPage> {
                                     MediaQuery.of(context).size.height / 2.5,
                                 child: ListView.builder(
                                     scrollDirection: Axis.vertical,
-                                    itemCount: 12,
+                                    itemCount: 13,
                                     itemBuilder: (context, index) {
                                       return ListTile(
                                         title: AppText(
@@ -427,7 +440,7 @@ class RecipesPageState extends State<RecipesPage> {
                                                       Radius.circular(10)),
                                               color: AppColors.textColor,
                                               image: DecorationImage(
-                                                  image: NetworkImage(filteredRecipes[index].img),
+                                                  image: NetworkImage(filteredRecipes[index].imageUri),
                                                   fit: BoxFit.fill))),
                                       title: Text(filteredRecipes[index].name),
                                       subtitle: SizedBox(

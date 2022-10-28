@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/widgets/app_text.dart';
 import '../models/categories_enum.dart';
-import '../models/ingredient_model.dart';
-import '../models/substitution_model.dart';
+import '../models/recipe_ingredient_model.dart';
+import '../models/recipe_substitute_model.dart';
 import '../models/tags_enum.dart';
 import '../widgets/recipe_detail_instructions.dart';
 import '../widgets/recipe_detail_preparation.dart';
@@ -57,6 +57,8 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
             return AppLocalizations.of(context)!.tag_gluten_free;
           } else if (tag == Tags.soyFree.name) {
             return AppLocalizations.of(context)!.tag_soy_free;
+          } else if (tag == Tags.eggFree.name) {
+            return AppLocalizations.of(context)!.tag_egg_free;
           } else if (tag == Tags.nutFree.name) {
             return AppLocalizations.of(context)!.tag_nut_free;
           } else if (tag == Tags.peanutFree.name) {
@@ -74,23 +76,33 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
           } else if (tag == Tags.kosher.name) {
             return AppLocalizations.of(context)!.tag_kosher;
           } else {
-            return "";
+            return tag;
           }
         }
 
         String getCategoryString(category) {
-          if (category == Categories.breakfast.name) {
-            return AppLocalizations.of(context)!.category_breakfast;
-          } else if (category == Categories.lunch.name) {
-            return AppLocalizations.of(context)!.category_lunch;
-          } else if (category == Categories.diner.name) {
-            return AppLocalizations.of(context)!.category_diner;
+          if (category == Categories.mainCourse.name) {
+            return AppLocalizations.of(context)!.category_main_course;
+          } else if (category == Categories.sideDish.name) {
+            return AppLocalizations.of(context)!.category_side_dish;
+          } else if (category == Categories.appetizer.name) {
+            return AppLocalizations.of(context)!.category_appetizer;
           } else if (category == Categories.dessert.name) {
             return AppLocalizations.of(context)!.category_dessert;
-          } else if (category == Categories.snack.name) {
-            return AppLocalizations.of(context)!.category_snack;
+          } else if (category == Categories.lunch.name) {
+            return AppLocalizations.of(context)!.category_lunch;
+          } else if (category == Categories.breakfast.name) {
+            return AppLocalizations.of(context)!.category_breakfast;
           } else if (category == Categories.beverage.name) {
             return AppLocalizations.of(context)!.category_beverage;
+          } else if (category == Categories.soup.name) {
+            return AppLocalizations.of(context)!.category_soup;
+          } else if (category == Categories.sauce.name) {
+            return AppLocalizations.of(context)!.category_sauce;
+          } else if (category == Categories.bread.name) {
+            return AppLocalizations.of(context)!.category_bread;
+          } else if (category == Categories.snack.name) {
+            return AppLocalizations.of(context)!.category_snack;
           } else {
             return "";
           }
@@ -99,12 +111,12 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
         List<TagsWithColor> tagsWithColors(recipe) {
           List<TagsWithColor> tags = [];
           for (var i = 0; i < 12; i++) {
-            if (recipe.ingredients.any((IngredientModel ig) =>
+            if (recipe.ingredients.any((RecipeIngredientModel ig) =>
                 ig.tags.any((t) => t == Tags.values[i].name))) {
               tags.add(
                   TagsWithColor(tag: Tags.values[i].name, isIngredients: true));
-            } else if (recipe.ingredients.any((IngredientModel ig) =>
-                ig.substitutions.any((SubstitutionModel s) =>
+            } else if (recipe.ingredients.any((RecipeIngredientModel ig) =>
+                ig.substitutes.any((RecipeSubstituteModel s) =>
                     s.tags.any((t) => t == Tags.values[i].name)))) {
               tags.add(TagsWithColor(
                   tag: Tags.values[i].name, isIngredients: false));
@@ -144,7 +156,8 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                               topLeft: Radius.circular(40),
                                               bottomRight: Radius.circular(40)),
                                           child: Image(
-                                              image: NetworkImage(recipe.img),
+                                              image:
+                                                  NetworkImage(recipe.imageUri),
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width))))),
@@ -241,7 +254,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                               padding:
                                   const EdgeInsets.only(left: 14, right: 14),
                               child: AppText(
-                                  text: recipe.desc,
+                                  text: recipe.description,
                                   color: AppColors.backgroundColor,
                                   size: AppTextSize.normal,
                                   fontFamily: AppFontFamily.bauhaus))

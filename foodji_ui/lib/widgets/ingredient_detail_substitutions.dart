@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../misc/colors.dart';
-import '../models/ingredient_model.dart';
+import '../models/recipe_ingredient_model.dart';
 import 'app_text.dart';
 
 class IngredientDetailSubstitutions extends StatefulWidget {
   const IngredientDetailSubstitutions(this.ingredient, {super.key});
-  final IngredientModel ingredient;
+  final RecipeIngredientModel ingredient;
   @override
   IngredientDetailSubstitutionsState createState() =>
       IngredientDetailSubstitutionsState();
@@ -19,7 +19,7 @@ class IngredientDetailSubstitutionsState
   ingredients(BuildContext context) {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: widget.ingredient.substitutions.length,
+        itemCount: widget.ingredient.substitutes.length,
         itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Column(children: [
@@ -32,7 +32,7 @@ class IngredientDetailSubstitutionsState
                     children: <Widget>[
                       AppText(
                           color: AppColors.textColor,
-                          text: widget.ingredient.substitutions[index].name),
+                          text: widget.ingredient.substitutes[index].name),
                     ],
                   ),
                 ),
@@ -66,7 +66,7 @@ class IngredientDetailSubstitutionsState
           const SizedBox(
             height: 10,
           ),
-          widget.ingredient.substitutions.isNotEmpty
+          widget.ingredient.substitutes.isNotEmpty
               ? ingredients(context)
               : AppText(
                   text: AppLocalizations.of(context)!.recipe_no_ingredients)

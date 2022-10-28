@@ -4,18 +4,19 @@ public record Tag
 {
     public string Name { get; private set; }
 
-    public static Tag Vegan { get; } = new("Végétalien");
-    public static Tag Vegetarian { get; } = new("Végétarien");
-    public static Tag GlutenFree { get; } = new("Sans gluten");
-    public static Tag SoyFree { get; } = new("Sans soya");
-    public static Tag NutFree { get; } = new("Sans noix");
-    public static Tag PeanutFree { get; } = new("Sans arachides");
-    public static Tag LactoseFree { get; } = new("Sans lactose");
-    public static Tag MilkFree { get; } = new("Sans lait");
-    public static Tag WheatFree { get; } = new("Sans blé");
-    public static Tag SeafoodFree { get; } = new("Sans fruits de mer");
-    public static Tag Halal { get; } = new("Halal");
-    public static Tag Kosher { get; } = new("Casher");
+    public static Tag Vegan { get; } = new("vegan");
+    public static Tag Vegetarian { get; } = new("vegetarian");
+    public static Tag GlutenFree { get; } = new("glutenFree");
+    public static Tag SoyFree { get; } = new("soyFree");
+    public static Tag EggFree { get; } = new("eggFree");
+    public static Tag NutFree { get; } = new("nutFree");
+    public static Tag PeanutFree { get; } = new("peanutFree");
+    public static Tag LactoseFree { get; } = new("lactoseFree");
+    public static Tag MilkFree { get; } = new("milkFree");
+    public static Tag WheatFree { get; } = new("wheatFree");
+    public static Tag SeafoodFree { get; } = new("seafoodFree");
+    public static Tag Halal { get; } = new("halal");
+    public static Tag Kosher { get; } = new("kosher");
 
     private Tag(string name)
     {
@@ -26,34 +27,30 @@ public record Tag
     {
         switch (name.ToLower())
         {
-            case "végétalien":
-            case "vegetalien":
             case "vegan":
-            case "vegane":
                 return Vegan;
-            case "végétarien":
-            case "vegetarien":
+            case "vegetarian":
                 return Vegetarian;
-            case "sans gluten":
+            case "glutenFree":
                 return GlutenFree;
-            case "sans soya":
+            case "soyFree":
                 return SoyFree;
-            case "sans noix":
+            case "nutFree":
                 return NutFree;
-            case "sans arachides":
+            case "eggFree":
+                return EggFree;
+            case "peanutFree":
                 return PeanutFree;
-            case "sans lactose":
+            case "lactoseFree":
                 return LactoseFree;
-            case "sans lait":
+            case "milkFree":
                 return MilkFree;
-            case "sans blé":
-            case "sans ble":
+            case "wheatFree":
                 return WheatFree;
-            case "sans fruits de mer":
+            case "seafoodFree":
                 return SeafoodFree;
             case "halal":
                 return Halal;
-            case "casher":
             case "kosher":
                 return Kosher;
             default:

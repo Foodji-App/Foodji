@@ -8,18 +8,18 @@ class RecipeEditorPage extends StatefulWidget {
   const RecipeEditorPage({Key? key}) : super(key: key);
 
   @override
-  _RecipeEditorPageState createState() => _RecipeEditorPageState();
+  RecipeEditorPageState createState() => RecipeEditorPageState();
 }
 
-class _RecipeEditorPageState extends State<RecipeEditorPage> {
-  late RecipeModel _recipe = RecipeModel.newRecipeModel();
+class RecipeEditorPageState extends State<RecipeEditorPage> {
+  late RecipeModel recipe = RecipeModel.newRecipeModel();
 
   final _formKey = GlobalKey<FormState>();
 
   _buildName() {
     return TextFormField(
-      initialValue: _recipe.name,
-      decoration: InputDecoration(labelText: 'Name'),
+      initialValue: recipe.name,
+      decoration: const InputDecoration(labelText: 'Name'),
       maxLength: 100,
       validator: (String? value) {
         if (value!.isEmpty) {
@@ -28,15 +28,15 @@ class _RecipeEditorPageState extends State<RecipeEditorPage> {
         return null;
       },
       onSaved: (String? value) {
-        _recipe.name = value!;
+        recipe.name = value!;
       },
     );
   }
 
   _buildDescription() {
     return TextFormField(
-      initialValue: _recipe.desc,
-      decoration: InputDecoration(labelText: 'Description'),
+      initialValue: recipe.description,
+      decoration: const InputDecoration(labelText: 'Description'),
       maxLength: 100,
       validator: (String? value) {
         if (value!.isEmpty) {
@@ -45,7 +45,7 @@ class _RecipeEditorPageState extends State<RecipeEditorPage> {
         return null;
       },
       onSaved: (String? value) {
-        _recipe.desc = value!;
+        recipe.description = value!;
       },
     );
   }
@@ -64,7 +64,7 @@ class _RecipeEditorPageState extends State<RecipeEditorPage> {
                   decoration: const BoxDecoration(
                       color: AppColors.highlightColor2,
                       borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: AppText(text: _recipe.toText())),
+                  child: AppText(text: recipe.toText())),
             ),
             Container(
               padding: const EdgeInsets.only(

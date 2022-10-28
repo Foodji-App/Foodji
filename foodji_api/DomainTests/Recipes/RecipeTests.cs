@@ -27,7 +27,7 @@ namespace DomainTests.Recipes
             var expectedCategory = RecipeCategory.Appetizer;
             var expectedDescription = "expectedDescription";
             var expectedDetails = RecipeDetails.Create(0,0,0,0);
-            var expectedRecipeIngredients = new List<RecipeIngredient> { expectedIngredient };
+            var expectedIngredients = new List<RecipeIngredient> { expectedIngredient };
             var expectedRecipeSteps = new List<string> { "expectedStep" };
             var expectedImageUri = new Uri("https://www.google.ca");
             
@@ -37,7 +37,7 @@ namespace DomainTests.Recipes
                 expectedCategory,
                 expectedDescription,
                 expectedDetails,
-                expectedRecipeIngredients,
+                expectedIngredients,
                 expectedRecipeSteps,
                 expectedImageUri);
 
@@ -46,7 +46,7 @@ namespace DomainTests.Recipes
             actualRecipe.Category.Should().Be(expectedCategory);
             actualRecipe.Description.Should().Be(expectedDescription);
             actualRecipe.Details.Should().Be(expectedDetails);
-            actualRecipe.Ingredients.Should().BeEquivalentTo(expectedRecipeIngredients);
+            actualRecipe.Ingredients.Should().BeEquivalentTo(expectedIngredients);
             actualRecipe.Steps.Should().BeEquivalentTo(expectedRecipeSteps);
             actualRecipe.ImageUri.Should().Be(expectedImageUri);
             actualRecipe.Should().BeOfType<Recipe>();
