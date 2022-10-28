@@ -34,6 +34,7 @@ class RecipesPageState extends State<RecipesPage> {
   String filterQuery = "";
   bool favoritesOnly = false;
   dynamic category;
+  // Les advancedFilters sont les tags de base, lesquels sont au nombre de 13.
   List<bool> advancedFilters = List.filled(13, false);
   bool advancedFilterSelected = false;
 
@@ -232,10 +233,9 @@ class RecipesPageState extends State<RecipesPage> {
                 ig.tags.any((t) => t == Tags.values[i].name))) {
               tags.add(
                   TagsWithColor(tag: Tags.values[i].name, isIngredients: true));
-            } else if (recipe.ingredients.any(
-                (RecipeIngredientModel ig) => ig.substitutes.any(
-                    (RecipeSubstituteModel s) =>
-                        s.tags.any((t) => t == Tags.values[i].name)))) {
+            } else if (recipe.ingredients.any((RecipeIngredientModel ig) =>
+                ig.substitutes.any((RecipeSubstituteModel s) =>
+                    s.tags.any((t) => t == Tags.values[i].name)))) {
               tags.add(TagsWithColor(
                   tag: Tags.values[i].name, isIngredients: false));
             }
