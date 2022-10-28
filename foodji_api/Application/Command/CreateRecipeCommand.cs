@@ -29,7 +29,6 @@ public class CreateRecipeCommand : IRequest<string>
         public async Task<string> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
         {
             var recipe = _mapper.Map<Recipe>(request.RecipeDto);
-            // TODO : Integrate createdAt (DateTime.Now)
 
             await _client.Recipes.InsertOneAsync(recipe, cancellationToken: cancellationToken);
 
