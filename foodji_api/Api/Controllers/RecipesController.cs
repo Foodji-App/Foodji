@@ -63,13 +63,13 @@ public class RecipesController : ControllerBase
     }
 
     [HttpPost]
-    // [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task CreateRecipe([FromBody] RecipeDto recipe)
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateRecipe([FromBody] RecipeDto recipe)
     {
         var command = new CreateRecipeCommand(recipe);
 
         var result = await _mediator.Send(command);
 
-        // return Created(result);
+        return CreatedAtAction(nameof(GetRecipe), new {id = result}, new {});
     }
 }

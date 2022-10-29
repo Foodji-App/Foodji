@@ -30,8 +30,10 @@ public class UserData
     public void RemoveRecipe(string recipeId)
     {
         if (Recipes.Contains(recipeId))
-        { 
-            Recipes.ToList().Remove(recipeId);
+        {
+            var newRecipes = Recipes.ToList();
+            newRecipes.Remove(recipeId);
+            Recipes = newRecipes;            
         }
     }
 }

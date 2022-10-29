@@ -42,5 +42,75 @@ namespace DomainTests.UsersData
             actualUserData.Recipes.Should().BeEquivalentTo(expectedRecipes);
             actualUserData.Should().BeOfType<UserData>();
         }
+        
+        [Test]
+        public void GivenValidRecipeId_AddRecipe_RecipeAddedToList()
+        {
+            // Arrange
+            var userDataId = "UserDataId";
+            var expectedRecipe = "Recipe1";
+            var userData = UserData.Create(
+                userDataId,
+                new List<string>());
+
+            // Act
+            userData.AddRecipe(expectedRecipe);
+            
+            // Assert
+            userData.Recipes.FirstOrDefault().Should().BeEquivalentTo(expectedRecipe);
+        }
+        
+        [Test]
+        public void GivenDuplicateRecipeId_AddRecipe_RecipeNotAddedToList()
+        {
+            // Arrange
+            var userDataId = "UserDataId";
+            var expectedRecipe = "Recipe1";
+            var userData = UserData.Create(
+                userDataId,
+                new List<string> {expectedRecipe});
+
+            // Act
+            userData.AddRecipe(expectedRecipe);
+            
+            // Assert
+            userData.Recipes.Count().Should().Be(1);
+        }
+        
+        [Test]
+        public void GivenValidRecipeId_Remove_RecipeRemovedFromList()
+        {
+            // Arrange
+            var userDataId = "UserDataId";
+            var expectedRecipes = new List<string> { "Recipe1"};
+            var recipeToRemove = "Recipe2";
+            var userData = UserData.Create(
+                userDataId,
+                new List<string> {expectedRecipes.FirstOrDefault(), recipeToRemove});
+
+            // Act
+            userData.RemoveRecipe(recipeToRemove);
+            
+            // Assert
+            userData.Recipes.Should().BeEquivalentTo(expectedRecipes);
+        }
+        
+        [Test]
+        public void GivenInvalidRecipeId_Remove_RecipeNotRemovedFromList()
+        {
+            // Arrange
+            var userDataId = "UserDataId";
+            var expectedRecipes = new List<string> { "Recipe1"};
+            var recipeToRemove = "Recipe2";
+            var userData = UserData.Create(
+                userDataId,
+                expectedRecipes);
+
+            // Act
+            userData.RemoveRecipe(recipeToRemove);
+            
+            // Assert
+            userData.Recipes.Should().BeEquivalentTo(expectedRecipes);
+        }
     }
 }
