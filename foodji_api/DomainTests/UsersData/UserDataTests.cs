@@ -57,7 +57,7 @@ namespace DomainTests.UsersData
             userData.AddRecipe(expectedRecipe);
             
             // Assert
-            userData.Recipes.First().Should().BeEquivalentTo(expectedRecipe);
+            userData.Recipes.Should().Contain(expectedRecipe);
         }
         
         [Test]
@@ -82,17 +82,17 @@ namespace DomainTests.UsersData
         {
             // Arrange
             var userDataId = "UserDataId";
+            var recipe1 = "recipe1";
+            var recipeToRemove = "recipeToRemove";
             var userData = UserData.Create(
                 userDataId,
-                new List<string> {"Recipe1", "Recipe2"});
-            var expectedRecipes = new List<string> {"Recipe1"} ;
-            var recipeToRemove = "Recipe2";
+                new List<string> {recipe1, recipeToRemove});
 
             // Act
             userData.RemoveRecipe(recipeToRemove);
             
             // Assert
-            userData.Recipes.Should().BeEquivalentTo(expectedRecipes);
+            userData.Recipes.Should().NotContain(recipeToRemove);
         }
         
         [Test]
@@ -100,8 +100,8 @@ namespace DomainTests.UsersData
         {
             // Arrange
             var userDataId = "UserDataId";
-            var expectedRecipes = new List<string> { "Recipe1"};
-            var recipeToRemove = "Recipe2";
+            var expectedRecipes = new List<string> { "recipe1"};
+            var recipeToRemove = "recipeToRemove";
             var userData = UserData.Create(
                 userDataId,
                 expectedRecipes);
