@@ -17,6 +17,23 @@ public class UsersDataController : ControllerBase
         _mediator = mediator;
     }
 
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDataDto))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetUserData([FromRoute] string id)
+    {
+        var query = new GetRecipeByIdQuery(id);
+
+        var result = await _mediator.Send(query);
+
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+    
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDataDto>))]
     public async Task<IActionResult> GetAllUsersData()
@@ -29,13 +46,14 @@ public class UsersDataController : ControllerBase
     }
 
     [HttpPost]
-    // [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task CreateUserData([FromBody] UserDataDto userData)
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateUserData([FromBody] UserDataDto userData)
     {
         var command = new CreateUserDataCommand(userData);
 
         var result = await _mediator.Send(command);
 
-        // return Created(result);
+        return CreatedAtAction(nameof(GetUserData), new {id = result}, new {});
+
     }
 }
