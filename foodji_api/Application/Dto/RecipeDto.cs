@@ -6,6 +6,8 @@ public record RecipeDto
     
     public string Name { get; set; } = null!;
 
+    public DateTime CreatedAt { get; set; }
+
     public string Category { get; set; } = null!;
     
     public string Description { get; set; } = null!;
@@ -17,4 +19,6 @@ public record RecipeDto
     public IEnumerable<string> Steps { get; set; } = null!;
     
     public Uri ImageUri { get; set; } = null!;
+    
+    public string Author { get; set; } = null!;
 }

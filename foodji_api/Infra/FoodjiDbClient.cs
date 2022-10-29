@@ -1,5 +1,6 @@
 ﻿using Domain.Ingredients;
 using Domain.Recipes;
+using Domain.Users;
 using MongoDB.Driver;
 
 namespace Infra;
@@ -17,4 +18,6 @@ public class FoodjiDbClient : MongoClient, IFoodjiDbClient
     public IMongoCollection<Ingredient> Ingredients => _database.GetCollection<Ingredient>("ingredients");
 
     public IMongoCollection<Recipe> Recipes => _database.GetCollection<Recipe>("recipes");
+    
+    public IMongoCollection<UserData> UsersData => _database.GetCollection<UserData>("usersData");
 }

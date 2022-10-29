@@ -28,6 +28,7 @@ public class RecipeConverter : ITypeConverter<RecipeDto, Recipe>
             details,
             ingredients,
             source.Steps.ToList(),
-            source.ImageUri);
+            source.ImageUri,
+            source.Author);
     }
 }
