@@ -2,12 +2,14 @@ using Application.Command;
 using Application.Dto;
 using Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
 [ApiController]
 [Route("usersData")]
+[Authorize]
 public class UsersDataController : ControllerBase
 {
     private readonly IMediator _mediator;

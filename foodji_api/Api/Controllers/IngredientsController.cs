@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
 [ApiController]
-[Route(("ingredients"))]
+[Route("ingredients")]
+[Authorize]
 public class IngredientsController : ControllerBase
 {
     [HttpGet]
