@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodji_ui/models/recipe_ingredient_model.dart';
 
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
-import '../models/recipe_ingredient_model.dart';
 import '../models/recipe_model.dart';
 import '../widgets/app_text.dart';
 import '../widgets/recipe_form/app_reorderable_text_form_fields.dart';
@@ -85,48 +85,53 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
         _currentRecipe = RecipeModel.deepCopy(_savedRecipe);
         return Scaffold(
           appBar: _appBar(),
-          body: SingleChildScrollView(
-            controller: _scrollController,
-            child: Container(
-              padding: const EdgeInsets.only(
-                  left: 10, top: 12, right: 10, bottom: 14),
-              width: double.maxFinite,
-              height: double.maxFinite,
-              // BUG : overflow le background des tiles
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('img/background-gradient.png'),
-                      fit: BoxFit.fill)),
-              child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      ListTile(
-                          tileColor: AppColors.highlightColor1,
-                          shape: _tileShape,
-                          title: Column(
-                            children: [
-                              _buildName(),
-                              _buildDescription(),
-                              Row(
-                                children: [
-                                  Expanded(flex: 2, child: _buildCategory()),
-                                  const SizedBox(width: 15),
-                                  Expanded(flex: 1, child: _buildServes()),
-                                ],
-                              ),
-                              const SizedBox(height: 10),
-                            ],
-                          )),
-                      const SizedBox(height: 20),
-                      // ingredients
-                      _buildIngredients(),
-                      // steps
-                      _buildSteps(),
-                      const SizedBox(height: 20),
-                    ],
-                  )),
-            ),
+          body: Stack(
+            children: [
+              Container(
+                width: double.maxFinite,
+                height: double.maxFinite,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('img/background-gradient.png'),
+                        fit: BoxFit.fill)),
+              ),
+              SingleChildScrollView(
+                controller: _scrollController,
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Material(
+                            shape: _tileShape,
+                            color: AppColors.backgroundColor,
+                            child: ListTile(
+                                title: Column(
+                              children: [
+                                _buildName(),
+                                _buildDescription(),
+                                Row(
+                                  children: [
+                                    Expanded(flex: 2, child: _buildCategory()),
+                                    const SizedBox(width: 15),
+                                    Expanded(flex: 1, child: _buildServes()),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                              ],
+                            )),
+                          ),
+                          const SizedBox(height: 12),
+                          _buildIngredients(),
+                          const SizedBox(height: 12),
+                          _buildSteps(),
+                          const SizedBox(height: 20),
+                        ],
+                      )),
+                ),
+              ),
+            ],
           ),
         );
       } else {
@@ -216,44 +221,54 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   }
 
   Widget _buildSteps() {
-    return ExpansionTile(
-      title: const AppText(text: 'Steps'),
-      children: [
-        ReorderableTextFormFields(
-          scrollController: _scrollController,
-          items: _currentRecipe.steps,
-          onChanged: (items) => _currentRecipe.steps = items,
-          validator: (value) => (value == null || value.isEmpty)
-              ? 'Please enter some text' // TODO : i10n
-              : null,
-        ),
-      ],
+    return Material(
+      color: AppColors.backgroundColor,
+      shape: _tileShape,
+      child: ExpansionTile(
+        title: const AppText(text: 'Steps'),
+        children: [
+          ReorderableTextFormFields(
+            color: AppColors.highlightColor2,
+            scrollController: _scrollController,
+            items: _currentRecipe.steps,
+            newItem: '',
+            onChanged: (items) => _currentRecipe.steps = items,
+            validator: (value) => (value == null || value.isEmpty)
+                ? 'Please enter some text' // TODO : i10n
+                : null,
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildIngredients() {
-    return ExpansionTile(
-      title: const AppText(text: 'Ingredients'),
-      children: [
-        ReorderableTextFormFields(
-          scrollController: _scrollController,
-          items: _currentRecipe.ingredients,
-          hasCustomListTile: true,
-          custombuildTenableListTile: (item) => _ingredientBuilder(item),
-          onChanged: (items) => _currentRecipe.ingredients = items,
-          validator: (value) => (value == null || value.isEmpty)
-              ? 'Please enter some text' // TODO : i10n
-              : null,
-        ),
-      ],
+    return Material(
+      color: AppColors.backgroundColor,
+      shape: _tileShape,
+      child: ExpansionTile(
+        title: const AppText(text: 'Ingredients'),
+        children: [
+          ReorderableTextFormFields(
+            color: AppColors.highlightColor3,
+            scrollController: _scrollController,
+            items: _currentRecipe.ingredients,
+            newItem: RecipeIngredientModel.newRecipeIngredientModel(),
+            hasCustomListTile: true,
+            custombuildTenableListTile: (item) => _ingredientBuilder(item),
+            onChanged: (items) => _currentRecipe.ingredients = items,
+            validator: (value) => (value == null || value.isEmpty)
+                ? 'Please enter some text' // TODO : i10n
+                : null,
+          ),
+        ],
+      ),
     );
   }
 
   ListTile _ingredientBuilder(int index) {
     return ListTile(
       key: ValueKey(_currentRecipe.ingredients[index]),
-      tileColor: AppColors.highlightColor3,
-      shape: _tileShape,
       leading: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () =>
@@ -280,6 +295,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                       children: [
                         // amount
                         Expanded(
+                          flex: 1,
                           child: TextFormField(
                               keyboardType: TextInputType.number,
                               initialValue: _currentRecipe
@@ -300,6 +316,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                         const SizedBox(width: 15),
                         // unit
                         Expanded(
+                          flex: 1,
                           child: TextFormField(
                               initialValue: _currentRecipe
                                   .ingredients[index].measurement.unitType,

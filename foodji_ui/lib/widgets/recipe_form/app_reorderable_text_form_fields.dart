@@ -1,19 +1,28 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: must_be_immutable
 
-import '../../misc/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:foodji_ui/misc/app_shape.dart';
+import 'package:foodji_ui/widgets/app_text.dart';
 
 class ReorderableTextFormFields extends StatefulWidget {
   ReorderableTextFormFields(
       {Key? key,
+      this.color,
+      this.includeDivider = true,
       required this.scrollController,
       required this.items,
+      required this.newItem,
       this.hasCustomListTile = false,
       this.custombuildTenableListTile,
       required this.onChanged,
       required this.validator})
       : super(key: key);
+
+  final Color? color;
+  final bool includeDivider;
   final ScrollController scrollController;
   List items;
+  final dynamic newItem;
   final bool hasCustomListTile;
   final ListTile Function(int)? custombuildTenableListTile;
   final Function onChanged;
@@ -35,35 +44,39 @@ class AppReorderableTextFormFieldsState
     return Column(
       children: [
         ReorderableListView.builder(
+          key: widget.key,
           shrinkWrap: true,
           onReorder: onReorder,
           itemCount: items.length,
           scrollController: widget.scrollController,
           itemBuilder: (context, index) {
-            return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                key: ValueKey(items[index]),
-                child: widget.hasCustomListTile
-                    ? widget.custombuildTenableListTile!(index)
-                    : buildTenableListTile(index));
+            return Material(
+              key: ValueKey(items[index]),
+              color: widget.color ?? Colors.transparent,
+              child: widget.hasCustomListTile
+                  ? widget.custombuildTenableListTile!(index)
+                  : buildTenableListTile(index),
+            );
           },
         ),
         ElevatedButton(
             onPressed: () {
-              setState(() => items.add(''));
+              setState(() => items.add(widget.newItem));
             },
-            child: const Text('Add')),
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    AppShapes().lastTile)),
+            child: Container(
+                width: double.maxFinite,
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                alignment: Alignment.center,
+                child: const AppText(text: 'Add'))),
       ],
     );
   }
 
   ListTile buildTenableListTile(int index) => ListTile(
         key: ValueKey(items[index]),
-        tileColor: AppColors.highlightColor2,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                bottomRight: Radius.circular(15))),
         leading: Column(
           children: [
             Text("${index + 1}"),

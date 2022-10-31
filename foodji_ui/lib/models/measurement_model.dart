@@ -23,7 +23,7 @@ class MeasurementModel {
 
     return MeasurementModel(
         alternativeText: faker.food.cuisine(),
-        value: faker.randomGenerator.decimal(),
+        value: faker.randomGenerator.decimal(scale: 4, min: 0),
         unitType: faker.randomGenerator.element(UnitType.values).name);
   }
 

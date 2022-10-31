@@ -58,7 +58,7 @@ class RecipeIngredientModel {
     return samples;
   }
 
-  static newRecipeIngredientModel() {
+  static RecipeIngredientModel newRecipeIngredientModel() {
     return RecipeIngredientModel(
         id: null,
         name: '',
