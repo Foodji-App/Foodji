@@ -1,30 +1,31 @@
-﻿using MediatR;
+using Application.Dto;
+using AutoMapper;
+using Domain.Recipes;
+using Infra;
+using MediatR;
 using MongoDB.Driver;
 
 namespace Application.Queries;
 
-public class GetAllRecipesQuery : IRequest
+public class GetAllRecipesQuery : IRequest<IEnumerable<RecipeDto>>
 {
-    private class Handler : IRequestHandler<GetAllRecipesQuery>
+    private class Handler : IRequestHandler<GetAllRecipesQuery, IEnumerable<RecipeDto>>
     {
-        private readonly IMongoClient _client;
+        private readonly IFoodjiDbClient _client;
+        private readonly IMapper _mapper;
 
-        public Handler(IMongoClient client)
+        public Handler(IFoodjiDbClient client, IMapper mapper)
         {
             _client = client;
+            _mapper = mapper;
         }
 
 
-        public async Task<Unit> Handle(GetAllRecipesQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<RecipeDto>> Handle(GetAllRecipesQuery request, CancellationToken cancellationToken)
         {
-            var temp = new Dictionary<string, string>();
-            temp.Add("testKey", "testValue");
-            
-            await _client.GetDatabase("foodji")
-                .GetCollection<Dictionary<string, string>>("test")
-                .InsertOneAsync(temp, cancellationToken);
+            var recipes = await _client.Recipes.FindAsync(_ => true, cancellationToken: cancellationToken);
 
-            return default;
+            return _mapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipes.ToList());
         }
     }
 }

@@ -1,44 +1,71 @@
 ﻿using Domain.Ingredients;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain.Recipes;
 
-public class RecipeIngredient : Ingredient
+public class RecipeIngredient
 {
-    public string Description { get; protected set; }
+    [BsonId]
+    public ObjectId Id { get; }
     
-    public Measurement Measurement { get; protected set; }
+    public string Name { get; private set; }
     
-    // TODO - Refactor method after merge
+    public string Description { get; private set; }
+    
+    public Measurement Measurement { get; private set; }
+
+    // TODO - will implement later
+    // public IEnumerable<string> Synonyms { get; private set; }
+
+    public IEnumerable<Tag> Tags { get; private set; } = new List<Tag>();
+
+    public IEnumerable<RecipeSubstitute> Substitutes { get; private set; } = new List<RecipeSubstitute>();
+
+
     private RecipeIngredient(
+        string name,
         string description,
-        Measurement measurement,
-        string name)
-            : base(name)
+        Measurement measurement)
     {
+        Name = name;
         Description = description;
         Measurement = measurement;
-        Name = name;
     }
     
     public static RecipeIngredient Create(
-        Measurement measurement,
         string name,
-        string description = "",
-        IEnumerable<Tag>? tags = null,
-        IEnumerable<RecipeSubstitute>? substitutes = null)
+        string description,
+        Measurement measurement,
+        IEnumerable<Tag> tags,
+        IEnumerable<RecipeSubstitute> substitutes)
     {
-        var recipeIngredient = new RecipeIngredient(description, measurement, name);
-
-        if (substitutes != null)
+        var recipeIngredient = new RecipeIngredient(name, description, measurement)
         {
-            recipeIngredient.Substitutes = substitutes.ToList();
-        }
+            Substitutes = substitutes.ToList(),
+            Tags = tags.ToList()
+        };
 
-        if (tags != null)
+        return recipeIngredient;
+    }
+    
+    public void AddTag(Tag tag)
+    {
+        var newTags = Tags.ToList();
+        if (newTags.Contains(tag))
         {
-            recipeIngredient.Tags = tags.ToList();
+            throw new DomainException($"Ingredient already has tag {tag.Name}");
         }
         
-        return recipeIngredient;
+        newTags.Add(tag);
+        Tags = newTags;
+    }
+
+    public void AddSubstitute(RecipeSubstitute substitute)
+    {
+        var newSubstitutes = Substitutes.ToList();
+        newSubstitutes.Add(substitute);
+
+        Substitutes = newSubstitutes;
     }
 }

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
-import '../models/ingredient_model.dart';
+import '../models/recipe_ingredient_model.dart';
 import '../models/recipe_model.dart';
 import '../widgets/app_text.dart';
 import '../widgets/recipe_form/app_reorderable_text_form_fields.dart';
@@ -235,14 +235,14 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
         ),
         ElevatedButton(
           onPressed: () => setState(() => _currentRecipe.ingredients
-              .add(IngredientModel.newIngredientModel())),
+              .add(RecipeIngredientModel.newRecipeIngredientModel())),
           child: const AppText(text: 'Add Ingredient'), // TODO : i10n
         ),
       ],
     );
   }
 
-  ListTile _ingredientBuilder(IngredientModel ingredient) {
+  ListTile _ingredientBuilder(RecipeIngredientModel ingredient) {
     return ListTile(
       key: ValueKey(ingredient),
       tileColor: AppColors.highlightColor3,
@@ -270,7 +270,8 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                         Expanded(
                           child: TextFormField(
                               keyboardType: TextInputType.number,
-                              initialValue: ingredient.amount.toString(),
+                              initialValue:
+                                  ingredient.measurement.value.toString(),
                               decoration: const InputDecoration(
                                 hintText: 'Amount', // TODO : i10n
                               ),
@@ -278,14 +279,14 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                                   (value == null || value.isEmpty)
                                       ? 'Please enter some text' // TODO : i10n
                                       : null,
-                              onSaved: (value) =>
-                                  ingredient.amount = int.parse(value!)),
+                              onSaved: (value) => ingredient.measurement.value =
+                                  int.parse(value!)),
                         ),
                         const SizedBox(width: 15),
                         // unit
                         Expanded(
                           child: TextFormField(
-                              initialValue: ingredient.unit,
+                              initialValue: ingredient.measurement.unitType,
                               decoration: const InputDecoration(
                                 hintText: 'Unit', // TODO : i10n
                               ),
@@ -293,7 +294,8 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                                   (value == null || value.isEmpty)
                                       ? 'Please enter some text' // TODO : i10n
                                       : null,
-                              onSaved: (value) => ingredient.unit = value!),
+                              onSaved: (value) =>
+                                  ingredient.measurement.unitType = value!),
                         ),
                       ],
                     ),

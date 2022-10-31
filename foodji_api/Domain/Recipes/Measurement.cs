@@ -8,20 +8,20 @@ public class Measurement
     
     public UnitType UnitType { get; private set; }
     
-    private Measurement(decimal value, string alternativeText, UnitType unitType)
+    private Measurement(decimal value, UnitType unitType, string alternativeText)
     {
-        AlternativeText = alternativeText;
         Value = value;
         UnitType = unitType;
+        AlternativeText = alternativeText;
     }
     
-    public static Measurement Create(UnitType unitType, string alternativeText = "", decimal value = 0)
+    public static Measurement Create(decimal value, UnitType unitType, string alternativeText)
     {
         if (value == 0 && String.IsNullOrEmpty(alternativeText))
         {
             throw new DomainException("Measurement must have a value or alternative text");
         }
         
-        return new Measurement(value, alternativeText, unitType);
+        return new Measurement(value, unitType, alternativeText);
     }
 }

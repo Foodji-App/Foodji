@@ -1,20 +1,24 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../models/recipe_ingredient_model.dart';
 import '../models/recipe_model.dart';
-import '../services/data_services.dart';
+import '../services/recipe_services.dart';
 import 'app_cubit_states.dart';
 
 class AppCubits extends Cubit<CubitStates> {
-  AppCubits({required this.data}) : super(InitialState()) {
+  AppCubits({required this.recipeServices}) : super(InitialState()) {
     emit(InitState());
   }
 
-  final DataServices data;
+  final RecipeServices recipeServices;
 
   // Data ----------------------------------------
 
   // Recipes
-  List<RecipeModel> recipes = [];
+  late List<RecipeModel> recipes = [];
+
+  // Ingredients
+  List<RecipeIngredientModel> recipeIngredients = [];
 
   // Getters -------------------------------------
 
@@ -34,8 +38,12 @@ class AppCubits extends Cubit<CubitStates> {
   // then, the authentified state or error state
   void authentify() async {
     try {
+      // TODO : Make ternary operator for a config file
       recipes.addAll(RecipeModel.getSamples(20));
-      emit(AuthentifiedState(recipes, [...recipes])); //Deep copy
+      // recipes = await recipeServices.getRecipes();
+      recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
+      emit(AuthentifiedState(recipes, [...recipes], recipeIngredients,
+          [...recipeIngredients])); //Deep copy
     } catch (e) {
       emit(ErrorState());
     }
@@ -71,7 +79,8 @@ class AppCubits extends Cubit<CubitStates> {
   // To recipes
   void gotoRecipes() async {
     try {
-      emit(AuthentifiedState(recipes, [...recipes]));
+      emit(AuthentifiedState(
+          recipes, [...recipes], recipeIngredients, [...recipeIngredients]));
     } catch (e) {
       emit(ErrorState());
     }
@@ -89,6 +98,25 @@ class AppCubits extends Cubit<CubitStates> {
   void gotoRecipeEditor(recipe) async {
     try {
       emit(RecipeEditorState(recipe));
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  // To ingredients
+  void gotoIngredients() async {
+    try {
+      emit(AuthentifiedState(
+          recipes, [...recipes], recipeIngredients, [...recipeIngredients]));
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  // To recipe details
+  void gotoIngredientDetails(recipe) async {
+    try {
+      emit(IngredientState(recipe));
     } catch (e) {
       emit(ErrorState());
     }

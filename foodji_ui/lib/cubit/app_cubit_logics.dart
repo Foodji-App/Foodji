@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/pages/recipe_editor_page.dart';
 
+import '../pages/ingredient_detail_page.dart';
 import '../pages/recipe_detail_page.dart';
 import '../widgets/navigation_bar.dart' as navigation_bar_widget;
 import '../pages/authentification_page.dart';
@@ -33,8 +34,10 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
         return const navigation_bar_widget.NavigationBar();
       } else if (state is RecipeState) {
         return const RecipeDetailPage();
-      } else if (state is RecipeEditorState){
+      } else if (state is RecipeEditorState) {
         return const RecipeEditorPage();
+      } else if (state is IngredientState) {
+        return const IngredientDetailPage();
       } else if (state is ErrorState) {
         return const ErrorPage();
       } else {

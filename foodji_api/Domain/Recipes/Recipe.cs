@@ -1,7 +1,14 @@
-﻿namespace Domain.Recipes;
+﻿using System.Diagnostics.Tracing;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Domain.Recipes;
 
 public class Recipe
 {
+    [BsonId]
+    public ObjectId Id { get; private set; }
+    
     public string Name { get; private set; }
 
     public DateTime CreatedAt { get; private set; }
@@ -16,16 +23,22 @@ public class Recipe
     
     public IEnumerable<RecipeIngredient> Ingredients { get; private set; }
     
-    public IEnumerable<RecipeStep> Steps { get; private set; }
+    public IEnumerable<string> Steps { get; private set; }
+    
+    public string Author { get; private set; }
+    
+    public Uri ImageUri { get; private set; }
     
     private Recipe(
-        String name, 
-        DateTime createdAt, 
-        RecipeCategory category, 
-        string description, 
-        RecipeDetails details, 
-        IEnumerable<RecipeIngredient> ingredients, 
-        IEnumerable<RecipeStep> steps)
+        string name,
+        DateTime createdAt,
+        RecipeCategory category,
+        string description,
+        RecipeDetails details,
+        IEnumerable<RecipeIngredient> ingredients,
+        IEnumerable<string> steps,
+        Uri imageUri,
+        string authorId)
     {
         Name = name;
         CreatedAt = createdAt;
@@ -34,17 +47,45 @@ public class Recipe
         Description = description;
         Ingredients = ingredients.ToList();
         Steps = steps.ToList();
+        ImageUri = imageUri;
+        Author = authorId;
     }
     public static Recipe Create(
-        String name, 
-        DateTime createdAt, 
-        RecipeCategory category, 
-        string description, 
-        RecipeDetails details, 
-        IEnumerable<RecipeIngredient> ingredients, 
-        IEnumerable<RecipeStep> steps)
+        string name,
+        RecipeCategory category,
+        string description,
+        RecipeDetails details,
+        IEnumerable<RecipeIngredient> ingredients,
+        IEnumerable<string> steps,
+        Uri imageUri,
+        string authorId)
     {
-        return new Recipe(name, createdAt, category, description, details, ingredients, steps);
+        return new Recipe(name, DateTime.Now, category, description, details, ingredients, steps, imageUri, authorId);
     }
     
+    public void AddIngredient(RecipeIngredient ingredient)
+    {
+        var newIngredients = Ingredients.ToList();
+        newIngredients.Add(ingredient);
+
+        Ingredients = newIngredients;
+    }
+    
+    public void AddStep(string step)
+    {
+        var newSteps = Steps.ToList();
+        newSteps.Add(step);
+
+        Steps = newSteps;
+    }
+    
+    public void UpdateStepsOrder(int oldIndex, int newIndex)
+    {
+        var newSteps = Steps.ToList();
+        var step = newSteps[oldIndex];
+        newSteps.RemoveAt(oldIndex);
+        newSteps.Insert(newIndex, step);
+
+        Steps = newSteps;
+    }
 }

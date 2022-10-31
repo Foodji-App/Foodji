@@ -1,34 +1,38 @@
-﻿using Application.Queries;
+﻿using Application.Dto;
+using AutoMapper;
+using Infra;
 using MediatR;
-using MongoDB.Driver;
+using Domain.Recipes;
 
 namespace Application.Command;
 
-public class CreateRecipeCommand : IRequest
+public class CreateRecipeCommand : IRequest<string>
 {
+    public RecipeDto RecipeDto { get; }
     
-    
-    
-    private class Handler : IRequestHandler<CreateRecipeCommand>
+    public CreateRecipeCommand(RecipeDto recipeDto)
     {
-        private readonly IMongoClient _client;
+        RecipeDto = recipeDto;
+    }
+    
+    private class Handler : IRequestHandler<CreateRecipeCommand, string>
+    {
+        private readonly IFoodjiDbClient _client;
+        private readonly IMapper _mapper;
 
-        public Handler(IMongoClient client)
+        public Handler(IFoodjiDbClient client, IMapper mapper)
         {
             _client = client;
+            _mapper = mapper;
         }
         
-        // TODO - copy pasta shenanigans, we have to redo the method
-        public async Task<Unit> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
         {
-            var temp = new Dictionary<string, string>();
-            temp.Add("testKey", "testValue");
-            
-            /*await _client.GetDatabase("foodji")
-                .GetCollection<Dictionary<string, string>>("test")
-                .InsertOneAsync(temp, cancellationToken);*/
-            
-            return Unit.Value;
+            var recipe = _mapper.Map<Recipe>(request.RecipeDto);
+
+            await _client.Recipes.InsertOneAsync(recipe, cancellationToken: cancellationToken);
+
+            return recipe.Id.ToString();
         }
     }
 }
