@@ -24,15 +24,15 @@ class ReorderableTextFormFields extends StatefulWidget {
       AppReorderableTextFormFieldsState();
 }
 
-class AppReorderableTextFormFieldsState extends State<ReorderableTextFormFields> {
+class AppReorderableTextFormFieldsState
+    extends State<ReorderableTextFormFields> {
   List items = [];
 
   @override
   Widget build(BuildContext context) {
     items = widget.items;
 
-    return Scaffold(
-        body: Column(
+    return Column(
       children: [
         ReorderableListView.builder(
           shrinkWrap: true,
@@ -43,7 +43,9 @@ class AppReorderableTextFormFieldsState extends State<ReorderableTextFormFields>
             return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 key: ValueKey(items[index]),
-                child: widget.hasCustomListTile ? widget.custombuildTenableListTile!(index) : buildTenableListTile(index));
+                child: widget.hasCustomListTile
+                    ? widget.custombuildTenableListTile!(index)
+                    : buildTenableListTile(index));
           },
         ),
         ElevatedButton(
@@ -52,7 +54,7 @@ class AppReorderableTextFormFieldsState extends State<ReorderableTextFormFields>
             },
             child: const Text('Add')),
       ],
-    ));
+    );
   }
 
   ListTile buildTenableListTile(int index) => ListTile(
@@ -62,7 +64,14 @@ class AppReorderableTextFormFieldsState extends State<ReorderableTextFormFields>
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15),
                 bottomRight: Radius.circular(15))),
-        leading: Text("${index + 1}"),
+        leading: Column(
+          children: [
+            Text("${index + 1}"),
+            IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () => setState(() => items.removeAt(index)))
+          ],
+        ),
         title: TextFormField(
             initialValue: items[index],
             decoration: const InputDecoration(
@@ -76,9 +85,6 @@ class AppReorderableTextFormFieldsState extends State<ReorderableTextFormFields>
               items[index] = value!;
               widget.onChanged(items);
             }),
-        trailing: IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () => setState(() => items.removeAt(index))),
       );
 
   onReorder(int oldIndex, int newIndex) {

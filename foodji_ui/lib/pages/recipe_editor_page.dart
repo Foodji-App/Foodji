@@ -40,7 +40,10 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   _updateRecipe() {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        BlocProvider.of<AppCubits>(context).updateRecipe(_savedRecipe);
+        // TODO : Send recipe to database
+        // _savedRecipe = BlocProvider.....
+        BlocProvider.of<AppCubits>(context)
+            .updateRecipe(RecipeModel.deepCopy(_currentRecipe));
         _savedRecipe = RecipeModel.deepCopy(_currentRecipe);
         _formKey.currentState!.save();
       });
@@ -64,13 +67,13 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                 ),
                 TextButton(
                   child: const AppText(text: 'Discard'),
-                  onPressed: () => _updateRecipe(),
+                  onPressed: () => BlocProvider.of<AppCubits>(context)
+                      .gotoRecipeDetails(_savedRecipe),
                 ),
               ],
             );
           });
     }
-    BlocProvider.of<AppCubits>(context).gotoRecipeDetails(_savedRecipe);
   }
 
   @override
@@ -78,7 +81,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     // Build a Form widget using the _formKey created above.
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is RecipeEditorState) {
-        _savedRecipe = RecipeModel.deepCopy(state.recipe);
+        _savedRecipe = state.recipe;
         _currentRecipe = RecipeModel.deepCopy(_savedRecipe);
         return Scaffold(
           appBar: _appBar(),
@@ -119,16 +122,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                       // ingredients
                       _buildIngredients(),
                       // steps
-                      Expanded(
-                          child: ReorderableTextFormFields(
-                        scrollController: _scrollController,
-                        items: _currentRecipe.steps,
-                        onChanged: (items) => _currentRecipe.steps = items,
-                        validator: (value) => (value == null || value.isEmpty)
-                            ? 'Please enter some text' // TODO : i10n
-                            : null,
-                      )),
-                      // _buildSteps(),
+                      _buildSteps(),
                       const SizedBox(height: 20),
                     ],
                   )),
@@ -221,44 +215,62 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     );
   }
 
-  Widget _buildIngredients() {
+  Widget _buildSteps() {
     return ExpansionTile(
-      title: const Text('Ingredients'), // TODO : i10n
+      title: const AppText(text: 'Steps'),
       children: [
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: _currentRecipe.ingredients.length,
-          itemBuilder: (context, index) {
-            return _ingredientBuilder(_currentRecipe.ingredients[index]);
-          },
-        ),
-        ElevatedButton(
-          onPressed: () => setState(() => _currentRecipe.ingredients
-              .add(RecipeIngredientModel.newRecipeIngredientModel())),
-          child: const AppText(text: 'Add Ingredient'), // TODO : i10n
+        ReorderableTextFormFields(
+          scrollController: _scrollController,
+          items: _currentRecipe.steps,
+          onChanged: (items) => _currentRecipe.steps = items,
+          validator: (value) => (value == null || value.isEmpty)
+              ? 'Please enter some text' // TODO : i10n
+              : null,
         ),
       ],
     );
   }
 
-  ListTile _ingredientBuilder(RecipeIngredientModel ingredient) {
+  Widget _buildIngredients() {
+    return ExpansionTile(
+      title: const AppText(text: 'Ingredients'),
+      children: [
+        ReorderableTextFormFields(
+          scrollController: _scrollController,
+          items: _currentRecipe.ingredients,
+          hasCustomListTile: true,
+          custombuildTenableListTile: (item) => _ingredientBuilder(item),
+          onChanged: (items) => _currentRecipe.ingredients = items,
+          validator: (value) => (value == null || value.isEmpty)
+              ? 'Please enter some text' // TODO : i10n
+              : null,
+        ),
+      ],
+    );
+  }
+
+  ListTile _ingredientBuilder(int index) {
     return ListTile(
-      key: ValueKey(ingredient),
+      key: ValueKey(_currentRecipe.ingredients[index]),
       tileColor: AppColors.highlightColor3,
       shape: _tileShape,
+      leading: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () =>
+              setState(() => _currentRecipe.ingredients.removeAt(index))),
       title: Column(
         children: [
           // name
           TextFormField(
-              initialValue: ingredient.name,
+              initialValue: _currentRecipe.ingredients[index].name,
               decoration: const InputDecoration(
                 hintText: 'Ingredient',
               ),
               validator: (value) => (value == null || value.isEmpty)
                   ? 'Please enter some text' // TODO : i10n
                   : null,
-              onSaved: (value) => ingredient.name = value!),
+              onSaved: (value) =>
+                  _currentRecipe.ingredients[index].name = value!),
           Row(
             children: [
               Expanded(
@@ -270,8 +282,9 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                         Expanded(
                           child: TextFormField(
                               keyboardType: TextInputType.number,
-                              initialValue:
-                                  ingredient.measurement.value.toString(),
+                              initialValue: _currentRecipe
+                                  .ingredients[index].measurement.value
+                                  .toString(),
                               decoration: const InputDecoration(
                                 hintText: 'Amount', // TODO : i10n
                               ),
@@ -279,14 +292,17 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                                   (value == null || value.isEmpty)
                                       ? 'Please enter some text' // TODO : i10n
                                       : null,
-                              onSaved: (value) => ingredient.measurement.value =
-                                  int.parse(value!)),
+                              onSaved: (value) => _currentRecipe
+                                  .ingredients[index]
+                                  .measurement
+                                  .value = int.parse(value!)),
                         ),
                         const SizedBox(width: 15),
                         // unit
                         Expanded(
                           child: TextFormField(
-                              initialValue: ingredient.measurement.unitType,
+                              initialValue: _currentRecipe
+                                  .ingredients[index].measurement.unitType,
                               decoration: const InputDecoration(
                                 hintText: 'Unit', // TODO : i10n
                               ),
@@ -294,8 +310,10 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                                   (value == null || value.isEmpty)
                                       ? 'Please enter some text' // TODO : i10n
                                       : null,
-                              onSaved: (value) =>
-                                  ingredient.measurement.unitType = value!),
+                              onSaved: (value) => _currentRecipe
+                                  .ingredients[index]
+                                  .measurement
+                                  .unitType = value!),
                         ),
                       ],
                     ),
@@ -309,10 +327,6 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
           ),
         ],
       ),
-      trailing: IconButton(
-          icon: const Icon(Icons.delete),
-          onPressed: () =>
-              setState(() => _currentRecipe.ingredients.remove(ingredient))),
     );
   }
 }
