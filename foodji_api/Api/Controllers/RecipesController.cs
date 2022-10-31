@@ -74,4 +74,38 @@ public class RecipesController : ControllerBase
 
         return CreatedAtAction(nameof(GetRecipe), new {id = result}, new {});
     }
+    
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateRecipe([FromBody] RecipeDto recipe)
+    {
+        var command = new UpdateRecipeCommand(recipe);
+
+        var result = await _mediator.Send(command);
+        
+        if (string.IsNullOrEmpty(result))
+        {
+            return NotFound();
+        }
+
+        return CreatedAtAction(nameof(GetRecipe), new {id = result}, new {});
+    }
+    
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteRecipe([FromRoute] string id)
+    {
+        var command = new DeleteRecipeCommand(id);
+
+        var result = await _mediator.Send(command);
+        
+        if (string.IsNullOrEmpty(result))
+        {
+            return NotFound();
+        }
+
+        return CreatedAtAction(nameof(GetRecipe), new {id = result}, new {});
+    }
 }

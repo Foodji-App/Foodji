@@ -11,7 +11,7 @@ namespace Application.Queries;
 
 public class GetUserDataByIdQuery : IRequest<UserDataDto?>
 {
-    public ObjectId UserDataId { get; }
+    private ObjectId UserDataId { get; }
 
     public GetUserDataByIdQuery(string recipeId)
     {

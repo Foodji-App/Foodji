@@ -63,6 +63,17 @@ public class Recipe
         return new Recipe(name, DateTime.Now, category, description, details, ingredients, steps, imageUri, authorId);
     }
     
+    public void Update(Recipe recipe)
+    {
+        Name = recipe.Name;
+        Category = recipe.Category;
+        Description = recipe.Description;
+        Details = recipe.Details;
+        Ingredients = recipe.Ingredients;
+        Steps = recipe.Steps;
+        ImageUri = recipe.ImageUri;
+    }
+    
     public void AddIngredient(RecipeIngredient ingredient)
     {
         var newIngredients = Ingredients.ToList();

@@ -10,7 +10,7 @@ namespace Application.Queries;
 
 public class GetRecipeByIdQuery : IRequest<RecipeDto?>
 {
-    public ObjectId RecipeId { get; }
+    private ObjectId RecipeId { get; }
 
     public GetRecipeByIdQuery(string recipeId)
     {
