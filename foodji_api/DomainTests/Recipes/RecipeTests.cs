@@ -84,18 +84,18 @@ namespace DomainTests.Recipes
         [Test]
         public void GivenValidRecipeToUpdate_UpdateRecipe_RecipeUpdated()
         {
-            // Arrange new substitute
+            // Arrange updated substitute
             var substitute = RecipeSubstitute.Create(
                 "updatedSubstituteName",
                 "updatedSubstituteDescription",
-                "substituteDescription",
+                "updatedSubstituteDescription",
                 Measurement.Create(
                     1,
                     UnitType.Millilitre,
                     "updated alternative text"),
                 new List<Tag> { Tag.Vegan });
                 
-            // Arrange new ingredient
+            // Arrange updated ingredient
             var ingredient = RecipeIngredient.Create(
                 "updatedIngredientName",
                 "updatedIngredientDescription",
@@ -106,31 +106,36 @@ namespace DomainTests.Recipes
                 new List<Tag> { Tag.Vegan },
                 new List<RecipeSubstitute> { substitute });
 
-            // Arrange new recipe
-            var expectedRecipe = Recipe.Create(
-                "expectedName",
-                RecipeCategory.Dessert,
-                "expectedDescription",
-                RecipeDetails.Create(1,1,1,1),
-                new List<RecipeIngredient> { ingredient },
-                new List<string> { "updatedRecipeStep" },
-                new Uri("https://www.yahoo.ca"),
-                "updatedAuthor");
+            // Arrange updated recipe properties
+            var updatedName = "updatedName";
+            var updatedCategory = RecipeCategory.Dessert;
+            var updatedDescription = "updatedDescription";
+            var updatedDetails = RecipeDetails.Create(1,1,1,1);
+            var updatedIngredients = new List<RecipeIngredient> { ingredient };
+            var updatedRecipeSteps = new List<string> { "updatedRecipeStep" };
+            var updatedImageUri = new Uri("https://www.yahoo.ca");
+            var expectedAuthor = _recipe.Author;
+
             
             // Act
-            _recipe.Update(expectedRecipe);
+            _recipe.Update(
+                updatedName,
+                updatedCategory,
+                updatedDescription,
+                updatedDetails,
+                updatedIngredients,
+                updatedRecipeSteps,
+                updatedImageUri);
             
             // Assert
-            // I know we should be testing the Id here,
-            // but I'm not sure how to do that since Create() does not instantiate the Id property...
-            _recipe.Name.Should().Be(expectedRecipe.Name);
-            _recipe.Category.Should().Be(expectedRecipe.Category);
-            _recipe.Description.Should().Be(expectedRecipe.Description);
-            _recipe.Details.Should().Be(expectedRecipe.Details);
-            _recipe.Ingredients.Should().BeEquivalentTo(expectedRecipe.Ingredients);
-            _recipe.Steps.Should().BeEquivalentTo(expectedRecipe.Steps);
-            _recipe.ImageUri.Should().Be(expectedRecipe.ImageUri);
-            _recipe.Author.Should().NotBe(expectedRecipe.Author);
+            _recipe.Name.Should().Be(updatedName);
+            _recipe.Category.Should().Be(updatedCategory);
+            _recipe.Description.Should().Be(updatedDescription);
+            _recipe.Details.Should().Be(updatedDetails);
+            _recipe.Ingredients.Should().BeEquivalentTo(updatedIngredients);
+            _recipe.Steps.Should().BeEquivalentTo(updatedRecipeSteps);
+            _recipe.ImageUri.Should().Be(updatedImageUri);
+            _recipe.Author.Should().Be(expectedAuthor);
         }
         
         [Test]

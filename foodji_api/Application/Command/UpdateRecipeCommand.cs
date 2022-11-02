@@ -51,7 +51,15 @@ public class UpdateRecipeCommand : IRequest<string>
 
             var recipeToUpdate = recipeToUpdateList.First();
             
-            recipeToUpdate.Update(recipe);
+            recipeToUpdate.Update(
+                request.RecipeDto.Name,
+                _mapper.Map<RecipeCategory>(request.RecipeDto.Category),
+                request.RecipeDto.Description,
+                _mapper.Map<RecipeDetails>(request.RecipeDto.Details),
+                _mapper.Map<IEnumerable<RecipeIngredientDto>, 
+                    IEnumerable<RecipeIngredient>>(request.RecipeDto.Ingredients),
+                request.RecipeDto.Steps,
+                request.RecipeDto.ImageUri);
             
             await _client.Recipes.ReplaceOneAsync(r => r.Id.Equals(recipeToUpdate.Id),
                 recipeToUpdate, new ReplaceOptions { IsUpsert = false }, cancellationToken);
