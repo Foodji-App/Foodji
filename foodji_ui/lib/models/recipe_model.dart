@@ -3,7 +3,6 @@
 import 'dart:math';
 
 import 'package:faker/faker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:foodji_ui/models/recipe_details_model.dart';
 
 import 'categories_enum.dart';
@@ -67,7 +66,7 @@ class RecipeModel {
       imageUri == other.imageUri &&
       category == other.category &&
       description == other.description &&
-      details == other.details &&
+      details.equals(other.details) &&
       _equalsIngredients(other.ingredients) &&
       _equalsSteps(other.steps) &&
       isFavorite == other.isFavorite;
@@ -89,7 +88,9 @@ class RecipeModel {
     if (steps.length != other.length) return false;
 
     for (var i = 0; i < steps.length; i++) {
-      if (steps[i] != other[i]) return false;
+      if (steps[i] != other[i]) {
+        return false;
+      }
     }
     return true;
   }
