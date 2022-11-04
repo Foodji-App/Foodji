@@ -228,6 +228,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
         title: const AppText(text: 'Steps'),
         children: [
           ReorderableTextFormFields(
+            key: ValueKey('${_currentRecipe.id}.steps'),
             color: AppColors.highlightColor2,
             scrollController: _scrollController,
             items: _currentRecipe.steps,
@@ -250,6 +251,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
         title: const AppText(text: 'Ingredients'),
         children: [
           ReorderableTextFormFields(
+            key: ValueKey('${_currentRecipe.id}.ingredients'),
             color: AppColors.highlightColor3,
             scrollController: _scrollController,
             items: _currentRecipe.ingredients,
@@ -268,7 +270,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
 
   ListTile _ingredientBuilder(int index) {
     return ListTile(
-      key: ValueKey(_currentRecipe.ingredients[index]),
+      key: ValueKey("ingredient-$_currentRecipe.ingredients[index]"),
       leading: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () =>

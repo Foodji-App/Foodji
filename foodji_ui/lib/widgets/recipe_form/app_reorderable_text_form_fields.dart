@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:foodji_ui/misc/app_shape.dart';
+import 'package:foodji_ui/misc/app_util.dart';
 import 'package:foodji_ui/widgets/app_text.dart';
 
 class ReorderableTextFormFields extends StatefulWidget {
@@ -44,14 +44,14 @@ class AppReorderableTextFormFieldsState
     return Column(
       children: [
         ReorderableListView.builder(
-          key: widget.key,
+          key: ValueKey('${widget.key}-list'),
           shrinkWrap: true,
           onReorder: onReorder,
           itemCount: items.length,
           scrollController: widget.scrollController,
           itemBuilder: (context, index) {
             return Material(
-              key: ValueKey(items[index]),
+              key: ValueKey('m_${widget.key}-${AppUtil.intKeys[index]}'),
               color: widget.color ?? Colors.transparent,
               child: widget.hasCustomListTile
                   ? widget.custombuildTenableListTile!(index)
@@ -65,7 +65,7 @@ class AppReorderableTextFormFieldsState
             },
             style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    AppShapes().lastTile)),
+                    AppUtil().lastTile)),
             child: Container(
                 width: double.maxFinite,
                 padding: const EdgeInsets.symmetric(vertical: 10),
@@ -76,7 +76,7 @@ class AppReorderableTextFormFieldsState
   }
 
   ListTile buildTenableListTile(int index) => ListTile(
-        key: ValueKey(items[index]),
+        key: ValueKey('lt_${widget.key}-${AppUtil.intKeys[index]}'),
         leading: Column(
           children: [
             Text("${index + 1}"),
