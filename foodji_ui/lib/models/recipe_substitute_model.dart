@@ -53,4 +53,28 @@ class RecipeSubstituteModel {
     }
     return samples;
   }
+
+  static deepCopy(List<RecipeSubstituteModel> ingredients) {
+    var copy = <RecipeSubstituteModel>[];
+
+    for (var ingredient in ingredients) {
+      copy.add(RecipeSubstituteModel(
+          id: ingredient.id,
+          name: ingredient.name,
+          substitutionPrecisions: ingredient.substitutionPrecisions,
+          description: ingredient.description,
+          measurement: ingredient.measurement,
+          tags: ingredient.tags));
+    }
+    return copy;
+  }
+
+  bool equals(RecipeSubstituteModel other) {
+    return id == other.id &&
+        name == other.name &&
+        substitutionPrecisions == other.substitutionPrecisions &&
+        description == other.description &&
+        measurement.equals(other.measurement) &&
+        tags == other.tags;
+  }
 }

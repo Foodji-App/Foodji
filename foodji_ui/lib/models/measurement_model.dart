@@ -23,7 +23,7 @@ class MeasurementModel {
 
     return MeasurementModel(
         alternativeText: faker.food.cuisine(),
-        value: faker.randomGenerator.decimal(),
+        value: faker.randomGenerator.decimal(scale: 4, min: 0),
         unitType: faker.randomGenerator.element(UnitType.values).name);
   }
 
@@ -34,5 +34,18 @@ class MeasurementModel {
       samples.add(getSample());
     }
     return samples;
+  }
+
+  static MeasurementModel deepCopy(MeasurementModel measurement) {
+    return MeasurementModel(
+        alternativeText: measurement.alternativeText,
+        value: measurement.value,
+        unitType: measurement.unitType);
+  }
+
+  bool equals(MeasurementModel measurement) {
+    return alternativeText == measurement.alternativeText &&
+        unitType == measurement.unitType &&
+        value == measurement.value;
   }
 }
