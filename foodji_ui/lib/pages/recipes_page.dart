@@ -418,10 +418,9 @@ class RecipesPageState extends State<RecipesPage> {
                               borderRadius: BorderRadius.circular(10),
                               //Material required to solve known issue with Gesture Detector, see https://github.com/flutter/flutter/issues/83108
                               child: GestureDetector(
-                                  onTap: () =>
-                                      BlocProvider.of<AppCubits>(context)
-                                          .gotoRecipeDetails(
-                                              filteredRecipes[index]),
+                                  onTap: () => BlocProvider.of<AppCubits>(context)
+                                      .gotoRecipeDetails(
+                                          filteredRecipes[index]),
                                   child: ListTile(
                                       shape: const RoundedRectangleBorder(
                                           borderRadius: BorderRadius.only(
@@ -429,59 +428,97 @@ class RecipesPageState extends State<RecipesPage> {
                                               bottomRight:
                                                   Radius.circular(30))),
                                       tileColor: AppColors.backgroundColor,
-                                      leading: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width /
-                                                  4,
-                                          decoration: BoxDecoration(
-                                              borderRadius: const BorderRadius.only(
-                                                  topLeft: Radius.circular(10),
-                                                  bottomRight:
-                                                      Radius.circular(10)),
-                                              color: AppColors.textColor,
-                                              image: DecorationImage(
-                                                  image: NetworkImage(filteredRecipes[index].imageUri),
-                                                  fit: BoxFit.fill))),
-                                      title: Text(filteredRecipes[index].name),
-                                      subtitle: SizedBox(
-                                          child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                        Text(getCategoryString(
-                                            filteredRecipes[index].category)),
-                                        SizedBox(
-                                            height: 20,
-                                            child: ListView.builder(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                itemCount: tagsWithColors(
-                                                        filteredRecipes[index])
-                                                    .length,
-                                                itemBuilder:
-                                                    (context, indexSecondary) {
-                                                  return AppText(
-                                                      size: AppTextSize.small,
-                                                      color: tagsWithColors(
-                                                                      filteredRecipes[
-                                                                          index])[
-                                                                  indexSecondary]
-                                                              .isIngredients
-                                                          ? AppColors
-                                                              .highlightColor3
-                                                          : AppColors.textColor,
-                                                      text: indexSecondary <
-                                                              tagsWithColors(filteredRecipes[
-                                                                          index])
-                                                                      .length -
-                                                                  1
-                                                          ? "${getTagString(tagsWithColors(filteredRecipes[index])[indexSecondary].tag)}, "
-                                                          : getTagString(
-                                                              tagsWithColors(filteredRecipes[
-                                                                          index])[
-                                                                      indexSecondary]
-                                                                  .tag));
-                                                }))
-                                      ])),
-                                      isThreeLine: false,
-                                      trailing: IconButton(onPressed: () => updateFavoriteStatus(filteredRecipes[index]), color: filteredRecipes[index].isFavorite ? AppColors.starColor1 : AppColors.textColor, icon: filteredRecipes[index].isFavorite ? const Icon(Icons.star) : const Icon(Icons.star_outline))))));
+                                      contentPadding: const EdgeInsets.all(0),
+                                      title: Scaffold(
+                                          body: Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  3.5,
+                                              padding: const EdgeInsets.only(
+                                                  top: 3, bottom: 3),
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(10),
+                                                          bottomRight: Radius.circular(10)),
+                                                  color: AppColors.textColor,
+                                                  image: DecorationImage(image: NetworkImage(filteredRecipes[index].imageUri), fit: BoxFit.cover)),
+                                              child: Row(children: [
+                                                Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                                filteredRecipes[
+                                                                        index]
+                                                                    .name),
+                                                            IconButton(
+                                                                onPressed: () =>
+                                                                    updateFavoriteStatus(
+                                                                        filteredRecipes[
+                                                                            index]),
+                                                                color: filteredRecipes[
+                                                                            index]
+                                                                        .isFavorite
+                                                                    ? AppColors
+                                                                        .starColor1
+                                                                    : AppColors
+                                                                        .textColor,
+                                                                icon: filteredRecipes[
+                                                                            index]
+                                                                        .isFavorite
+                                                                    ? const Icon(
+                                                                        Icons
+                                                                            .star)
+                                                                    : const Icon(
+                                                                        Icons
+                                                                            .star_outline))
+                                                          ]),
+                                                      Row(children: [
+                                                        Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(getCategoryString(
+                                                                  filteredRecipes[
+                                                                          index]
+                                                                      .category)),
+                                                              SizedBox(
+                                                                  height: 20,
+                                                                  child: ListView
+                                                                      .builder(
+                                                                          scrollDirection: Axis
+                                                                              .horizontal,
+                                                                          itemCount: tagsWithColors(filteredRecipes[index])
+                                                                              .length,
+                                                                          itemBuilder:
+                                                                              (context, indexSecondary) {
+                                                                            return AppText(
+                                                                                size: AppTextSize.small,
+                                                                                color: tagsWithColors(filteredRecipes[index])[indexSecondary].isIngredients ? AppColors.highlightColor3 : AppColors.textColor,
+                                                                                text: indexSecondary < tagsWithColors(filteredRecipes[index]).length - 1 ? "${getTagString(tagsWithColors(filteredRecipes[index])[indexSecondary].tag)}, " : getTagString(tagsWithColors(filteredRecipes[index])[indexSecondary].tag));
+                                                                          }))
+                                                            ])
+                                                      ])
+                                                    ])
+                                              ]))),
+                                      isThreeLine: false))));
                     },
                   ))
                 ])));
