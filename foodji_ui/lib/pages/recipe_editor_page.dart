@@ -53,7 +53,6 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   }
 
   _discardRecipe() {
-    // TODO : fix Discard notification
     if (!_savedRecipe.equals(_currentRecipe)) {
       showDialog(
           context: context,
@@ -77,8 +76,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
               ],
             );
           });
-    }
-    else {
+    } else {
       BlocProvider.of<AppCubits>(context).gotoRecipeDetails(_savedRecipe);
     }
   }
@@ -212,7 +210,6 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   }
 
   Widget _buildServes() {
-    // TODO : implement
     return TextFormField(
       keyboardType: TextInputType.number,
       initialValue: _currentRecipe.details.serves.toString(),
@@ -232,8 +229,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
         title: const AppText(text: 'Steps'),
         children: [
           ReorderableTextFormFields(
-            key: ValueKey('${_currentRecipe.id}.steps'),
-            color: AppColors.highlightColor2,
+            key: UniqueKey(),
             scrollController: _scrollController,
             items: _currentRecipe.steps,
             newItem: '',
@@ -255,14 +251,14 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
         title: const AppText(text: 'Ingredients'),
         children: [
           ReorderableTextFormFields(
-            key: ValueKey('${_currentRecipe.id}.ingredients'),
-            color: AppColors.highlightColor3,
+            key: UniqueKey(),
             scrollController: _scrollController,
             items: _currentRecipe.ingredients,
             newItem: RecipeIngredientModel.newRecipeIngredientModel(),
             hasCustomListTile: true,
             custombuildTenableListTile: (item) => _ingredientBuilder(item),
-            onChanged: (items) => _currentRecipe.ingredients = items,
+            onChanged: (items) =>
+                setState(() => _currentRecipe.ingredients = items),
             validator: (value) => (value == null || value.isEmpty)
                 ? 'Please enter some text' // TODO : i10n
                 : null,
@@ -272,83 +268,91 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     );
   }
 
-  ListTile _ingredientBuilder(int index) {
-    return ListTile(
-      key: ValueKey("ingredient-$_currentRecipe.ingredients[index]"),
-      trailing: IconButton(
-          icon: const Icon(Icons.delete),
-          onPressed: () =>
-              setState(() => _currentRecipe.ingredients.removeAt(index))),
-      title: Column(
-        children: [
-          // name
-          TextFormField(
-              initialValue: _currentRecipe.ingredients[index].name,
-              decoration: const InputDecoration(
-                hintText: 'Ingredient',
-              ),
-              validator: (value) => (value == null || value.isEmpty)
-                  ? 'Please enter some text' // TODO : i10n
-                  : null,
-              onChanged: (value) =>
-                  _currentRecipe.ingredients[index].name = value!),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        // amount
-                        Expanded(
-                          flex: 1,
-                          child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              initialValue: _currentRecipe
-                                  .ingredients[index].measurement.value
-                                  .toString(),
-                              decoration: const InputDecoration(
-                                hintText: 'Amount', // TODO : i10n
-                              ),
-                              validator: (value) =>
-                                  (value == null || value.isEmpty)
-                                      ? 'Please enter some text' // TODO : i10n
-                                      : null,
-                              onChanged: (value) => _currentRecipe
-                                  .ingredients[index]
-                                  .measurement
-                                  .value = int.parse(value!)),
-                        ),
-                        const SizedBox(width: 15),
-                        // unit
-                        Expanded(
-                          flex: 1,
-                          child: TextFormField(
-                              initialValue: _currentRecipe
-                                  .ingredients[index].measurement.unitType,
-                              decoration: const InputDecoration(
-                                hintText: 'Unit', // TODO : i10n
-                              ),
-                              validator: (value) =>
-                                  (value == null || value.isEmpty)
-                                      ? 'Please enter some text' // TODO : i10n
-                                      : null,
-                              onChanged: (value) => _currentRecipe
-                                  .ingredients[index]
-                                  .measurement
-                                  .unitType = value!),
-                        ),
-                      ],
-                    ),
-                  ],
+  Widget _ingredientBuilder(int index) {
+    return Dismissible(
+      key: UniqueKey(),
+      confirmDismiss: (direction) =>
+          Future.value(direction == DismissDirection.endToStart),
+      onDismissed: (direction) {
+        setState(() => _currentRecipe.ingredients.removeAt(index));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('item dismissed')));
+      },
+      background: Container(color: Colors.red),
+      child: ListTile(
+        key: UniqueKey(),
+        title: Column(
+          children: [
+            // name
+            TextFormField(
+                initialValue: _currentRecipe.ingredients[index].name,
+                decoration: const InputDecoration(
+                  hintText: 'Ingredient',
                 ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-        ],
+                validator: (value) => (value == null || value.isEmpty)
+                    ? 'Please enter some text' // TODO : i10n
+                    : null,
+                onChanged: (value) =>
+                    _currentRecipe.ingredients[index].name = value),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          // amount
+                          Expanded(
+                            flex: 1,
+                            child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                initialValue: _currentRecipe
+                                    .ingredients[index].measurement.value
+                                    .toString(),
+                                decoration: const InputDecoration(
+                                  hintText: 'Amount', // TODO : i10n
+                                ),
+                                validator: (value) => (value == null ||
+                                        value.isEmpty)
+                                    ? 'Please enter some text' // TODO : i10n
+                                    : null,
+                                onChanged: (value) => _currentRecipe
+                                    .ingredients[index]
+                                    .measurement
+                                    .value = int.parse(value)),
+                          ),
+                          const SizedBox(width: 15),
+                          // unit
+                          Expanded(
+                            flex: 1,
+                            child: TextFormField(
+                                initialValue: _currentRecipe
+                                    .ingredients[index].measurement.unitType,
+                                decoration: const InputDecoration(
+                                  hintText: 'Unit', // TODO : i10n
+                                ),
+                                validator: (value) => (value == null ||
+                                        value.isEmpty)
+                                    ? 'Please enter some text' // TODO : i10n
+                                    : null,
+                                onChanged: (value) => _currentRecipe
+                                    .ingredients[index]
+                                    .measurement
+                                    .unitType = value),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
+        trailing: const Icon(Icons.drag_handle),
       ),
     );
   }
