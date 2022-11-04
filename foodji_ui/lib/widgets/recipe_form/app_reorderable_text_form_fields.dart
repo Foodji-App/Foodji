@@ -24,7 +24,7 @@ class ReorderableTextFormFields extends StatefulWidget {
   List items;
   final dynamic newItem;
   final bool hasCustomListTile;
-  final ListTile Function(int)? custombuildTenableListTile;
+  final Widget Function(int)? custombuildTenableListTile;
   final Function onChanged;
   final String? Function(String?)? validator;
 
@@ -43,21 +43,12 @@ class AppReorderableTextFormFieldsState
 
     return Column(
       children: [
-        ReorderableListView.builder(
-          key: ValueKey('${widget.key}-list'),
+        ReorderableListView(
+          key: UniqueKey(),
           shrinkWrap: true,
           onReorder: onReorder,
-          itemCount: items.length,
           scrollController: widget.scrollController,
-          itemBuilder: (context, index) {
-            return Material(
-              key: ValueKey('m_${widget.key}-${AppUtil.intKeys[index]}'),
-              color: widget.color ?? Colors.transparent,
-              child: widget.hasCustomListTile
-                  ? widget.custombuildTenableListTile!(index)
-                  : buildTenableListTile(index),
-            );
-          },
+          children: _getListItems(),
         ),
         ElevatedButton(
             onPressed: () {
@@ -75,37 +66,66 @@ class AppReorderableTextFormFieldsState
     );
   }
 
-  ListTile buildTenableListTile(int index) => ListTile(
-        key: ValueKey('lt_${widget.key}-${AppUtil.intKeys[index]}'),
-        trailing: Column(
-          children: [
-            Text("${index + 1}"),
-            IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () => setState(() => items.removeAt(index)))
-          ],
-        ),
-        title: TextFormField(
-            initialValue: items[index],
-            decoration: const InputDecoration(
-              hintText: 'Step', // TODO : i10n
+  List<Widget> _getListItems() {
+    return items
+        .map((item) => widget.hasCustomListTile
+            ? widget.custombuildTenableListTile!(items.indexOf(item))
+            : _buildTenableListTile(items.indexOf(item)))
+        .toList();
+  }
+
+  Widget _buildTenableListTile(int index) => Dismissible(
+        key: UniqueKey(),
+        confirmDismiss: (direction) =>
+            Future.value(direction == DismissDirection.endToStart),
+        onDismissed: (direction) {
+          setState(() {
+            items.removeAt(index);
+            widget.onChanged(items);
+          });
+
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('item dismissed')));
+        },
+        background: Container(color: Colors.red),
+        child: Material(
+          key: UniqueKey(),
+          color: widget.color ?? Colors.transparent,
+          child: ListTile(
+            key: UniqueKey(),
+            title: TextFormField(
+                initialValue: items[index],
+                decoration: const InputDecoration(
+                  hintText: 'Step', // TODO : i10n
+                ),
+                maxLength: 300,
+                minLines: 1,
+                maxLines: 6,
+                validator: widget.validator,
+                onChanged: (value) {
+                  items[index] = value;
+                  widget.onChanged(items);
+                }),
+            //trailing: const Icon(Icons.drag_handle),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.drag_handle,
+                  color: Colors.blueGrey,
+                ),
+              ],
             ),
-            maxLength: 300,
-            minLines: 1,
-            maxLines: 6,
-            validator: widget.validator,
-            onChanged: (value) {
-              items[index] = value;
-              widget.onChanged(items);
-            }),
+          ),
+        ),
       );
 
   onReorder(int oldIndex, int newIndex) {
+    if (newIndex > oldIndex) {
+      newIndex -= 1;
+    }
     setState(() {
-      if (newIndex > oldIndex) {
-        newIndex -= 1;
-      }
-      final String item = items[oldIndex];
+      var item = items[oldIndex];
       items.removeAt(oldIndex);
       items.insert(newIndex, item);
     });
