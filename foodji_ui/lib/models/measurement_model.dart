@@ -44,8 +44,8 @@ class MeasurementModel {
   }
 
   bool equals(MeasurementModel measurement) {
-    return this.alternativeText == measurement.alternativeText &&
-        this.unitType == measurement.unitType &&
-        this.value == measurement.value;
+    return alternativeText == measurement.alternativeText &&
+        unitType == measurement.unitType &&
+        value == measurement.value;
   }
 }

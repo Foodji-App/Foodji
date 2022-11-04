@@ -63,16 +63,23 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
               actions: [
                 TextButton(
                   child: const AppText(text: 'Cancel'),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
                 TextButton(
-                  child: const AppText(text: 'Discard'),
-                  onPressed: () => BlocProvider.of<AppCubits>(context)
-                      .gotoRecipeDetails(_savedRecipe),
-                ),
+                    child: const AppText(text: 'Discard'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      BlocProvider.of<AppCubits>(context)
+                          .gotoRecipeDetails(_savedRecipe);
+                    }),
               ],
             );
           });
+    }
+    else {
+      BlocProvider.of<AppCubits>(context).gotoRecipeDetails(_savedRecipe);
     }
   }
 
@@ -154,12 +161,9 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
           Container(
               margin: const EdgeInsets.only(right: 4),
               child: IconButton(
-                icon: const Icon(Icons.arrow_back_rounded),
-                color: AppColors.backgroundColor,
-                onPressed: () => BlocProvider.of<AppCubits>(context)
-                    .gotoRecipeDetails(_savedRecipe),
-                // TODO: Use _discardRecipe() after fixing rendering bugs,
-              ))
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  color: AppColors.backgroundColor,
+                  onPressed: () => _discardRecipe()))
         ]);
   }
 
@@ -170,7 +174,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
       maxLength: 50,
       validator: (String? value) =>
           (value!.isEmpty) ? 'Name is Required' : null,
-      onSaved: (String? value) => _currentRecipe.name = value!,
+      onChanged: (String? value) => _currentRecipe.name = value!,
     );
   }
 
@@ -183,7 +187,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
       maxLines: 6,
       validator: (String? value) =>
           (value!.isEmpty) ? 'Name is Required' : null, // TODO : i10n
-      onSaved: (String? value) => _currentRecipe.description = value!,
+      onChanged: (String? value) => _currentRecipe.description = value!,
     );
   }
 
@@ -215,7 +219,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
       decoration: const InputDecoration(hintText: 'Serves'), // TODO : i10n
       validator: (String? value) =>
           (value!.isEmpty) ? 'Name is Required' : null, // TODO : i10n
-      onSaved: (String? value) =>
+      onChanged: (String? value) =>
           _currentRecipe.details.serves = int.parse(value!),
     );
   }
@@ -271,7 +275,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   ListTile _ingredientBuilder(int index) {
     return ListTile(
       key: ValueKey("ingredient-$_currentRecipe.ingredients[index]"),
-      leading: IconButton(
+      trailing: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () =>
               setState(() => _currentRecipe.ingredients.removeAt(index))),
@@ -286,7 +290,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
               validator: (value) => (value == null || value.isEmpty)
                   ? 'Please enter some text' // TODO : i10n
                   : null,
-              onSaved: (value) =>
+              onChanged: (value) =>
                   _currentRecipe.ingredients[index].name = value!),
           Row(
             children: [
@@ -310,7 +314,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                                   (value == null || value.isEmpty)
                                       ? 'Please enter some text' // TODO : i10n
                                       : null,
-                              onSaved: (value) => _currentRecipe
+                              onChanged: (value) => _currentRecipe
                                   .ingredients[index]
                                   .measurement
                                   .value = int.parse(value!)),
@@ -329,7 +333,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                                   (value == null || value.isEmpty)
                                       ? 'Please enter some text' // TODO : i10n
                                       : null,
-                              onSaved: (value) => _currentRecipe
+                              onChanged: (value) => _currentRecipe
                                   .ingredients[index]
                                   .measurement
                                   .unitType = value!),

@@ -77,7 +77,7 @@ class AppReorderableTextFormFieldsState
 
   ListTile buildTenableListTile(int index) => ListTile(
         key: ValueKey('lt_${widget.key}-${AppUtil.intKeys[index]}'),
-        leading: Column(
+        trailing: Column(
           children: [
             Text("${index + 1}"),
             IconButton(
@@ -94,8 +94,8 @@ class AppReorderableTextFormFieldsState
             minLines: 1,
             maxLines: 6,
             validator: widget.validator,
-            onSaved: (value) {
-              items[index] = value!;
+            onChanged: (value) {
+              items[index] = value;
               widget.onChanged(items);
             }),
       );
