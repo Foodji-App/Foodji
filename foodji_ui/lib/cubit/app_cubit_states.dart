@@ -52,6 +52,13 @@ class RecipeState extends CubitStates {
   List<Object> get props => throw [recipe];
 }
 
+class RecipeEditorState extends CubitStates {
+  RecipeEditorState(this.recipe);
+  final RecipeModel recipe;
+  @override
+  List<Object> get props => throw [recipe];
+}
+
 // When an ingredient is selected, displays the ingredient details
 class IngredientState extends CubitStates {
   IngredientState(this.ingredient);

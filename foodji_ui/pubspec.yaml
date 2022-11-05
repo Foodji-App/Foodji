@@ -47,6 +47,7 @@ dependencies:
   firebase_core: ^1.23.0
   faker: ^2.0.0
   observable: ^0.24.0
+  file_picker: ^5.2.2
 
 dev_dependencies:
   flutter_test:

@@ -38,8 +38,9 @@ class AppCubits extends Cubit<CubitStates> {
   // then, the authentified state or error state
   void authentify() async {
     try {
+      // TODO : Make ternary operator for a config file
       recipes.addAll(RecipeModel.getSamples(20));
-      //recipes = await recipeServices.getRecipes();
+      // recipes = await recipeServices.getRecipes();
       recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
       emit(AuthentifiedState(recipes, [...recipes], recipeIngredients,
           [...recipeIngredients])); //Deep copy
@@ -54,6 +55,13 @@ class AppCubits extends Cubit<CubitStates> {
     RecipeModel targetRecipe =
         recipes.firstWhere((element) => element.id == recipe.id);
     targetRecipe.isFavorite = !targetRecipe.isFavorite;
+    return targetRecipe;
+  }
+
+  updateRecipe(recipe) {
+    RecipeModel targetRecipe =
+        recipes.firstWhere((element) => element.id == recipe.id);
+    targetRecipe = recipe;
     return targetRecipe;
   }
 
@@ -82,6 +90,14 @@ class AppCubits extends Cubit<CubitStates> {
   void gotoRecipeDetails(recipe) async {
     try {
       emit(RecipeState(recipe));
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  void gotoRecipeEditor(recipe) async {
+    try {
+      emit(RecipeEditorState(recipe));
     } catch (e) {
       emit(ErrorState());
     }

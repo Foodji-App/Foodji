@@ -49,6 +49,7 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
 
     return ListView.builder(
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: widget.recipe.steps.length,
         itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),

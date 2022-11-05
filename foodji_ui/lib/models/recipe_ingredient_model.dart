@@ -57,4 +57,51 @@ class RecipeIngredientModel {
     }
     return samples;
   }
+
+  static RecipeIngredientModel newRecipeIngredientModel() {
+    return RecipeIngredientModel(
+        id: null,
+        name: '',
+        description: '',
+        measurement: MeasurementModel.getSamples(1)[0],
+        tags: [],
+        substitutes: []);
+  }
+
+  static deepCopy(List<RecipeIngredientModel> ingredients) {
+    var copy = <RecipeIngredientModel>[];
+
+    for (var ingredient in ingredients) {
+      copy.add(RecipeIngredientModel(
+          id: ingredient.id,
+          name: ingredient.name,
+          description: ingredient.description,
+          measurement: ingredient.measurement,
+          tags: ingredient.tags,
+          substitutes: RecipeSubstituteModel.deepCopy(ingredient.substitutes)));
+    }
+    return copy;
+  }
+
+  bool equals(RecipeIngredientModel other) {
+    return id == other.id &&
+        name == other.name &&
+        description == other.description &&
+        measurement.equals(other.measurement) &&
+        tags == other.tags &&
+        _equalsSubstitutes(other.substitutes);
+  }
+
+  bool _equalsSubstitutes(List<RecipeSubstituteModel> otherSubstitutes) {
+    if (substitutes.length != otherSubstitutes.length) {
+      return false;
+    }
+
+    for (var i = 0; i < substitutes.length; i++) {
+      if (!substitutes[i].equals(otherSubstitutes[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

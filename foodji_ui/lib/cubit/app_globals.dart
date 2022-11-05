@@ -33,7 +33,7 @@ class MultiObservableListener {
   }
 }
 
-///object holding refernce to listening of aobservable
+///object holding reference to listening of aobservable
 class ObservableListener {
   ///the function which should be run when the participating observable changes
   final void Function() _onChange;
