@@ -56,6 +56,7 @@ class RecipesPageState extends State<RecipesPage> {
         List<RecipeModel> recipes = state.recipes;
 
         // Widget method to have access to state
+
         List<RecipeModel> applyCategoryFilter(recipes) {
           setState(() {
             recipes = recipes
@@ -414,7 +415,7 @@ class RecipesPageState extends State<RecipesPage> {
                           color: Colors.transparent,
                           padding: const EdgeInsets.only(bottom: 6),
                           child: Material(
-                              color: AppColors.backgroundColor,
+                              color: Colors.transparent,
                               borderRadius: BorderRadius.circular(10),
                               //Material required to solve known issue with Gesture Detector, see https://github.com/flutter/flutter/issues/83108
                               child: GestureDetector(
@@ -428,60 +429,148 @@ class RecipesPageState extends State<RecipesPage> {
                                               topLeft: Radius.circular(30),
                                               bottomRight:
                                                   Radius.circular(30))),
-                                      tileColor: AppColors.backgroundColor,
-                                      leading: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width /
-                                                  4,
-                                          decoration: BoxDecoration(
-                                              borderRadius: const BorderRadius.only(
-                                                  topLeft: Radius.circular(10),
-                                                  bottomRight:
-                                                      Radius.circular(10)),
-                                              color: AppColors.textColor,
-                                              image: DecorationImage(
-                                                  image: NetworkImage(filteredRecipes[index].imageUri),
-                                                  fit: BoxFit.fill))),
-                                      title: Text(filteredRecipes[index].name),
-                                      subtitle: SizedBox(
-                                          child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                        Text(getCategoryString(
-                                            filteredRecipes[index].category)),
-                                        SizedBox(
-                                            height: 20,
-                                            child: ListView.builder(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                itemCount: tagsWithColors(
-                                                        filteredRecipes[index])
-                                                    .length,
-                                                itemBuilder:
-                                                    (context, indexSecondary) {
-                                                  return AppText(
-                                                      size: AppTextSize.small,
-                                                      color: tagsWithColors(
+                                      contentPadding: const EdgeInsets.all(0),
+                                      tileColor: Colors.transparent,
+                                      title: Stack(children: [
+                                        Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                3.5,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(20),
+                                                        bottomRight:
+                                                            Radius.circular(
+                                                                20)),
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        filteredRecipes[index]
+                                                            .imageUri),
+                                                    fit: BoxFit.cover))),
+                                        Positioned(
+                                            top: 0,
+                                            left: 0,
+                                            child: Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: 40,
+                                                decoration: const BoxDecoration(
+                                                    color: Colors.black54,
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    20))),
+                                                child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 20,
+                                                            right: 30),
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          AppText(
+                                                              color: AppColors
+                                                                  .backgroundColor,
+                                                              text:
+                                                                  filteredRecipes[
+                                                                          index]
+                                                                      .name),
+                                                          IconButton(
+                                                              onPressed: () =>
+                                                                  updateFavoriteStatus(
                                                                       filteredRecipes[
-                                                                          index])[
-                                                                  indexSecondary]
-                                                              .isIngredients
-                                                          ? AppColors
-                                                              .highlightColor3
-                                                          : AppColors.textColor,
-                                                      text: indexSecondary <
-                                                              tagsWithColors(filteredRecipes[
-                                                                          index])
-                                                                      .length -
-                                                                  1
-                                                          ? "${getTagString(tagsWithColors(filteredRecipes[index])[indexSecondary].tag)}, "
-                                                          : getTagString(
-                                                              tagsWithColors(filteredRecipes[
-                                                                          index])[
-                                                                      indexSecondary]
-                                                                  .tag));
-                                                }))
-                                      ])),
-                                      isThreeLine: false,
-                                      trailing: IconButton(onPressed: () => updateFavoriteStatus(filteredRecipes[index]), color: filteredRecipes[index].isFavorite ? AppColors.starColor1 : AppColors.textColor, icon: filteredRecipes[index].isFavorite ? const Icon(Icons.star) : const Icon(Icons.star_outline))))));
+                                                                          index]),
+                                                              color: filteredRecipes[
+                                                                          index]
+                                                                      .isFavorite
+                                                                  ? AppColors
+                                                                      .starColor1
+                                                                  : AppColors
+                                                                      .backgroundColor,
+                                                              icon: filteredRecipes[
+                                                                          index]
+                                                                      .isFavorite
+                                                                  ? const Icon(
+                                                                      Icons
+                                                                          .star)
+                                                                  : const Icon(Icons
+                                                                      .star_outline))
+                                                        ])))),
+                                        Positioned(
+                                            bottom: 0,
+                                            left: 0,
+                                            child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    20,
+                                                height: 50,
+                                                decoration: const BoxDecoration(
+                                                    color: Colors.black54,
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    20))),
+                                                child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 20,
+                                                            right: 30,
+                                                            top: 5,
+                                                            bottom: 2),
+                                                    child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                AppText(
+                                                                    color: AppColors
+                                                                        .backgroundColor,
+                                                                    text: getCategoryString(
+                                                                        filteredRecipes[index]
+                                                                            .category)),
+                                                                SizedBox(
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width -
+                                                                        70,
+                                                                    height: 2),
+                                                                SizedBox(
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width -
+                                                                        70,
+                                                                    height: 20,
+                                                                    child: ListView.builder(
+                                                                        scrollDirection: Axis.horizontal,
+                                                                        itemCount: tagsWithColors(filteredRecipes[index]).length,
+                                                                        itemBuilder: (context, indexSecondary) {
+                                                                          return AppText(
+                                                                              size: AppTextSize.small,
+                                                                              color: tagsWithColors(filteredRecipes[index])[indexSecondary].isIngredients ? AppColors.backgroundColor : AppColors.starColor1,
+                                                                              text: indexSecondary < tagsWithColors(filteredRecipes[index]).length - 1 ? "${getTagString(tagsWithColors(filteredRecipes[index])[indexSecondary].tag)}, " : getTagString(tagsWithColors(filteredRecipes[index])[indexSecondary].tag));
+                                                                        }))
+                                                              ])
+                                                        ]))))
+                                      ]),
+                                      isThreeLine: false))));
                     },
                   ))
                 ])));
