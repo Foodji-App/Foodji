@@ -303,7 +303,7 @@ class RecipesPageState extends State<RecipesPage> {
                         child: ExpansionTile(
                           title: AppText(
                             text: category == null
-                                ? AppLocalizations.of(context)!.category_filter
+                                ? AppLocalizations.of(context)!.category
                                 : getCategoryString(category),
                             size: AppTextSize.normal,
                             color: category != null

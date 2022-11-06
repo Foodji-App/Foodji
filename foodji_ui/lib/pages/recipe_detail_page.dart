@@ -218,7 +218,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                         label: AppText(
                                             color: AppColors.backgroundColor,
                                             text:
-                                                '${recipe.details.totalTime} ${AppLocalizations.of(context)!.recipe_detail_minutes}'),
+                                                '${recipe.details.totalTime} ${AppLocalizations.of(context)!.minutes}'),
                                         shape: const StadiumBorder(
                                             side: BorderSide(
                                           width: 1,
@@ -298,10 +298,10 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                         child: TabBar(controller: tabController, tabs: <Tab>[
                           Tab(
                               text: AppLocalizations.of(context)!
-                                  .recipe_detail_preparation),
+                                  .recipe_preparation),
                           Tab(
                               text: AppLocalizations.of(context)!
-                                  .recipe_detail_instructions)
+                                  .recipe_instructions)
                         ])),
                     pinned: true,
                     toolbarHeight: 50,
