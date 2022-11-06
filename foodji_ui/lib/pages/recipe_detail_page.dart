@@ -240,7 +240,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                             size: AppTextSize.normal,
                                             color: tagsWithColors(recipe)[index]
                                                     .isIngredients
-                                                ? AppColors.highlightColor3
+                                                ? AppColors.backgroundColor
                                                 : AppColors.starColor1,
                                             text: index <
                                                     tagsWithColors(recipe)
