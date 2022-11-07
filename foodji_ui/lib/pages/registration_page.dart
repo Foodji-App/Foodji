@@ -116,7 +116,7 @@ class AuthentificationPageState extends State<AuthentificationPage> {
                               ),
                               child: AppText(
                                   text: AppLocalizations.of(context)!
-                                      .authentification_login,
+                                      .authentification_register,
                                   color: AppColors.backgroundColor)),
                         ))
                   ]))));

@@ -2,20 +2,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/recipe_ingredient_model.dart';
 import '../models/recipe_model.dart';
+import '../models/user_data_model.dart';
+import '../services/login_services.dart';
 import '../services/recipe_services.dart';
 import 'app_cubit_states.dart';
 
 class AppCubits extends Cubit<CubitStates> {
-  AppCubits({required this.recipeServices}) : super(InitialState()) {
+  AppCubits({required this.loginServices, required this.recipeServices})
+      : super(InitialState()) {
     emit(InitState());
   }
 
   final RecipeServices recipeServices;
+  final LoginServices loginServices;
 
   // Data ----------------------------------------
 
-  // Recipes
-  late List<RecipeModel> recipes = [];
+  // User
+  late DateTime tokenTimeout;
+  late String userToken = "";
+  late UserDataModel userData;
 
   // Ingredients
   List<RecipeIngredientModel> recipeIngredients = [];
@@ -36,31 +42,53 @@ class AppCubits extends Cubit<CubitStates> {
   // Authentification page
   // Authentifies the user and returns, gets the data linked to the user and
   // then, the authentified state or error state
-  void authentify() async {
+  Future<bool> login(email, password) async {
     try {
-      // TODO : Make ternary operator for a config file
-      recipes.addAll(RecipeModel.getSamples(20));
-      // recipes = await recipeServices.getRecipes();
+      userToken = await loginServices.login(email, password);
+      if (userToken.isEmpty) {
+        return false;
+      } else {
+        tokenTimeout = DateTime.now().add(const Duration(hours: 1));
+        try {
+          userData = await loginServices.getUserData(email);
+        } catch (e) {
+          emit(ErrorState());
+        }
+      }
+
+      userData.recipes.addAll(RecipeModel.getSamples(20));
       recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
-      emit(AuthentifiedState(recipes, [...recipes], recipeIngredients,
-          [...recipeIngredients])); //Deep copy
+
+      emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+          recipeIngredients, [...recipeIngredients]));
+
+      return true;
     } catch (e) {
       emit(ErrorState());
     }
+    return false;
   }
 
   // Setters -------------------------------------
 
   toggleFavoriteStatus(recipe) {
+    if (DateTime.now().isAfter(tokenTimeout)) {
+      getInitialData();
+    }
+
     RecipeModel targetRecipe =
-        recipes.firstWhere((element) => element.id == recipe.id);
+        userData.recipes.firstWhere((element) => element.id == recipe.id);
     targetRecipe.isFavorite = !targetRecipe.isFavorite;
     return targetRecipe;
   }
 
   updateRecipe(recipe) {
+    if (DateTime.now().isAfter(tokenTimeout)) {
+      getInitialData();
+    }
+
     RecipeModel targetRecipe =
-        recipes.firstWhere((element) => element.id == recipe.id);
+        userData.recipes.firstWhere((element) => element.id == recipe.id);
     targetRecipe = recipe;
     return targetRecipe;
   }
@@ -78,9 +106,12 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To recipes
   void gotoRecipes() async {
+    if (DateTime.now().isAfter(tokenTimeout)) {
+      getInitialData();
+    }
     try {
-      emit(AuthentifiedState(
-          recipes, [...recipes], recipeIngredients, [...recipeIngredients]));
+      emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+          recipeIngredients, [...recipeIngredients]));
     } catch (e) {
       emit(ErrorState());
     }
@@ -88,6 +119,9 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To recipe details
   void gotoRecipeDetails(recipe) async {
+    if (DateTime.now().isAfter(tokenTimeout)) {
+      getInitialData();
+    }
     try {
       emit(RecipeState(recipe));
     } catch (e) {
@@ -96,6 +130,9 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   void gotoRecipeEditor(recipe) async {
+    if (DateTime.now().isAfter(tokenTimeout)) {
+      getInitialData();
+    }
     try {
       emit(RecipeEditorState(recipe));
     } catch (e) {
@@ -105,9 +142,12 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To ingredients
   void gotoIngredients() async {
+    if (DateTime.now().isAfter(tokenTimeout)) {
+      getInitialData();
+    }
     try {
-      emit(AuthentifiedState(
-          recipes, [...recipes], recipeIngredients, [...recipeIngredients]));
+      emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+          recipeIngredients, [...recipeIngredients]));
     } catch (e) {
       emit(ErrorState());
     }
@@ -115,6 +155,9 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To recipe details
   void gotoIngredientDetails(recipe) async {
+    if (DateTime.now().isAfter(tokenTimeout)) {
+      getInitialData();
+    }
     try {
       emit(IngredientState(recipe));
     } catch (e) {

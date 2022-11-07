@@ -10,6 +10,12 @@
 
   "demo_access": "Appuyez sur l'écran pour accéder à la démonstration",
 
+  "authentification_email": "Courriel",
+  "authentification_password": "Mot de passe",
+  "authentification_login": "Connexion",
+  "authentification_no_account": "Pas de compte?",
+  "authentification_register": "S'enregistrer",
+
   "menu_recipes": "Recettes",
   "menu_exploration": "Explorer",
   "menu_favourites": "Favoris",

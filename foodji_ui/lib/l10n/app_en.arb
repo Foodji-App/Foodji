@@ -9,6 +9,12 @@
   "app_bar_recipe_details": "Recipe details",
 
   "demo_access": "Press anywhere on the screen to access the demo",
+  
+  "authentification_email": "Email",
+  "authentification_password": "Password",
+  "authentification_login": "Login",
+  "authentification_no_account": "No account yet?",
+  "authentification_register": "Create account",
 
   "menu_recipes": "Recipes",
   "menu_exploration": "Explore",

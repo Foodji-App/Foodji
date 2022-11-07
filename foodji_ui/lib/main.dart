@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodji_ui/services/login_services.dart';
 import 'package:foodji_ui/services/recipe_services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
       scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
       supportedLocales: AppLocalizations.supportedLocales,
       home: BlocProvider<AppCubits>(
-          create: (context) => AppCubits(recipeServices: RecipeServices()),
+          create: (context) => AppCubits(
+              loginServices: LoginServices(), recipeServices: RecipeServices()),
           child: const AppCubitLogics()),
     );
   }
