@@ -4,6 +4,7 @@ import 'package:foodji_ui/pages/recipe_editor_page.dart';
 
 import '../pages/ingredient_detail_page.dart';
 import '../pages/recipe_detail_page.dart';
+import '../pages/registration_page.dart';
 import '../widgets/navigation_bar.dart' as navigation_bar_widget;
 import '../pages/authentification_page.dart';
 import '../pages/error_page.dart';
@@ -30,6 +31,8 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
         return const Center(child: CircularProgressIndicator());
       } else if (state is AuthentificationRequestState) {
         return const AuthentificationPage();
+      } else if (state is RegistrationState) {
+        return const RegistrationPage();
       } else if (state is AuthentifiedState) {
         return const navigation_bar_widget.NavigationBar();
       } else if (state is RecipeState) {

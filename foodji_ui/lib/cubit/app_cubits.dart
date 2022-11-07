@@ -42,6 +42,7 @@ class AppCubits extends Cubit<CubitStates> {
   // Authentification page
   // Authentifies the user and returns, gets the data linked to the user and
   // then, the authentified state or error state
+  //TODO - Complete the login process
   Future<bool> login(email, password) async {
     try {
       userToken = await loginServices.login(email, password);
@@ -62,6 +63,18 @@ class AppCubits extends Cubit<CubitStates> {
       emit(AuthentifiedState(userData.recipes, [...userData.recipes],
           recipeIngredients, [...recipeIngredients]));
 
+      return true;
+    } catch (e) {
+      emit(ErrorState());
+    }
+    return false;
+  }
+
+  // Creates an account, then go to the login page if successful
+  //TODO - Complete the registration process
+  Future<bool> register(email, password) async {
+    try {
+      emit(AuthentificationRequestState());
       return true;
     } catch (e) {
       emit(ErrorState());
@@ -99,6 +112,15 @@ class AppCubits extends Cubit<CubitStates> {
   void gotoInit() async {
     try {
       emit(InitState());
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  // To registration screen
+  void gotoRegistration() async {
+    try {
+      emit(RegistrationState());
     } catch (e) {
       emit(ErrorState());
     }
