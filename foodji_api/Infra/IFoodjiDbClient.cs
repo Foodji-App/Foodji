@@ -5,7 +5,7 @@ using MongoDB.Driver;
 
 namespace Infra;
 
-public interface IFoodjiDbClient
+public interface IFoodjiDbClient : IMongoClient
 {
     public IMongoCollection<Ingredient> Ingredients { get; }
 

@@ -1,6 +1,5 @@
 ﻿using Application.Dto;
 using AutoMapper;
-using Domain.Recipes;
 using Domain.Users;
 using Infra;
 using MediatR;
@@ -11,7 +10,7 @@ namespace Application.Queries;
 
 public class GetUserDataByIdQuery : IRequest<UserDataDto?>
 {
-    public ObjectId UserDataId { get; }
+    private ObjectId UserDataId { get; }
 
     public GetUserDataByIdQuery(string recipeId)
     {
@@ -32,24 +31,12 @@ public class GetUserDataByIdQuery : IRequest<UserDataDto?>
 
         public async Task<UserDataDto?> Handle(GetUserDataByIdQuery request, CancellationToken cancellationToken)
         {
-            var results = await _client.UsersData.FindAsync(x => x.Id.Equals(request.UserDataId), cancellationToken: cancellationToken);
+            var results = await _client.UsersData.FindAsync(
+                x => x.Id.Equals(request.UserDataId), cancellationToken: cancellationToken);
 
-            var usersData = results.ToList();
-            
-            if (usersData.Count > 1)
-            {
-                // TODO More specific exception to go along better exception handling in the API layer
-                //      500 many with the same ID (bad news!)
-                //      shouldn't happen, but no "FindOne" method to make that check for us
-                throw new Exception($"{usersData.Count} usersData with the id {request.UserDataId} found");
-            }
+            var userData = results.SingleOrDefault(cancellationToken: cancellationToken);
 
-            if (usersData.Count == 0)
-            {
-                return null;
-            }
-            
-            return _mapper.Map<UserData, UserDataDto>(usersData[0]);
+            return userData == null ? null : _mapper.Map<UserData, UserDataDto>(userData);
         }
     }
 }
