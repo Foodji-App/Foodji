@@ -9,7 +9,7 @@ namespace Application.Queries;
 
 public class GetAllRecipesFromUserQuery : IRequest<IEnumerable<RecipeDto>?>
 {
-    public string AuthorId { get; }
+    private string AuthorId { get; }
 
     public GetAllRecipesFromUserQuery(string authorId)
     {

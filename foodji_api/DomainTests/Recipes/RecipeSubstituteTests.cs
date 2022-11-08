@@ -12,7 +12,7 @@ namespace DomainTests.Recipes
         [Test]
         public void GivenValidValues_Create_ReturnsRecipeSubstitute()
         {
-            // Arrange ingredient
+            // Arrange
             var expectedDescription = "expectedDescription";
             var expectedMeasurement = Measurement.Create(
                 1,
@@ -20,12 +20,12 @@ namespace DomainTests.Recipes
                 String.Empty);
             var expectedName = "expectedName";
             var expectedTags = new List<Tag> { Tag.Vegan, Tag.Vegetarian };
-            var expectedSubstitutionPrecisions = "expectedSubstitutionPrecisions";
+            var expectedSubstitutionPrecision = "expectedSubstitutionPrecision";
             
             // Act
             var actualRecipeSubstitute = RecipeSubstitute.Create(
                 expectedName,
-                expectedSubstitutionPrecisions,
+                expectedSubstitutionPrecision,
                 expectedDescription,
                 expectedMeasurement,
                 expectedTags);
@@ -34,7 +34,7 @@ namespace DomainTests.Recipes
             actualRecipeSubstitute.Description.Should().Be(expectedDescription);
             actualRecipeSubstitute.Measurement.Should().BeEquivalentTo(expectedMeasurement);
             actualRecipeSubstitute.Name.Should().Be(expectedName);
-            actualRecipeSubstitute.SubstitutionPrecisions.Should().Be(expectedSubstitutionPrecisions);
+            actualRecipeSubstitute.SubstitutionPrecision.Should().Be(expectedSubstitutionPrecision);
             actualRecipeSubstitute.Tags.Should().BeEquivalentTo(expectedTags);
             actualRecipeSubstitute.Should().BeOfType<RecipeSubstitute>();
         }
@@ -47,7 +47,7 @@ namespace DomainTests.Recipes
 
             var recipeSubstitute = RecipeSubstitute.Create(
                 "substituteName",
-                "substitutionPrecisions",
+                "substitutionPrecision",
                 "description",
                 Measurement.Create(
                     1,
@@ -71,7 +71,7 @@ namespace DomainTests.Recipes
 
             var recipeSubstitute = RecipeSubstitute.Create(
                 "substituteName",
-                "substitutionPrecisions",
+                "substitutionPrecision",
                 "description",
                 Measurement.Create(
                     1,
@@ -94,7 +94,7 @@ namespace DomainTests.Recipes
             
             var recipeSubstitute = RecipeSubstitute.Create(
                 "substituteName",
-                "substitutionPrecisions",
+                "substitutionPrecision",
                 "description",
                 Measurement.Create(
                     1,

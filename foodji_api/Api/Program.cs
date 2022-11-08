@@ -1,5 +1,5 @@
 using System.Reflection;
-using Infra.Services;
+using Infra.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -37,7 +37,7 @@ builder.Services.AddSwaggerGen(c =>
                     Id = "bearerAuth" 
                 }
             },
-            new string[] {}
+            Array.Empty<string>()
         }
     });
 });
