@@ -115,7 +115,6 @@ namespace DomainTests.Recipes
             var updatedRecipeSteps = new List<string> { "updatedRecipeStep" };
             var updatedImageUri = new Uri("https://www.yahoo.ca");
             var expectedAuthor = _recipe.Author;
-
             
             // Act
             _recipe.Update(

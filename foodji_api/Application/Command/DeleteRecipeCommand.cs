@@ -32,7 +32,7 @@ public class DeleteRecipeCommand : IRequest<string?>
                 r => r.Id == request.RecipeId,
                 cancellationToken: cancellationToken);
 
-            return result.IsAcknowledged ? request.RecipeId.ToString() : null;
+            return result.DeletedCount > 0 ? request.RecipeId.ToString() : null;
         }
     }
 }

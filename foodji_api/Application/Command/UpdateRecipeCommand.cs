@@ -30,7 +30,7 @@ public class UpdateRecipeCommand : IRequest<string?>
         
         public async Task<string?> Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
         {
-            // We're using a session instead of single transactions to avoid deadlocks
+            // We're using a session to do everything in a single transaction to avoid data incoherence
             using var session = await _client.StartSessionAsync(cancellationToken: cancellationToken);
             
             return await session.WithTransactionAsync<string?>(async (session, cancellationToken) =>
@@ -39,7 +39,7 @@ public class UpdateRecipeCommand : IRequest<string?>
                         x => x.Id == new ObjectId(request.RecipeDto.Id),
                         cancellationToken: cancellationToken);
             
-                    var recipeToUpdate = results.ToList(cancellationToken).SingleOrDefault();
+                    var recipeToUpdate = results.SingleOrDefault(cancellationToken);
 
                     if (recipeToUpdate ==  null)
                     {
