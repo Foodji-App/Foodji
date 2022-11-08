@@ -76,7 +76,7 @@ public class RecipesController : ControllerBase
     }
     
     [HttpPut]
-    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateRecipe([FromBody] RecipeDto recipe)
     {
@@ -93,7 +93,7 @@ public class RecipesController : ControllerBase
     }
     
     [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteRecipe([FromRoute] string id)
     {
@@ -106,6 +106,6 @@ public class RecipesController : ControllerBase
             return NotFound();
         }
 
-        return CreatedAtAction(nameof(GetRecipe), new {id = result}, new {});
+        return NoContent();
     }
 }

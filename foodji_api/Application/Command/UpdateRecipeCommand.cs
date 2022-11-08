@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace Application.Command;
 
-public class UpdateRecipeCommand : IRequest<string>
+public class UpdateRecipeCommand : IRequest<string?>
 {
     private RecipeDto RecipeDto { get; }
     
@@ -17,7 +17,7 @@ public class UpdateRecipeCommand : IRequest<string>
         RecipeDto = recipeDto;
     }
     
-    private class Handler : IRequestHandler<UpdateRecipeCommand, string>
+    private class Handler : IRequestHandler<UpdateRecipeCommand, string?>
     {
         private readonly IFoodjiDbClient _client;
         private readonly IMapper _mapper;
@@ -28,43 +28,40 @@ public class UpdateRecipeCommand : IRequest<string>
             _mapper = mapper;
         }
         
-        public async Task<string> Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
+        public async Task<string?> Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
         {
-            var recipe = _mapper.Map<Recipe>(request.RecipeDto);
+            // We're using a session instead of single transactions to avoid deadlocks
+            using var session = await _client.StartSessionAsync(cancellationToken: cancellationToken);
             
-            var results = await _client.Recipes.FindAsync(
-                x => x.Id == new ObjectId(request.RecipeDto.Id),
-                cancellationToken: cancellationToken);
+            return await session.WithTransactionAsync<string?>(async (session, cancellationToken) =>
+                {
+                    var results = await _client.Recipes.FindAsync(
+                        x => x.Id == new ObjectId(request.RecipeDto.Id),
+                        cancellationToken: cancellationToken);
+            
+                    var recipeToUpdate = results.ToList(cancellationToken).SingleOrDefault();
 
-            var recipeToUpdateList = results.ToList(cancellationToken);
-            
-            switch (recipeToUpdateList.Count)
-            {
-                case > 1:
-                    // TODO More specific exception to go along better exception handling in the API layer
-                    //      500 many with the same ID (bad news!)
-                    //      shouldn't happen, but no "FindOne" method to make that check for us
-                    throw new Exception($"{recipeToUpdateList.Count} recipes with the id {request.RecipeDto.Id} found");
-                case 0:
-                    return string.Empty;
-            }
+                    if (recipeToUpdate ==  null)
+                    {
+                        return null;
+                    }
 
-            var recipeToUpdate = recipeToUpdateList.First();
+                    recipeToUpdate.Update(
+                        request.RecipeDto.Name,
+                        _mapper.Map<RecipeCategory>(request.RecipeDto.Category),
+                        request.RecipeDto.Description,
+                        _mapper.Map<RecipeDetails>(request.RecipeDto.Details),
+                        _mapper.Map<IEnumerable<RecipeIngredientDto>, 
+                            IEnumerable<RecipeIngredient>>(request.RecipeDto.Ingredients),
+                        request.RecipeDto.Steps,
+                        request.RecipeDto.ImageUri);
             
-            recipeToUpdate.Update(
-                request.RecipeDto.Name,
-                _mapper.Map<RecipeCategory>(request.RecipeDto.Category),
-                request.RecipeDto.Description,
-                _mapper.Map<RecipeDetails>(request.RecipeDto.Details),
-                _mapper.Map<IEnumerable<RecipeIngredientDto>, 
-                    IEnumerable<RecipeIngredient>>(request.RecipeDto.Ingredients),
-                request.RecipeDto.Steps,
-                request.RecipeDto.ImageUri);
-            
-            await _client.Recipes.ReplaceOneAsync(r => r.Id.Equals(recipeToUpdate.Id),
-                recipeToUpdate, new ReplaceOptions { IsUpsert = false }, cancellationToken);
+                    await _client.Recipes.ReplaceOneAsync(r => r.Id.Equals(recipeToUpdate.Id),
+                        recipeToUpdate, new ReplaceOptions { IsUpsert = false }, cancellationToken);
+                    
+                    return recipeToUpdate.Id.ToString();
 
-            return recipeToUpdate.Id.ToString();
+                }, cancellationToken: cancellationToken);
         }
     }
 }
