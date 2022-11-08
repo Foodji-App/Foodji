@@ -9,7 +9,7 @@
   "app_bar_recipe_details": "Recipe details",
 
   "demo_access": "Press anywhere on the screen to access the demo",
-  
+
   "menu_recipes": "Recipes",
   "menu_exploration": "Explore",
   "menu_favourites": "Favorites",
@@ -24,7 +24,7 @@
 
   "recipe_name": "Name",
   "recipe_description": "Description",
-  "recipe_serves": "Serves",
+  "recipe_serves": "servings",
   "recipe_step": "Step",
   "recipe_steps": "Steps",
   "recipe_ingredient": "Ingredient",
