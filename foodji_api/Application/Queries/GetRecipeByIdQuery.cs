@@ -10,7 +10,7 @@ namespace Application.Queries;
 
 public class GetRecipeByIdQuery : IRequest<RecipeDto?>
 {
-    public ObjectId RecipeId { get; }
+    private ObjectId RecipeId { get; }
 
     public GetRecipeByIdQuery(string recipeId)
     {
@@ -31,24 +31,12 @@ public class GetRecipeByIdQuery : IRequest<RecipeDto?>
 
         public async Task<RecipeDto?> Handle(GetRecipeByIdQuery request, CancellationToken cancellationToken)
         {
-            var results = await _client.Recipes.FindAsync(x => x.Id == request.RecipeId, cancellationToken: cancellationToken);
+            var results = await _client.Recipes.FindAsync(
+                x => x.Id == request.RecipeId, cancellationToken: cancellationToken);
 
-            var recipes = results.ToList();
-            
-            if (recipes.Count > 1)
-            {
-                // TODO More specific exception to go along better exception handling in the API layer
-                //      500 many with the same ID (bad news!)
-                //      shouldn't happen, but no "FindOne" method to make that check for us
-                throw new Exception($"{recipes.Count} recipes with the id {request.RecipeId}");
-            }
+            var recipe = results.SingleOrDefault(cancellationToken: cancellationToken);
 
-            if (recipes.Count == 0)
-            {
-                return null;
-            }
-            
-            return _mapper.Map<Recipe, RecipeDto>(recipes[0]);
+            return recipe == null ? null : _mapper.Map<Recipe, RecipeDto>(recipe);
         }
     }
 }

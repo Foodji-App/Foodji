@@ -11,7 +11,7 @@ public class RecipeSubstitute
     
     public string Name { get; private set; }
 
-    public string SubstitutionPrecisions { get; private set; } = String.Empty;
+    public string SubstitutionPrecision { get; private set; } = string.Empty;
 
     public string Description { get; protected set; }
     
@@ -34,7 +34,7 @@ public class RecipeSubstitute
 
     public static RecipeSubstitute Create(
         string name,
-        string substitutionPrecisions,
+        string substitutionPrecision,
         string description,
         Measurement measurement,
         IEnumerable<Tag> tags)
@@ -42,7 +42,7 @@ public class RecipeSubstitute
         var recipeSubstitute = new RecipeSubstitute(
             name, description, measurement)
         {
-            SubstitutionPrecisions = substitutionPrecisions,
+            SubstitutionPrecision = substitutionPrecision,
             Tags = tags.ToList()
         };
 
