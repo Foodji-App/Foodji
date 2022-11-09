@@ -1,5 +1,3 @@
-import 'package:flutter/services.dart';
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -7,18 +5,14 @@ import '../models/user_data_model.dart';
 
 class LoginServices {
   String firebaseUrl =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyASAHflXbW1uAPnVuseYXTEtP1ckrGJfNs";
   String baseUrl = "https://localhost:7272";
 
   // Login
 
   Future<String> login(email, password) async {
-    http.Response res = await http.post(
-        Uri.parse(firebaseUrl +
-            await json.decode(await rootBundle.loadString(
-                    '../foodji-auth-firebase-adminsdk-ulcr8-d5a92dbcff.json'))[
-                "private_key"]),
-        body: {email: email, password: password});
+    http.Response res = await http
+        .post(Uri.parse(firebaseUrl), body: {email: email, password: password});
     try {
       if (res.statusCode == 200) {
         return json.decode(res.body).secureToken;
