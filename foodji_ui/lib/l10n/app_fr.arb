@@ -22,9 +22,9 @@
 
   "minutes": "min",
 
-  "recipe_name": "Name",
+  "recipe_name": "Nom",
   "recipe_description": "Description",
-  "recipe_serves": "Portions",
+  "recipe_servings": "Portions",
   "recipe_step": "Étape",
   "recipe_steps": "Étapes",
   "recipe_ingredient": "Ingrédient",

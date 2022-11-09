@@ -24,7 +24,7 @@
 
   "recipe_name": "Name",
   "recipe_description": "Description",
-  "recipe_serves": "servings",
+  "recipe_servings": "servings",
   "recipe_step": "Step",
   "recipe_steps": "Steps",
   "recipe_ingredient": "Ingredient",

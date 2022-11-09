@@ -220,9 +220,9 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     return TextFormField(
       keyboardType: TextInputType.number,
       initialValue: _currentRecipe.details.serves.toString(),
-      decoration: InputDecoration(hintText: i10n.recipe_serves),
+      decoration: InputDecoration(hintText: i10n.recipe_servings),
       validator: (String? value) => (value!.isEmpty)
-          ? '${i10n.recipe_serves} ${i10n.form_is_required}'
+          ? '${i10n.recipe_servings} ${i10n.form_is_required}'
           : null,
       onChanged: (String? value) =>
           _currentRecipe.details.serves = int.parse(value!),
