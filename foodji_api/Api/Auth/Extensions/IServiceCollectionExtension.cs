@@ -14,6 +14,9 @@ public static class ServiceCollectionExtension
             Credential = GoogleCredential.FromFile(firebaseCredentials)
         });
 
+        // Possible that the authentication scheme we want to use is not strictly the JwtBearerDefaults one,
+        // though it might also work fine. We can change it if it causes issues down the line. For now, it is simpler
+        // to use that notably to use along with Swagger (and overall seems valid to me, despite uncertainty?).
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddScheme<FirebaseAuthenticationSchemeOptions, FirebaseAuthenticationHandler>(
