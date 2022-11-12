@@ -3,9 +3,10 @@ using System.Security.Principal;
 using System.Text.Encodings.Web;
 using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Api.Auth;
+namespace Auth;
 
 // See https://dotnetcorecentral.com/blog/authentication-handler-in-asp-net-core/
 // Also https://referbruv.com/blog/implementing-custom-authentication-scheme-and-handler-in-aspnet-core-3x/

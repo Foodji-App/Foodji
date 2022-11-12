@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 
-namespace Api.Auth;
+namespace Auth;
 
 public class FirebaseAuthenticationSchemeOptions : AuthenticationSchemeOptions
 {

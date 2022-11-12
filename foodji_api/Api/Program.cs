@@ -1,5 +1,5 @@
 using System.Reflection;
-using Api.Auth.Extensions;
+using Auth.Extensions;
 using Infra.Extensions;
 using MediatR;
 using Microsoft.OpenApi.Models;
@@ -48,16 +48,7 @@ builder.Services.SetupInfra(
 
 builder.Services.AddMediatR(Assembly.Load("Application"));
 builder.Services.AddAutoMapper(Assembly.Load("Application"));
-
-// This whole manipulation would very likely benefit from better configuration handling,
-// in addition to secrets handling. This is better left to another task, however.
-var executingAssemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-var firebaseCredentialsFileName = builder.Configuration["Auth:Firebase:CredentialsFile"];
-// If the directory of the executing assembly is null, we have bigger problems
-var firebaseCredentials = Path.Combine(executingAssemblyDirectory!, firebaseCredentialsFileName);
-
-Console.WriteLine($"Credentials: {firebaseCredentials}");
-builder.Services.AddFirebaseJwtAuthentication(firebaseCredentials);
+builder.Services.AddFirebaseJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
