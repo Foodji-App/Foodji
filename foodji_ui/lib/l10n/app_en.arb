@@ -9,7 +9,7 @@
   "app_bar_recipe_details": "Recipe details",
 
   "demo_access": "Press anywhere on the screen to access the demo",
-  
+
   "menu_recipes": "Recipes",
   "menu_exploration": "Explore",
   "menu_favourites": "Favorites",
@@ -20,16 +20,20 @@
   "menu_pantry": "Pantry",
   "menu_grocery": "Grocery List",
 
-  "recipe_detail_minutes": "min",
+  "minutes": "min",
 
-  "recipe_detail_preparation": "Preparation",
-  "recipe_detail_preparation_ingredients" : "Ingredients",
-
-  "recipe_detail_instructions": "Instructions",
-  "recipe_detail_instructions_instructions" : "Instructions",
-
+  "recipe_name": "Name",
   "recipe_description": "Description",
+  "recipe_servings": "servings",
+  "recipe_step": "Step",
   "recipe_steps": "Steps",
+  "recipe_ingredient": "Ingredient",
+  "recipe_ingredients": "Ingredients",
+  "recipe_instructions": "Instructions",
+  "recipe_instruction": "Instruction",
+  "recipe_preparation": "Preparation",
+  "recipe_amount": "Amount",
+
   "recipe_no_steps": "Aucune instruction n'a été ajoutée",
   "recipe_no_ingredients": "Aucun ingrédient n'a été ajouté",
 
@@ -50,7 +54,7 @@
   "tag_halal": "Halal",
   "tag_kosher": "Kosher",
 
-  "category_filter": "Category",
+  "category": "Category",
   "category_main_course": "Main course",
   "category_side_dish": "Side dish",
   "category_appetizer": "Appetizer",
@@ -62,6 +66,15 @@
   "category_sauce": "Sauce",
   "category_bread": "Bread",
   "category_snack": "Snack",
+
+  "form_is_required": "is Required",
+  "form_error": "Form not valid",
+  "form_item_dismissed": "Item dismissed",
+  "form_item": "Item",
+
+  "form_recipe_title": "Recipe Editor",
+  "form_recipe_updated": "Recipe updated",
+  "form_recipe_error": "Form not valid",
 
   "error_unknown": "An unknown error occured during the execution. Press anywhere to restart the application.",
   "error_authentification": "An authentication error occured during the execution. To access this feature, press anywhere on this page to restart the application."

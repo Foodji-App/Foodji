@@ -90,7 +90,7 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
             )),
             AppText(
               text: AppLocalizations.of(context)!
-                  .recipe_detail_instructions_instructions,
+                  .recipe_instructions,
               size: AppTextSize.subtitle,
             ),
             const Expanded(child: Divider(thickness: 2, indent: 5)),
