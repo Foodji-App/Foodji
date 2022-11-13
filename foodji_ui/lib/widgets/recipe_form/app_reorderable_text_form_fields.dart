@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:foodji_ui/misc/app_util.dart';
 import 'package:foodji_ui/widgets/app_text.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class ReorderableTextFormFields extends StatefulWidget {
+
   ReorderableTextFormFields(
       {Key? key,
       this.color,
@@ -12,6 +15,7 @@ class ReorderableTextFormFields extends StatefulWidget {
       required this.scrollController,
       required this.items,
       required this.newItem,
+      this.hintText,
       this.hasCustomListTile = false,
       this.custombuildTenableListTile,
       required this.onChanged,
@@ -23,6 +27,7 @@ class ReorderableTextFormFields extends StatefulWidget {
   final ScrollController scrollController;
   List items;
   final dynamic newItem;
+  final String? hintText;
   final bool hasCustomListTile;
   final Widget Function(int)? custombuildTenableListTile;
   final Function onChanged;
@@ -95,8 +100,8 @@ class AppReorderableTextFormFieldsState
             key: UniqueKey(),
             title: TextFormField(
                 initialValue: items[index],
-                decoration: const InputDecoration(
-                  hintText: 'Step', // TODO : i10n
+                decoration: InputDecoration(
+                  hintText: widget.hintText ?? AppLocalizations.of(context)!.form_item,
                 ),
                 maxLength: 300,
                 minLines: 1,

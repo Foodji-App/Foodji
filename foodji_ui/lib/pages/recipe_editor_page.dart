@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/models/recipe_ingredient_model.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
@@ -20,6 +22,8 @@ class RecipeEditorPage extends StatefulWidget {
 class RecipeEditorPageState extends State<RecipeEditorPage>
     with TickerProviderStateMixin {
   late RecipeModel _currentRecipe, _savedRecipe;
+
+  late AppLocalizations i10n;
 
   final _dropdownValues = <String>[
     'Breakfast',
@@ -47,9 +51,9 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
         _savedRecipe = RecipeModel.deepCopy(_currentRecipe);
         _formKey.currentState!.save();
       });
-      return "Recipe updated"; // TODO : i10n
+      return i10n.form_recipe_updated;
     }
-    return "Form not valid"; // TODO : i10n
+    return i10n.form_error;
   }
 
   _discardRecipe() {
@@ -83,6 +87,8 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
 
   @override
   Widget build(BuildContext context) {
+    i10n = AppLocalizations.of(context)!;
+
     // Build a Form widget using the _formKey created above.
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is RecipeEditorState) {
@@ -147,9 +153,8 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
 
   AppBar _appBar() {
     return AppBar(
-        title: const AppText(
-            text: 'Recipe Editor',
-            color: AppColors.backgroundColor), // TODO : i10n
+        title: AppText(
+            text: i10n.form_recipe_title, color: AppColors.backgroundColor),
         backgroundColor: AppColors.textColor,
         actions: <Widget>[
           IconButton(
@@ -168,10 +173,11 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   Widget _buildName() {
     return TextFormField(
       initialValue: _currentRecipe.name,
-      decoration: const InputDecoration(hintText: 'Name'), // TODO : i10n
+      decoration: InputDecoration(hintText: i10n.recipe_name),
       maxLength: 50,
-      validator: (String? value) =>
-          (value!.isEmpty) ? 'Name is Required' : null,
+      validator: (String? value) => (value!.isEmpty)
+          ? '${i10n.recipe_name} ${i10n.form_is_required}'
+          : null,
       onChanged: (String? value) => _currentRecipe.name = value!,
     );
   }
@@ -179,12 +185,13 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   Widget _buildDescription() {
     return TextFormField(
       initialValue: _currentRecipe.description,
-      decoration: const InputDecoration(hintText: 'Description'), // TODO : i10n
+      decoration: InputDecoration(hintText: i10n.recipe_description),
       maxLength: 300,
       minLines: 1,
       maxLines: 6,
-      validator: (String? value) =>
-          (value!.isEmpty) ? 'Name is Required' : null, // TODO : i10n
+      validator: (String? value) => (value!.isEmpty)
+          ? '${i10n.recipe_description} ${i10n.form_is_required}'
+          : null,
       onChanged: (String? value) => _currentRecipe.description = value!,
     );
   }
@@ -197,7 +204,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
 
     return DropdownButtonFormField<String>(
       value: _currentRecipe.category,
-      decoration: const InputDecoration(hintText: 'Category'), // TODO : i10n
+      decoration: InputDecoration(hintText: i10n.category),
       items: _dropdownValues.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -213,9 +220,10 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     return TextFormField(
       keyboardType: TextInputType.number,
       initialValue: _currentRecipe.details.serves.toString(),
-      decoration: const InputDecoration(hintText: 'Serves'), // TODO : i10n
-      validator: (String? value) =>
-          (value!.isEmpty) ? 'Name is Required' : null, // TODO : i10n
+      decoration: InputDecoration(hintText: i10n.recipe_servings),
+      validator: (String? value) => (value!.isEmpty)
+          ? '${i10n.recipe_servings} ${i10n.form_is_required}'
+          : null,
       onChanged: (String? value) =>
           _currentRecipe.details.serves = int.parse(value!),
     );
@@ -226,16 +234,17 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
       color: AppColors.backgroundColor,
       shape: _tileShape,
       child: ExpansionTile(
-        title: const AppText(text: 'Steps'),
+        title: AppText(text: i10n.recipe_steps),
         children: [
           ReorderableTextFormFields(
             key: UniqueKey(),
             scrollController: _scrollController,
             items: _currentRecipe.steps,
             newItem: '',
+            hintText: i10n.recipe_step,
             onChanged: (items) => _currentRecipe.steps = items,
             validator: (value) => (value == null || value.isEmpty)
-                ? 'Please enter some text' // TODO : i10n
+                ? '${i10n.recipe_steps} ${i10n.form_is_required}'
                 : null,
           ),
         ],
@@ -248,7 +257,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
       color: AppColors.backgroundColor,
       shape: _tileShape,
       child: ExpansionTile(
-        title: const AppText(text: 'Ingredients'),
+        title: AppText(text: i10n.recipe_ingredients),
         children: [
           ReorderableTextFormFields(
             key: UniqueKey(),
@@ -260,7 +269,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
             onChanged: (items) =>
                 setState(() => _currentRecipe.ingredients = items),
             validator: (value) => (value == null || value.isEmpty)
-                ? 'Please enter some text' // TODO : i10n
+                ? '${i10n.recipe_ingredient} ${i10n.form_is_required}'
                 : null,
           ),
         ],
@@ -276,7 +285,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
       onDismissed: (direction) {
         setState(() => _currentRecipe.ingredients.removeAt(index));
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('item dismissed')));
+            .showSnackBar(SnackBar(content: Text(i10n.form_item_dismissed)));
       },
       background: Container(color: Colors.red),
       child: ListTile(
@@ -286,11 +295,11 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
             // name
             TextFormField(
                 initialValue: _currentRecipe.ingredients[index].name,
-                decoration: const InputDecoration(
-                  hintText: 'Ingredient',
+                decoration: InputDecoration(
+                  hintText: i10n.recipe_ingredient,
                 ),
                 validator: (value) => (value == null || value.isEmpty)
-                    ? 'Please enter some text' // TODO : i10n
+                    ? '${i10n.recipe_ingredient} ${i10n.form_is_required}'
                     : null,
                 onChanged: (value) =>
                     _currentRecipe.ingredients[index].name = value),
@@ -309,12 +318,12 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                                 initialValue: _currentRecipe
                                     .ingredients[index].measurement.value
                                     .toString(),
-                                decoration: const InputDecoration(
-                                  hintText: 'Amount', // TODO : i10n
+                                decoration: InputDecoration(
+                                  hintText: i10n.recipe_amount,
                                 ),
                                 validator: (value) => (value == null ||
                                         value.isEmpty)
-                                    ? 'Please enter some text' // TODO : i10n
+                                    ? '${i10n.recipe_amount} ${i10n.form_is_required}'
                                     : null,
                                 onChanged: (value) => _currentRecipe
                                     .ingredients[index]
@@ -328,12 +337,12 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                             child: TextFormField(
                                 initialValue: _currentRecipe
                                     .ingredients[index].measurement.unitType,
-                                decoration: const InputDecoration(
-                                  hintText: 'Unit', // TODO : i10n
+                                decoration: InputDecoration(
+                                  hintText: i10n.recipe_amount,
                                 ),
                                 validator: (value) => (value == null ||
                                         value.isEmpty)
-                                    ? 'Please enter some text' // TODO : i10n
+                                    ? '${i10n.recipe_amount} ${i10n.form_is_required}'
                                     : null,
                                 onChanged: (value) => _currentRecipe
                                     .ingredients[index]

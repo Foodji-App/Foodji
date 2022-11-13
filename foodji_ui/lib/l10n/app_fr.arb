@@ -20,16 +20,20 @@
   "menu_pantry": "Garde-Manger",
   "menu_grocery": "Liste d'épicerie",
 
-  "recipe_detail_minutes": "min",
+  "minutes": "min",
 
-  "recipe_detail_preparation": "Préparation",
-  "recipe_detail_preparation_ingredients" : "Ingrédients",
-
-  "recipe_detail_instructions": "Instructions",
-  "recipe_detail_instructions_instructions" : "Instructions",
-
+  "recipe_name": "Nom",
   "recipe_description": "Description",
-  "recipe_steps": "Instructions",
+  "recipe_servings": "Portions",
+  "recipe_step": "Étape",
+  "recipe_steps": "Étapes",
+  "recipe_ingredient": "Ingrédient",
+  "recipe_ingredients": "Ingrédients",
+  "recipe_instructions": "Instructions",
+  "recipe_instruction": "Instruction",
+  "recipe_preparation": "Préparation",
+  "recipe_amount": "Quantité",
+
   "recipe_no_steps": "Aucune instruction n'a été ajoutée",
   "recipe_no_ingredients": "Aucun ingrédient n'a été ajouté",
 
@@ -50,7 +54,7 @@
   "tag_halal": "Halal",
   "tag_kosher": "Kascher",
 
-  "category_filter": "Catégorie",
+  "category": "Catégorie",
   "category_main_course": "Repas principal",
   "category_side_dish": "Accompagnement",
   "category_appetizer": "Entrée",
@@ -62,7 +66,15 @@
   "category_sauce": "Sauce",
   "category_bread": "Pain",
   "category_snack": "Collation",
-  
+
+  "form_is_required": "est requis",
+  "form_error": "Formulaire invalide",
+  "form_item_dismissed": "Item retiré",
+  "form_item": "Item",
+
+  "form_recipe_title": "Édition de recette",
+  "form_recipe_updated": "Recette mise à jour",
+
   "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Appuyez sur l'écran pour redémarrer l'application.",
   "error_authentification": "Une erreur d'authentification est survenue durant l'exécution. Pour accéder à cette fonctionnalité, appuyez sur l'écran pour redémarrer l'application."
 }
