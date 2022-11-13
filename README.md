@@ -23,7 +23,7 @@ Fini les petites notes sur le coin d'une feuille. Vous pourrez annoter et substi
 
 *NB : La version actuellement développé fut optimisée pour la plateforme android*
 
-1. Ouvrir une console dans [foodji_ui](./foodji_ui/) et exécuter *flutter run*, puis choisir la plateforme cible désirée.
+1. Ouvrir une console dans [foodji_ui](./foodji_ui/) et exécuter *`flutter run`*, puis choisir la plateforme cible désirée.
 
 ## Auteurs
 
