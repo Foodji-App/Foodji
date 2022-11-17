@@ -27,10 +27,12 @@ public class GetAllRecipesFromUserQuery : IRequest<IEnumerable<RecipeDto>?>
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<RecipeDto>?> Handle(GetAllRecipesFromUserQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<RecipeDto>?> Handle(
+            GetAllRecipesFromUserQuery request, 
+            CancellationToken cancellationToken)
         {
-            // TODO: We should index the AuthorId field
-            var results = await _client.Recipes.FindAsync(x => x.Author == request.AuthorId, cancellationToken: cancellationToken);
+            var results = await _client.Recipes.FindAsync(
+                x => x.Author == request.AuthorId, cancellationToken: cancellationToken);
             
             var recipes = results.ToList();
             

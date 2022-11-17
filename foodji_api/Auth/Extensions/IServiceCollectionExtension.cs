@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
+using Auth.Policies;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,5 +32,16 @@ public static class ServiceCollectionExtension
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddScheme<FirebaseAuthenticationSchemeOptions, FirebaseAuthenticationHandler>(
                 JwtBearerDefaults.AuthenticationScheme, null);
+    }
+
+    public static void AddFoodjiAuthorization(this IServiceCollection services)
+    {
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy(FoodjiRecipeAccessRequirement.Policy, policy =>
+                policy.Requirements.Add(new FoodjiRecipeAccessRequirement()));
+        });
+
+        services.AddSingleton<IAuthorizationHandler, FoodjiAuthorizationHandler>();
     }
 }
