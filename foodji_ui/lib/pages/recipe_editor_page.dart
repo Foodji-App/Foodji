@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodji_ui/misc/app_util.dart';
 import 'package:foodji_ui/models/recipe_ingredient_model.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
+import '../misc/app_routes.dart';
 import '../misc/colors.dart';
 import '../models/recipe_model.dart';
 import '../widgets/app_text.dart';
@@ -21,10 +26,14 @@ class RecipeEditorPage extends StatefulWidget {
 
 class RecipeEditorPageState extends State<RecipeEditorPage>
     with TickerProviderStateMixin {
-  late RecipeModel _currentRecipe, _savedRecipe;
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ScrollController _scrollController = ScrollController();
+
+  late RecipeModel _currentRecipe, _savedRecipe;
   late AppLocalizations i10n;
 
+  // TODO : change for api call
   final _dropdownValues = <String>[
     'Breakfast',
     'Lunch',
@@ -33,27 +42,24 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     'Snack'
   ];
 
-  final _tileShape = const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15), bottomRight: Radius.circular(15)));
-
-  final _formKey = GlobalKey<FormState>();
-
-  final _scrollController = ScrollController();
-
-  _updateRecipe() {
+  _updateRecipe() async {
     if (_formKey.currentState!.validate()) {
-      setState(() {
-        // TODO : Send recipe to database
-        // _savedRecipe = BlocProvider.....
-        BlocProvider.of<AppCubits>(context)
-            .updateRecipe(RecipeModel.deepCopy(_currentRecipe));
-        _savedRecipe = RecipeModel.deepCopy(_currentRecipe);
-        _formKey.currentState!.save();
-      });
-      return i10n.form_recipe_updated;
+      http.Response res =
+          await http.put(Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}'),
+              headers: AppRoutes.headers,
+              body: jsonEncode(_currentRecipe));
+
+      if (res.statusCode == 200) {
+        setState(() {
+          BlocProvider.of<AppCubits>(context)
+              .updateRecipe(RecipeModel.deepCopy(_currentRecipe));
+          _savedRecipe = RecipeModel.deepCopy(_currentRecipe);
+          _formKey.currentState!.save();
+        });
+        return i10n.form_recipe_updated;
+      }
+      return i10n.form_error;
     }
-    return i10n.form_error;
   }
 
   _discardRecipe() {
@@ -115,7 +121,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                       child: Column(
                         children: [
                           Material(
-                            shape: _tileShape,
+                            shape: AppUtil.fullTile,
                             color: AppColors.backgroundColor,
                             child: ListTile(
                                 title: Column(
@@ -232,7 +238,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   Widget _buildSteps() {
     return Material(
       color: AppColors.backgroundColor,
-      shape: _tileShape,
+      shape: AppUtil.fullTile,
       child: ExpansionTile(
         title: AppText(text: i10n.recipe_steps),
         children: [
@@ -255,7 +261,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   Widget _buildIngredients() {
     return Material(
       color: AppColors.backgroundColor,
-      shape: _tileShape,
+      shape: AppUtil.fullTile,
       child: ExpansionTile(
         title: AppText(text: i10n.recipe_ingredients),
         children: [
