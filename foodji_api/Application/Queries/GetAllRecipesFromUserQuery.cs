@@ -34,9 +34,8 @@ public class GetAllRecipesFromUserQuery : IRequest<IEnumerable<RecipeDto>>
             var results = await _client.Recipes.FindAsync(
                 x => x.Author == request.AuthorId, cancellationToken: cancellationToken);
             
-            var recipes = results.ToList(cancellationToken: cancellationToken);
-
-            return _mapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipes.ToList());
+            return _mapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(
+                results.ToList(cancellationToken: cancellationToken));
         }
     }
 }
