@@ -48,7 +48,10 @@ builder.Services.SetupInfra(
 
 builder.Services.AddMediatR(Assembly.Load("Application"));
 builder.Services.AddAutoMapper(Assembly.Load("Application"));
+
+// Keep these two in order
 builder.Services.AddFirebaseJwtAuthentication(builder.Configuration);
+builder.Services.AddFoodjiAuthorization();
 
 var app = builder.Build();
 
