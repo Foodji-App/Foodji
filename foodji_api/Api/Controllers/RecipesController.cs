@@ -1,7 +1,6 @@
 using Application.Command;
 using Application.Dto;
 using Application.Queries;
-using Auth;
 using Auth.Policies;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +22,6 @@ public class RecipesController : ControllerBase
         _authorizationService = authorizationService;
     }
 
-
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RecipeDto>))]
     public async Task<IActionResult> GetAllRecipes()
@@ -36,14 +34,6 @@ public class RecipesController : ControllerBase
         // var query = new GetAllRecipesQuery();
         
         var result =  await _mediator.Send(query);
-        
-        // TODO bit of a particular case here, and can be reviewed with refactor
-        // but if null, it's the user who isn't found, so we return a 401
-        // Should be impossible, because of the authorization requirements
-        if (result == null)
-        {
-            return Unauthorized();
-        }
 
         return Ok(result);
     }

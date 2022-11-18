@@ -29,8 +29,7 @@ public class GetRecipeAccessRightsQuery : IRequest<RecipeAccessRightsDto?>
         public async Task<RecipeAccessRightsDto?> Handle(GetRecipeAccessRightsQuery request, CancellationToken cancellationToken)
         {
             // Safe parsing the string into an ObjectId. Return null if the id is malformed
-            ObjectId id;
-            if (!ObjectId.TryParse(request.RecipeId, out id))
+            if (!ObjectId.TryParse(request.RecipeId, out var id))
             {
                 return null;
             }

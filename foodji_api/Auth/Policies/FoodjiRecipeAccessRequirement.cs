@@ -7,5 +7,5 @@ namespace Auth.Policies;
 // of action (read, update, delete)
 public class FoodjiRecipeAccessRequirement : IAuthorizationRequirement
 {
-    public static readonly string Policy = "ReadRecipePolicy";
+    public const string Policy = "ReadRecipePolicy";
 }
