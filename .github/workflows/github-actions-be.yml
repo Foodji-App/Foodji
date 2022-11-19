@@ -9,6 +9,9 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.0.x
+      # The file is needed at build time as it is copied in the output, but not used at runtime for tests
+      - name: Init mock secrets folder
+        run: mkdir foodji_api/secrets && touch foodji_api/secrets/foodji-auth-google-credentials.json
       - name: Build
         run: dotnet build foodji_api/FoodjiApi.sln
       - name: Test

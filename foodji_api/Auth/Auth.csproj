@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FirebaseAdmin" Version="2.3.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
+    </ItemGroup>
+
+
+    <!-- Far from ideal as far as secret management goes, but for now, we're just copying the file
+         in the output folder, just like what happens with the appsettings. Since it's added as a link,
+         the file itself remains in the gitignored secrets folder. Keep in mind that this will likely
+          cause issues if the Api is to be built in the pipeline.-->
+    <ItemGroup>
+      <Content Include="..\secrets\foodji-auth-google-credentials.json">
+        <Link>foodji-auth-google-credentials.json</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\Application\Application.csproj" />
+    </ItemGroup>
+
+</Project>

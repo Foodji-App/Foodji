@@ -7,7 +7,7 @@ using MongoDB.Driver;
 
 namespace Application.Queries;
 
-public class GetAllRecipesFromUserQuery : IRequest<IEnumerable<RecipeDto>?>
+public class GetAllRecipesFromUserQuery : IRequest<IEnumerable<RecipeDto>>
 {
     private string AuthorId { get; }
 
@@ -16,7 +16,7 @@ public class GetAllRecipesFromUserQuery : IRequest<IEnumerable<RecipeDto>?>
         AuthorId = authorId;
     }
     
-    private class Handler : IRequestHandler<GetAllRecipesFromUserQuery, IEnumerable<RecipeDto>?>
+    private class Handler : IRequestHandler<GetAllRecipesFromUserQuery, IEnumerable<RecipeDto>>
     {
         private readonly IFoodjiDbClient _client;
         private readonly IMapper _mapper;
@@ -27,19 +27,15 @@ public class GetAllRecipesFromUserQuery : IRequest<IEnumerable<RecipeDto>?>
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<RecipeDto>?> Handle(GetAllRecipesFromUserQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<RecipeDto>> Handle(
+            GetAllRecipesFromUserQuery request, 
+            CancellationToken cancellationToken)
         {
-            // TODO: We should index the AuthorId field
-            var results = await _client.Recipes.FindAsync(x => x.Author == request.AuthorId, cancellationToken: cancellationToken);
+            var results = await _client.Recipes.FindAsync(
+                x => x.Author == request.AuthorId, cancellationToken: cancellationToken);
             
-            var recipes = results.ToList();
-            
-            if (recipes.Count == 0)
-            {
-                return null;
-            }
-
-            return _mapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipes.ToList());
+            return _mapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(
+                results.ToList(cancellationToken: cancellationToken));
         }
     }
 }
