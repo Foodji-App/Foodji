@@ -41,10 +41,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// TODO use secrets - not critical for the moment in local development ONLY
+var connectionAddress = builder.Environment.IsDevelopment() ? "localhost:27017" : Environment.GetEnvironmentVariable("DB_ADDR");
+if(connectionAddress == null)
+    throw new Exception("Database address is null");
+
 // Map dependency injection
-builder.Services.SetupInfra(
-    // TODO use secrets - not critical for the moment in local development ONLY
-    builder.Configuration.GetSection("Database:MongoDB")["ConnectionString"]);
+builder.Services.SetupInfra($"{builder.Configuration.GetSection("Database:MongoDB")["ConnectionString"]}@{connectionAddress}");
 
 builder.Services.AddMediatR(Assembly.Load("Application"));
 builder.Services.AddAutoMapper(Assembly.Load("Application"));
