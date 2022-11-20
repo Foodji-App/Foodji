@@ -7,8 +7,10 @@ public record UnitType
     public string Name { get; private set; }
     
     public static UnitType Unit = new UnitType("unit");
-    public static UnitType Millilitre = new UnitType("millilitre");
+    public static UnitType Milliliter = new UnitType("milliliter");
+    public static UnitType Liter = new UnitType("liter");
     public static UnitType Gram = new UnitType("gram");
+    public static UnitType Kilogram = new UnitType("kilogram");
     public static UnitType Cup = new UnitType("cup");
     public static UnitType Tablespoon = new UnitType("tablespoon");
     public static UnitType Teaspoon = new UnitType("teaspoon");
@@ -30,10 +32,14 @@ public record UnitType
             // TODO - have a tooltip to discourage such use on the front end whenever possible
             case "unit":
                 return Unit;
-            case "millilitre":
-                return Millilitre;
+            case "milliliter":
+                return Milliliter;
+            case "liter":
+                return Liter;
             case "gram":
                 return Gram;
+            case "kilogram":
+                return Kilogram;
             case "cup":
                 return Cup;
             case "tablespoon":
