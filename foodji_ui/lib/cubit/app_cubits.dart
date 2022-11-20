@@ -43,31 +43,15 @@ class AppCubits extends Cubit<CubitStates> {
   // Authentifies the user and returns, gets the data linked to the user and
   // then, the authentified state or error state
   //TODO - Complete the login process
-  Future<bool> login(email, password) async {
-    try {
-      userToken = await loginServices.login(email, password);
-      if (userToken.isEmpty) {
-        return false;
-      } else {
-        tokenTimeout = DateTime.now().add(const Duration(hours: 1));
-        try {
-          userData = await loginServices.getUserData(email);
-        } catch (e) {
-          emit(ErrorState());
-        }
-      }
+  void retrieveUserData() async {
+    userData =
+        UserDataModel(id: '', recipes: await RecipeServices().getRecipes());
 
-      userData.recipes.addAll(RecipeModel.getSamples(20));
-      recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
+    //userData.recipes.addAll(RecipeModel.getSamples(20));
+    recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
 
-      emit(AuthentifiedState(userData.recipes, [...userData.recipes],
-          recipeIngredients, [...recipeIngredients]));
-
-      return true;
-    } catch (e) {
-      emit(ErrorState());
-    }
-    return false;
+    emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+        recipeIngredients, [...recipeIngredients]));
   }
 
   // Creates an account, then go to the login page if successful

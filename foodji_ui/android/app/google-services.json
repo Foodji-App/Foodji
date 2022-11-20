@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "732089674050",
-    "project_id": "foodji-7557f",
-    "storage_bucket": "foodji-7557f.appspot.com"
+    "project_number": "452902969608",
+    "project_id": "foodji-auth",
+    "storage_bucket": "foodji-auth.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:732089674050:android:0378986bac288fa98900db",
+        "mobilesdk_app_id": "1:452902969608:android:87c9ee088bc58e35914cbd",
         "android_client_info": {
           "package_name": "com.example.foodji_ui"
         }
       },
       "oauth_client": [
         {
-          "client_id": "732089674050-i80ica9j907ukh9fqqqh5fs5tln0ika2.apps.googleusercontent.com",
+          "client_id": "452902969608-bg6mu6f04ur3tlegohckfiis5oa22u3n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCvfbagpnWWTMnYV0I1PPNSnQYBTUw3bWA"
+          "current_key": "AIzaSyDSp5ojVWbDtRNn3XsU57koZWqmeo8GX7w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "732089674050-i80ica9j907ukh9fqqqh5fs5tln0ika2.apps.googleusercontent.com",
+              "client_id": "452902969608-bg6mu6f04ur3tlegohckfiis5oa22u3n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "452902969608-m0qh87u9rk58fkpqccqnq2ugc8uvhl9e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.foodjiUi"
+              }
             }
           ]
         }
