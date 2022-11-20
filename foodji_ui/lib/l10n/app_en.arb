@@ -63,6 +63,18 @@
   "category_bread": "Bread",
   "category_snack": "Snack",
 
+  "unit_type_milliliter": "milliliter",
+  "unit_type_liter": "liter",
+  "unit_type_cup": "cup",
+  "unit_type_tablespoon": "tablespoon",
+  "unit_type_teaspoon": "teaspoon",
+  "unit_type_fluidOunce": "fluid ounce",
+  "unit_type_gram": "gram",
+  "unit_type_kilogram": "kilogram",
+  "unit_type_ounce": "ounce",
+  "unit_type_pound": "pound",
+  "unit_type_unit": "unit",
+
   "error_unknown": "An unknown error occured during the execution. Press anywhere to restart the application.",
   "error_authentification": "An authentication error occured during the execution. To access this feature, press anywhere on this page to restart the application."
 }

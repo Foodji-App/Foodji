@@ -63,6 +63,18 @@
   "category_bread": "Pain",
   "category_snack": "Collation",
   
+  "unit_type_milliliter": "millilitre",
+  "unit_type_liter": "litre",
+  "unit_type_cup": "tasse",
+  "unit_type_tablespoon": "cuillère à table",
+  "unit_type_teaspoon": "cuillère à thé",
+  "unit_type_fluidOunce": "once liquide",
+  "unit_type_gram": "gramme",
+  "unit_type_kilogram": "kilogramme",
+  "unit_type_ounce": "once",
+  "unit_type_pound": "livre",
+  "unit_type_unit": "unité",
+
   "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Appuyez sur l'écran pour redémarrer l'application.",
   "error_authentification": "Une erreur d'authentification est survenue durant l'exécution. Pour accéder à cette fonctionnalité, appuyez sur l'écran pour redémarrer l'application."
 }
