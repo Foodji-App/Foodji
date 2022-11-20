@@ -1,8 +1,7 @@
 using System.Reflection;
+using Auth.Extensions;
 using Infra.Extensions;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,25 +49,9 @@ builder.Services.SetupInfra(
 builder.Services.AddMediatR(Assembly.Load("Application"));
 builder.Services.AddAutoMapper(Assembly.Load("Application"));
 
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        var firebaseConfig = builder.Configuration.GetSection("Auth:Firebase");
-        // Adds the *authentication* part of the process
-        // https://blog.markvincze.com/secure-an-asp-net-core-api-with-firebase/
-        // and needed for the authorization part, which we have to customize.
-        // See https://learn.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased?view=aspnetcore-6.0
-        options.Authority = firebaseConfig["Authority"];
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidIssuer = firebaseConfig["Authority"],
-            ValidateAudience = true,
-            ValidAudience = firebaseConfig["Audience"],
-            ValidateLifetime = true
-        };
-    });
+// Keep these two in order
+builder.Services.AddFirebaseJwtAuthentication(builder.Configuration);
+builder.Services.AddFoodjiAuthorization();
 
 var app = builder.Build();
 

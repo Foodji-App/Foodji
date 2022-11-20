@@ -20,5 +20,5 @@ public record RecipeDto
     
     public Uri ImageUri { get; set; } = null!;
     
-    public string Author { get; set; } = null!;
+    public string? Author { get; set; } = null!;
 }
