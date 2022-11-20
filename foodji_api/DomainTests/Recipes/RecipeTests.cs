@@ -91,7 +91,7 @@ namespace DomainTests.Recipes
                 "updatedSubstituteDescription",
                 Measurement.Create(
                     1,
-                    UnitType.Millilitre,
+                    UnitType.Milliliter,
                     "updated alternative text"),
                 new List<Tag> { Tag.Vegan });
                 
