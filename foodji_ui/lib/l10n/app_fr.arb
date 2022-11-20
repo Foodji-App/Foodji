@@ -74,7 +74,11 @@
 
   "form_recipe_title": "Édition de recette",
   "form_recipe_updated": "Recette mise à jour",
+  "form_recipe_error": "Formulaire invalide",
   
+  "value": "Valeur",
+  "result": "Résutat",
+
   "unit_type_milliliter": "millilitre",
   "unit_type_liter": "litre",
   "unit_type_cup": "tasse",

@@ -12,6 +12,7 @@ import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/app_util.dart';
 import '../misc/colors.dart';
+import '../widgets/app_text.dart';
 
 class ConverterPage extends StatefulWidget {
   const ConverterPage({Key? key}) : super(key: key);
@@ -25,6 +26,8 @@ class ConverterPageState extends State<ConverterPage> {
   final _scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
 
+  late AppLocalizations l10n;
+
   List<DropdownMenuItem<String>> _originUnitTypes = [];
   List<DropdownMenuItem<String>> _volumeUnits = [];
   List<DropdownMenuItem<String>> _weightUnits = [];
@@ -35,25 +38,25 @@ class ConverterPageState extends State<ConverterPage> {
 
   String getUnitString(unit) {
     if (unit == UnitTypeConvertible.cup.name) {
-      return AppLocalizations.of(context)!.unit_type_cup;
+      return l10n.unit_type_cup;
     } else if (unit == UnitTypeConvertible.fluidOunce.name) {
-      return AppLocalizations.of(context)!.unit_type_fluidOunce;
+      return l10n.unit_type_fluidOunce;
     } else if (unit == UnitTypeConvertible.gram.name) {
-      return AppLocalizations.of(context)!.unit_type_gram;
+      return l10n.unit_type_gram;
     } else if (unit == UnitTypeConvertible.kilogram.name) {
-      return AppLocalizations.of(context)!.unit_type_kilogram;
+      return l10n.unit_type_kilogram;
     } else if (unit == UnitTypeConvertible.liter.name) {
-      return AppLocalizations.of(context)!.unit_type_liter;
+      return l10n.unit_type_liter;
     } else if (unit == UnitTypeConvertible.milliliter.name) {
-      return AppLocalizations.of(context)!.unit_type_milliliter;
+      return l10n.unit_type_milliliter;
     } else if (unit == UnitTypeConvertible.ounce.name) {
-      return AppLocalizations.of(context)!.unit_type_ounce;
+      return l10n.unit_type_ounce;
     } else if (unit == UnitTypeConvertible.pound.name) {
-      return AppLocalizations.of(context)!.unit_type_pound;
+      return l10n.unit_type_pound;
     } else if (unit == UnitTypeConvertible.tablespoon.name) {
-      return AppLocalizations.of(context)!.unit_type_tablespoon;
+      return l10n.unit_type_tablespoon;
     } else if (unit == UnitTypeConvertible.teaspoon.name) {
-      return AppLocalizations.of(context)!.unit_type_teaspoon;
+      return l10n.unit_type_teaspoon;
     } else {
       return unit;
     }
@@ -92,6 +95,7 @@ class ConverterPageState extends State<ConverterPage> {
 
   @override
   Widget build(BuildContext context) {
+    l10n = AppLocalizations.of(context)!;
     globals.setActivePage(4);
     initUnits();
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
@@ -120,17 +124,26 @@ class ConverterPageState extends State<ConverterPage> {
                                 children: [
                               Row(children: [
                                 Expanded(
-                                    flex: 1, child: buildOriginMeasurement()),
+                                    flex: 1, child: AppText(text: '${l10n.value}:')),
                                 const SizedBox(width: 12),
-                                Expanded(flex: 1, child: buildOriginUnitType())
+                                Expanded(
+                                    flex: 5, child: buildOriginMeasurement()),
+                              ]),
+                              Row(children: [
+                                Expanded(flex: 1, child: buildOriginUnitType()),
+                                const SizedBox(width: 5),
+                                const Icon(Icons.flip_camera_android),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                    flex: 1, child: buildDestinationUnitType()),
                               ]),
                               const SizedBox(height: 12),
                               Row(children: [
                                 Expanded(
-                                    flex: 1, child: buildConversionResult()),
+                                    flex: 1, child: AppText(text: '${l10n.result}:')),
                                 const SizedBox(width: 12),
                                 Expanded(
-                                    flex: 1, child: buildDestinationUnitType())
+                                    flex: 5, child: buildConversionResult()),
                               ]),
                             ]))))))
       ]));
@@ -197,6 +210,7 @@ class ConverterPageState extends State<ConverterPage> {
           controller: _controller,
           autofocus: false,
           readOnly: true,
+          decoration: const InputDecoration(border: InputBorder.none),
         ));
   }
 }
