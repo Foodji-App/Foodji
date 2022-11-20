@@ -51,9 +51,6 @@ Membres du projet à l'automne 2022
     * Analyse et formation
     * Démarrage du git
 
-## Licence
-Ce projet est sous licence MIT - voir le fichier LICENSE.md pour plus de détails
-
 ## Références
 
 Inspiration, code snippets, etc.
