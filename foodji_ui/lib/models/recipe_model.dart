@@ -9,7 +9,7 @@ import 'categories_enum.dart';
 import 'recipe_ingredient_model.dart';
 
 class RecipeModel {
-  String id;
+  String? id;
   String name;
   String imageUri;
   String category;

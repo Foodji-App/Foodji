@@ -58,12 +58,9 @@ class AppCubits extends Cubit<CubitStates> {
     return targetRecipe;
   }
 
-  updateRecipe(recipe) {
-    RecipeModel targetRecipe =
-        recipes.firstWhere((element) => element.id == recipe.id);
-    targetRecipe = recipe;
-    return targetRecipe;
-  }
+  updateRecipe(RecipeModel recipe) async => await recipeServices.updateRecipe(recipe);
+
+  createRecipe(RecipeModel recipe) async => await recipeServices.createRecipe(recipe);
 
   // Navigation ----------------------------------
 

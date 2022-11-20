@@ -10,7 +10,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
-import '../misc/app_routes.dart';
 import '../misc/colors.dart';
 import '../models/recipe_model.dart';
 import '../widgets/app_text.dart';
@@ -26,7 +25,6 @@ class RecipeEditorPage extends StatefulWidget {
 
 class RecipeEditorPageState extends State<RecipeEditorPage>
     with TickerProviderStateMixin {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ScrollController _scrollController = ScrollController();
 
@@ -43,16 +41,18 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   ];
 
   _updateRecipe() async {
+    http.Response res;
     if (_formKey.currentState!.validate()) {
-      http.Response res =
-          await http.put(Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}'),
-              headers: AppRoutes.headers,
-              body: jsonEncode(_currentRecipe));
+      if (_currentRecipe.id == null || _currentRecipe.id!.isEmpty) {
+        res = BlocProvider.of<AppCubits>(context)
+            .updateRecipe(_currentRecipe);
+      } else {
+        res = BlocProvider.of<AppCubits>(context)
+            .createRecipe(_currentRecipe);
+      }
 
       if (res.statusCode == 200) {
         setState(() {
-          BlocProvider.of<AppCubits>(context)
-              .updateRecipe(RecipeModel.deepCopy(_currentRecipe));
           _savedRecipe = RecipeModel.deepCopy(_currentRecipe);
           _formKey.currentState!.save();
         });
