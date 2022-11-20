@@ -26,7 +26,6 @@ class ConverterPageState extends State<ConverterPage> {
   final _formKey = GlobalKey<FormState>();
 
   List<DropdownMenuItem<String>> _originUnitTypes = [];
-  List<DropdownMenuItem<String>> _destinationUnitTypes = [];
   List<DropdownMenuItem<String>> _volumeUnits = [];
   List<DropdownMenuItem<String>> _weightUnits = [];
 
@@ -77,7 +76,6 @@ class ConverterPageState extends State<ConverterPage> {
         .toList();
 
     _originUnitTypes = units;
-    _destinationUnitTypes = units;
     _originUnit =
         _originUnit == "" ? UnitTypeConvertible.values.first.name : _originUnit;
     _destinationUnit = _destinationUnit == ""
@@ -85,27 +83,11 @@ class ConverterPageState extends State<ConverterPage> {
         : _destinationUnit;
   }
 
-  setDestinationUnitType(String? originUnitType) {
-    setState(() {
-      _destinationUnitTypes = unitTypeVolume.containsKey(originUnitType)
-          ? _volumeUnits
-          : _weightUnits;
-      _destinationUnit = _destinationUnitTypes[0].value!;
-      _destinationUnitTypes.forEach((el) => print(el.value));
-    });
-  }
-
   convert() {
-    // megaPrint();
-    _controller.text = AppUtil()
+    String result = AppUtil()
         .unitConvert(_originValue, _originUnit, _destinationUnit)
         .toString();
-  }
-
-  megaPrint() {
-    print('o.v $_originValue');
-    print('o.u $_originUnit');
-    print('d.u $_destinationUnit');
+    _controller.text = num.parse(result) == 0 ? "" : result;
   }
 
   @override
@@ -164,7 +146,6 @@ class ConverterPageState extends State<ConverterPage> {
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           onChanged: (v) {
             setState(() => _originValue = v != "" ? num.parse(v) : 0);
-            megaPrint();
             convert();
           },
         ));
@@ -176,19 +157,34 @@ class ConverterPageState extends State<ConverterPage> {
         items: _originUnitTypes,
         onChanged: (String? unit) {
           setState(() => _originUnit = unit!);
-          megaPrint();
-          setDestinationUnitType(unit);
           convert();
         });
   }
 
   Widget buildDestinationUnitType() {
+    return unitTypeVolume.containsKey(_originUnit)
+        ? buildDestinationUnitTypeVolume()
+        : buildDestinationUnitTypeWeight();
+  }
+
+  Widget buildDestinationUnitTypeVolume() {
+    _destinationUnit = _volumeUnits.first.value!;
     return DropdownButtonFormField<String>(
         value: _destinationUnit,
-        items: _destinationUnitTypes,
+        items: _volumeUnits,
         onChanged: (unit) {
           setState(() => _destinationUnit = unit!);
-          megaPrint();
+          convert();
+        });
+  }
+
+  Widget buildDestinationUnitTypeWeight() {
+    _destinationUnit = _weightUnits.first.value!;
+    return DropdownButtonFormField<String>(
+        value: _destinationUnit,
+        items: _weightUnits,
+        onChanged: (unit) {
+          setState(() => _destinationUnit = unit!);
           convert();
         });
   }
