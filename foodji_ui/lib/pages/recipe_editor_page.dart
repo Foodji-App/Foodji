@@ -23,7 +23,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     with TickerProviderStateMixin {
   late RecipeModel _currentRecipe, _savedRecipe;
 
-  late AppLocalizations i10n;
+  late AppLocalizations l10n;
 
   final _dropdownValues = <String>[
     'Breakfast',
@@ -51,9 +51,9 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
         _savedRecipe = RecipeModel.deepCopy(_currentRecipe);
         _formKey.currentState!.save();
       });
-      return i10n.form_recipe_updated;
+      return l10n.form_recipe_updated;
     }
-    return i10n.form_error;
+    return l10n.form_error;
   }
 
   _discardRecipe() {
@@ -87,7 +87,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
 
   @override
   Widget build(BuildContext context) {
-    i10n = AppLocalizations.of(context)!;
+    l10n = AppLocalizations.of(context)!;
 
     // Build a Form widget using the _formKey created above.
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
@@ -154,7 +154,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   AppBar _appBar() {
     return AppBar(
         title: AppText(
-            text: i10n.form_recipe_title, color: AppColors.backgroundColor),
+            text: l10n.form_recipe_title, color: AppColors.backgroundColor),
         backgroundColor: AppColors.textColor,
         actions: <Widget>[
           IconButton(
@@ -173,10 +173,10 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   Widget _buildName() {
     return TextFormField(
       initialValue: _currentRecipe.name,
-      decoration: InputDecoration(hintText: i10n.recipe_name),
+      decoration: InputDecoration(hintText: l10n.recipe_name),
       maxLength: 50,
       validator: (String? value) => (value!.isEmpty)
-          ? '${i10n.recipe_name} ${i10n.form_is_required}'
+          ? '${l10n.recipe_name} ${l10n.form_is_required}'
           : null,
       onChanged: (String? value) => _currentRecipe.name = value!,
     );
@@ -185,12 +185,12 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   Widget _buildDescription() {
     return TextFormField(
       initialValue: _currentRecipe.description,
-      decoration: InputDecoration(hintText: i10n.recipe_description),
+      decoration: InputDecoration(hintText: l10n.recipe_description),
       maxLength: 300,
       minLines: 1,
       maxLines: 6,
       validator: (String? value) => (value!.isEmpty)
-          ? '${i10n.recipe_description} ${i10n.form_is_required}'
+          ? '${l10n.recipe_description} ${l10n.form_is_required}'
           : null,
       onChanged: (String? value) => _currentRecipe.description = value!,
     );
@@ -204,7 +204,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
 
     return DropdownButtonFormField<String>(
       value: _currentRecipe.category,
-      decoration: InputDecoration(hintText: i10n.category),
+      decoration: InputDecoration(hintText: l10n.category),
       items: _dropdownValues.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -220,9 +220,9 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     return TextFormField(
       keyboardType: TextInputType.number,
       initialValue: _currentRecipe.details.serves.toString(),
-      decoration: InputDecoration(hintText: i10n.recipe_servings),
+      decoration: InputDecoration(hintText: l10n.recipe_servings),
       validator: (String? value) => (value!.isEmpty)
-          ? '${i10n.recipe_servings} ${i10n.form_is_required}'
+          ? '${l10n.recipe_servings} ${l10n.form_is_required}'
           : null,
       onChanged: (String? value) =>
           _currentRecipe.details.serves = int.parse(value!),
@@ -234,17 +234,17 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
       color: AppColors.backgroundColor,
       shape: _tileShape,
       child: ExpansionTile(
-        title: AppText(text: i10n.recipe_steps),
+        title: AppText(text: l10n.recipe_steps),
         children: [
           ReorderableTextFormFields(
             key: UniqueKey(),
             scrollController: _scrollController,
             items: _currentRecipe.steps,
             newItem: '',
-            hintText: i10n.recipe_step,
+            hintText: l10n.recipe_step,
             onChanged: (items) => _currentRecipe.steps = items,
             validator: (value) => (value == null || value.isEmpty)
-                ? '${i10n.recipe_steps} ${i10n.form_is_required}'
+                ? '${l10n.recipe_steps} ${l10n.form_is_required}'
                 : null,
           ),
         ],
@@ -257,7 +257,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
       color: AppColors.backgroundColor,
       shape: _tileShape,
       child: ExpansionTile(
-        title: AppText(text: i10n.recipe_ingredients),
+        title: AppText(text: l10n.recipe_ingredients),
         children: [
           ReorderableTextFormFields(
             key: UniqueKey(),
@@ -269,7 +269,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
             onChanged: (items) =>
                 setState(() => _currentRecipe.ingredients = items),
             validator: (value) => (value == null || value.isEmpty)
-                ? '${i10n.recipe_ingredient} ${i10n.form_is_required}'
+                ? '${l10n.recipe_ingredient} ${l10n.form_is_required}'
                 : null,
           ),
         ],
@@ -285,7 +285,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
       onDismissed: (direction) {
         setState(() => _currentRecipe.ingredients.removeAt(index));
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(i10n.form_item_dismissed)));
+            .showSnackBar(SnackBar(content: Text(l10n.form_item_dismissed)));
       },
       background: Container(color: Colors.red),
       child: ListTile(
@@ -296,10 +296,10 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
             TextFormField(
                 initialValue: _currentRecipe.ingredients[index].name,
                 decoration: InputDecoration(
-                  hintText: i10n.recipe_ingredient,
+                  hintText: l10n.recipe_ingredient,
                 ),
                 validator: (value) => (value == null || value.isEmpty)
-                    ? '${i10n.recipe_ingredient} ${i10n.form_is_required}'
+                    ? '${l10n.recipe_ingredient} ${l10n.form_is_required}'
                     : null,
                 onChanged: (value) =>
                     _currentRecipe.ingredients[index].name = value),
@@ -319,11 +319,11 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                                     .ingredients[index].measurement.value
                                     .toString(),
                                 decoration: InputDecoration(
-                                  hintText: i10n.recipe_amount,
+                                  hintText: l10n.recipe_amount,
                                 ),
                                 validator: (value) => (value == null ||
                                         value.isEmpty)
-                                    ? '${i10n.recipe_amount} ${i10n.form_is_required}'
+                                    ? '${l10n.recipe_amount} ${l10n.form_is_required}'
                                     : null,
                                 onChanged: (value) => _currentRecipe
                                     .ingredients[index]
@@ -338,11 +338,11 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                                 initialValue: _currentRecipe
                                     .ingredients[index].measurement.unitType,
                                 decoration: InputDecoration(
-                                  hintText: i10n.recipe_amount,
+                                  hintText: l10n.recipe_amount,
                                 ),
                                 validator: (value) => (value == null ||
                                         value.isEmpty)
-                                    ? '${i10n.recipe_amount} ${i10n.form_is_required}'
+                                    ? '${l10n.recipe_amount} ${l10n.form_is_required}'
                                     : null,
                                 onChanged: (value) => _currentRecipe
                                     .ingredients[index]
