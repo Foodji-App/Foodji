@@ -32,6 +32,12 @@ class AuthentificationRequestState extends CubitStates {
   List<Object> get props => throw [];
 }
 
+// If user requests, go to new account registration page
+class RegistrationState extends CubitStates {
+  @override
+  List<Object> get props => throw [];
+}
+
 // Once authorized, displays the user's recipes list as the main page
 class AuthentifiedState extends CubitStates {
   AuthentifiedState(this.recipes, this.filteredRecipes, this.ingredients,
