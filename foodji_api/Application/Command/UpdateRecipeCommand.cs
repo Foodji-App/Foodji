@@ -10,10 +10,12 @@ namespace Application.Command;
 
 public class UpdateRecipeCommand : IRequest<string?>
 {
+    private string RecipeId { get; }
     private RecipeDto RecipeDto { get; }
     
-    public UpdateRecipeCommand(RecipeDto recipeDto)
+    public UpdateRecipeCommand(string recipeId, RecipeDto recipeDto)
     {
+        RecipeId = recipeId;
         RecipeDto = recipeDto;
     }
     
@@ -35,8 +37,14 @@ public class UpdateRecipeCommand : IRequest<string?>
             
             return await session.WithTransactionAsync<string?>(async (session, cancellationToken) =>
                 {
+                    // Safe parsing the string into an ObjectId. Return null if the id is malformed
+                    if (!ObjectId.TryParse(request.RecipeId, out var recipeId))
+                    {
+                        return null;
+                    }
+                    
                     var results = await _client.Recipes.FindAsync(
-                        x => x.Id == new ObjectId(request.RecipeDto.Id),
+                        x => x.Id == recipeId,
                         cancellationToken: cancellationToken);
             
                     var recipeToUpdate = results.SingleOrDefault(cancellationToken);
