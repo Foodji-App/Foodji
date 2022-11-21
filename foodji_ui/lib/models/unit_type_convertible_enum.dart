@@ -1,5 +1,4 @@
-enum UnitType {
-  unit,
+enum UnitTypeConvertible {
   milliliter,
   liter,
   gram,
