@@ -12,7 +12,6 @@ class LoginPage extends StatelessWidget {
     return AuthStateListener<EmailAuthController>(
         listener: (oldState, newState, controller) {
           if (newState is SignedIn) {
-            print('je suis en vie');
             BlocProvider.of<AppCubits>(context).retrieveUserData();
           }
           return null;

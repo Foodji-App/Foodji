@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/recipe_ingredient_model.dart';
@@ -19,8 +20,6 @@ class AppCubits extends Cubit<CubitStates> {
   // Data ----------------------------------------
 
   // User
-  late DateTime tokenTimeout;
-  late String userToken = "";
   late UserDataModel userData;
 
   // Ingredients
@@ -33,19 +32,23 @@ class AppCubits extends Cubit<CubitStates> {
   // request state or error state
   void getInitialData() async {
     try {
-      emit(AuthentificationRequestState());
+      if (FirebaseAuth.instance.currentUser != null) {
+        retrieveUserData();
+      } else {
+        emit(AuthentificationRequestState());
+      }
     } catch (e) {
       emit(ErrorState());
     }
   }
 
-  // Authentification page
+  // Authentication page
   // Authentifies the user and returns, gets the data linked to the user and
   // then, the authentified state or error state
-  //TODO - Complete the login process
   void retrieveUserData() async {
-    userData =
-        UserDataModel(id: '', recipes: await RecipeServices().getRecipes());
+    userData = UserDataModel(
+        id: await FirebaseAuth.instance.currentUser!.getIdToken(),
+        recipes: await RecipeServices().getRecipes());
 
     //userData.recipes.addAll(RecipeModel.getSamples(20));
     recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
@@ -69,9 +72,7 @@ class AppCubits extends Cubit<CubitStates> {
   // Setters -------------------------------------
 
   toggleFavoriteStatus(recipe) {
-    if (DateTime.now().isAfter(tokenTimeout)) {
-      getInitialData();
-    }
+    getInitialData();
 
     RecipeModel targetRecipe =
         userData.recipes.firstWhere((element) => element.id == recipe.id);
@@ -80,9 +81,7 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   updateRecipe(recipe) {
-    if (DateTime.now().isAfter(tokenTimeout)) {
-      getInitialData();
-    }
+    getInitialData();
 
     RecipeModel targetRecipe =
         userData.recipes.firstWhere((element) => element.id == recipe.id);
@@ -112,9 +111,7 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To recipes
   void gotoRecipes() async {
-    if (DateTime.now().isAfter(tokenTimeout)) {
-      getInitialData();
-    }
+    getInitialData();
     try {
       emit(AuthentifiedState(userData.recipes, [...userData.recipes],
           recipeIngredients, [...recipeIngredients]));
@@ -125,9 +122,7 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To recipe details
   void gotoRecipeDetails(recipe) async {
-    if (DateTime.now().isAfter(tokenTimeout)) {
-      getInitialData();
-    }
+    getInitialData();
     try {
       emit(RecipeState(recipe));
     } catch (e) {
@@ -136,9 +131,7 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   void gotoRecipeEditor(recipe) async {
-    if (DateTime.now().isAfter(tokenTimeout)) {
-      getInitialData();
-    }
+    getInitialData();
     try {
       emit(RecipeEditorState(recipe));
     } catch (e) {
@@ -148,9 +141,7 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To ingredients
   void gotoIngredients() async {
-    if (DateTime.now().isAfter(tokenTimeout)) {
-      getInitialData();
-    }
+    getInitialData();
     try {
       emit(AuthentifiedState(userData.recipes, [...userData.recipes],
           recipeIngredients, [...recipeIngredients]));
@@ -161,9 +152,7 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To recipe details
   void gotoIngredientDetails(recipe) async {
-    if (DateTime.now().isAfter(tokenTimeout)) {
-      getInitialData();
-    }
+    getInitialData();
     try {
       emit(IngredientState(recipe));
     } catch (e) {
