@@ -11,13 +11,14 @@ class RecipeServices {
   // GET
   // Recipes
   Future<List<RecipeModel>> getRecipes() async {
-    var token = await FirebaseAuth.instance.currentUser?.getIdToken();
-
-    token ??= '';
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
 
     var apiUrl = '/recipes';
+    // FOR IT TO WORK:
+    // https://stackoverflow.com/questions/65630743/how-to-solve-flutter-web-api-cors-error-only-with-dart-code
     http.Response res = await http.get(Uri.parse(baseUrl + apiUrl),
-        headers: {HttpHeaders.authorizationHeader: token});
+        headers: {HttpHeaders.authorizationHeader: 'bearer $token'});
+
     try {
       if (res.statusCode == 200) {
         List<dynamic> list = json.decode(res.body);

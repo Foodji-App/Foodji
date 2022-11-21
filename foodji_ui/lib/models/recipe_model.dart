@@ -36,7 +36,7 @@ class RecipeModel {
     return RecipeModel(
         id: json['id'],
         name: json['name'],
-        createdAt: json['createdAt'],
+        createdAt: DateTime.tryParse(json['createdAt']),
         category: json['category'],
         description: json['description'],
         details: RecipeDetailsModel.fromJson(json['details']),
