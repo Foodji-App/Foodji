@@ -2,6 +2,8 @@
 
 public record RecipeDto
 {
+    // We don't actually use this field on our end, but it is easier for now
+    // to leave it there than to have the FE not send it
     public string? Id { get; set; }
     
     public string Name { get; set; } = null!;
@@ -20,5 +22,5 @@ public record RecipeDto
     
     public Uri ImageUri { get; set; } = null!;
     
-    public string? Author { get; set; } = null!;
+    public string? Author { get; set; }
 }
