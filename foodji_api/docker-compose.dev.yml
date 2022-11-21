@@ -1,7 +1,8 @@
 version: '3.1'
 
 services:
-  db:
+
+  mongo:
     image: mongo
     restart: always
     ports:
@@ -15,18 +16,6 @@ services:
     secrets:
       - root_username
       - root_password
-
-  api:
-    restart: unless-stopped
-    ports:
-      - 7272:80
-    build:
-      context: .
-      dockerfile: ./Api/Dockerfile
-    depends_on:
-      - db
-    environment:
-      DB_ADDR: db
 
 # https://docs.docker.com/storage/volumes/
 volumes:
