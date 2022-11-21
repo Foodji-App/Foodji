@@ -4,18 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../models/recipe_ingredient_model.dart';
 import '../models/recipe_model.dart';
 import '../models/user_data_model.dart';
-import '../services/login_services.dart';
 import '../services/recipe_services.dart';
 import 'app_cubit_states.dart';
 
 class AppCubits extends Cubit<CubitStates> {
-  AppCubits({required this.loginServices, required this.recipeServices})
-      : super(InitialState()) {
+  AppCubits({required this.recipeServices}) : super(InitialState()) {
     emit(InitState());
   }
 
   final RecipeServices recipeServices;
-  final LoginServices loginServices;
 
   // Data ----------------------------------------
 
@@ -50,6 +47,8 @@ class AppCubits extends Cubit<CubitStates> {
         id: await FirebaseAuth.instance.currentUser!.getIdToken(),
         recipes: await RecipeServices().getRecipes());
 
+    // TODO - Make sure data loads correctly into the models so we can remove these lines
+    // Used to mock models, 100% WIP
     //userData.recipes.addAll(RecipeModel.getSamples(20));
     recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
 
