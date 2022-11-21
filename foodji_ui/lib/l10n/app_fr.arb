@@ -10,6 +10,14 @@
 
   "demo_access": "Appuyez sur l'écran pour accéder à la démonstration",
 
+  "authentification_email": "Courriel",
+  "authentification_password": "Mot de passe",
+  "authentification_login": "Connexion",
+  "authentification_no_account": "Pas de compte?",
+  "authentification_register": "S'inscrire",
+  "authentification_error": "Veuillez vérifier les informations fournies et essayer de nouveau.",
+  "registration_error": "Le courriel est peut-être lié à un compte existant. Veuillez vérifier ou modifier les informations et essayer de nouveau.",
+
   "menu_recipes": "Recettes",
   "menu_exploration": "Explorer",
   "menu_favourites": "Favoris",
@@ -74,6 +82,22 @@
 
   "form_recipe_title": "Édition de recette",
   "form_recipe_updated": "Recette mise à jour",
+  "form_recipe_error": "Formulaire invalide",
+  
+  "value": "Valeur",
+  "result": "Résutat",
+
+  "unit_type_milliliter": "millilitre",
+  "unit_type_liter": "litre",
+  "unit_type_cup": "tasse",
+  "unit_type_tablespoon": "cuillère à table",
+  "unit_type_teaspoon": "cuillère à thé",
+  "unit_type_fluidOunce": "once liquide",
+  "unit_type_gram": "gramme",
+  "unit_type_kilogram": "kilogramme",
+  "unit_type_ounce": "once",
+  "unit_type_pound": "livre",
+  "unit_type_unit": "unité",
 
   "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Appuyez sur l'écran pour redémarrer l'application.",
   "error_authentification": "Une erreur d'authentification est survenue durant l'exécution. Pour accéder à cette fonctionnalité, appuyez sur l'écran pour redémarrer l'application."

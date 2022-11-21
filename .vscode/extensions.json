@@ -1,0 +1,23 @@
+{
+    "recommendations": [
+        "formulahendry.auto-close-tag",
+        "hookyqr.beautify",
+        "aaron-bond.better-comments",
+        "dart-code.dart-code",
+        "ms-vscode-remote.remote-containers",
+        "ms-azuretools.vscode-docker",
+        "usernamehw.errorlens",
+        "dart-code.flutter",
+        "alexisvt.flutter-snippets",
+        "golang.go",
+        "vscjava.vscode-gradle",
+        "oderwat.indent-rainbow",
+        "ms-vsliveshare.vsliveshare",
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+        "christian-kohler.path-intellisense",
+        "rebornix.ruby",
+        "gruntfuggly.todo-tree",
+        "wingrunr21.vscode-ruby"
+    ]
+}
