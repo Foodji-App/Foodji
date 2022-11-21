@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_adjacent_string_concatenation, prefer_interpolation_to_compose_strings
-
 import 'package:foodji_ui/models/recipe_model.dart';
 
 class UserDataModel {
