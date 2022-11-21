@@ -14,9 +14,9 @@
   "authentification_password": "Mot de passe",
   "authentification_login": "Connexion",
   "authentification_no_account": "Pas de compte?",
-  "authentification_register": "S'enregistrer",
+  "authentification_register": "S'inscrire",
   "authentification_error": "Veuillez vérifier les informations fournies et essayer de nouveau.",
-  "registration_error": "Le courriel est peut-être lié à un compte existant. Veuillez vérifier ou modifier les information et essayer de nouveau.",
+  "registration_error": "Le courriel est peut-être lié à un compte existant. Veuillez vérifier ou modifier les informations et essayer de nouveau.",
 
   "menu_recipes": "Recettes",
   "menu_exploration": "Explorer",
