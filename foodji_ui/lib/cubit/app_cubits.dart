@@ -71,8 +71,6 @@ class AppCubits extends Cubit<CubitStates> {
   // Setters -------------------------------------
 
   toggleFavoriteStatus(recipe) {
-    getInitialData();
-
     RecipeModel targetRecipe =
         userData.recipes.firstWhere((element) => element.id == recipe.id);
     targetRecipe.isFavorite = !targetRecipe.isFavorite;
@@ -80,8 +78,6 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   updateRecipe(recipe) {
-    getInitialData();
-
     RecipeModel targetRecipe =
         userData.recipes.firstWhere((element) => element.id == recipe.id);
     targetRecipe = recipe;
@@ -110,7 +106,6 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To recipes
   void gotoRecipes() async {
-    getInitialData();
     try {
       emit(AuthentifiedState(userData.recipes, [...userData.recipes],
           recipeIngredients, [...recipeIngredients]));
@@ -121,7 +116,6 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To recipe details
   void gotoRecipeDetails(recipe) async {
-    getInitialData();
     try {
       emit(RecipeState(recipe));
     } catch (e) {
@@ -130,7 +124,6 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   void gotoRecipeEditor(recipe) async {
-    getInitialData();
     try {
       emit(RecipeEditorState(recipe));
     } catch (e) {
@@ -140,7 +133,6 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To ingredients
   void gotoIngredients() async {
-    getInitialData();
     try {
       emit(AuthentifiedState(userData.recipes, [...userData.recipes],
           recipeIngredients, [...recipeIngredients]));
@@ -151,7 +143,6 @@ class AppCubits extends Cubit<CubitStates> {
 
   // To recipe details
   void gotoIngredientDetails(recipe) async {
-    getInitialData();
     try {
       emit(IngredientState(recipe));
     } catch (e) {
