@@ -29,7 +29,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   final ScrollController _scrollController = ScrollController();
 
   late RecipeModel _currentRecipe, _savedRecipe;
-  late AppLocalizations i10n;
+  late AppLocalizations l10n;
 
   // TODO : change for api call
   final _dropdownValues = <String>[
@@ -44,11 +44,9 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     http.Response res;
     if (_formKey.currentState!.validate()) {
       if (_currentRecipe.id == null || _currentRecipe.id!.isEmpty) {
-        res = BlocProvider.of<AppCubits>(context)
-            .updateRecipe(_currentRecipe);
+        res = BlocProvider.of<AppCubits>(context).updateRecipe(_currentRecipe);
       } else {
-        res = BlocProvider.of<AppCubits>(context)
-            .createRecipe(_currentRecipe);
+        res = BlocProvider.of<AppCubits>(context).createRecipe(_currentRecipe);
       }
 
       if (res.statusCode == 200) {
@@ -56,9 +54,9 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
           _savedRecipe = RecipeModel.deepCopy(_currentRecipe);
           _formKey.currentState!.save();
         });
-        return i10n.form_recipe_updated;
+        return l10n.form_recipe_updated;
       }
-      return i10n.form_error;
+      return l10n.form_error;
     }
   }
 

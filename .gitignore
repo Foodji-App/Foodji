@@ -1,4 +1,6 @@
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,androidstudio,jetbrains
+
+foodji_ui/windows/flutter/generated_plugins.cmake
+gnore/api/visualstudio,visualstudiocode,androidstudio,jetbrains
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,androidstudio,jetbrains
 
 ### JetBrains ###
@@ -656,3 +658,4 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,androidstudio,jetbrains
+foodji_ui/windows/flutter/generated_plugin_registrant.cc

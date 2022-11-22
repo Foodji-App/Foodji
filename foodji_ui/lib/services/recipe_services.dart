@@ -8,16 +8,19 @@ import 'dart:convert';
 import '../misc/app_routes.dart';
 
 class RecipeServices {
+  AppRoutes appRoutes = AppRoutes("");
+
   // GET
   // Recipes
   Future<List<RecipeModel>> getRecipes() async {
-    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+    appRoutes =
+        AppRoutes(await FirebaseAuth.instance.currentUser!.getIdToken());
 
-    var apiUrl = '/recipes';
     // FOR IT TO WORK:
     // https://stackoverflow.com/questions/65630743/how-to-solve-flutter-web-api-cors-error-only-with-dart-code
-    http.Response res = await http.get(Uri.parse(baseUrl + apiUrl),
-        headers: {HttpHeaders.authorizationHeader: 'bearer $token'});
+    http.Response res = await http.get(
+        Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}'),
+        headers: appRoutes.headers());
 
     try {
       if (res.statusCode == 200) {
@@ -36,7 +39,7 @@ class RecipeServices {
   updateRecipe(RecipeModel recipe) async {
     var res = await http.put(
         Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}'),
-        headers: AppRoutes.headers,
+        headers: appRoutes.headers(),
         body: jsonEncode(recipe));
 
     if (res.statusCode == 200) {
@@ -50,7 +53,7 @@ class RecipeServices {
   createRecipe(RecipeModel recipe) async {
     var res = await http.post(
         Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}'),
-        headers: AppRoutes.headers,
+        headers: appRoutes.headers(),
         body: jsonEncode(recipe));
 
     if (res.statusCode == 200) {
