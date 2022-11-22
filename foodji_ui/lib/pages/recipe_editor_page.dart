@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/misc/app_util.dart';
@@ -60,22 +58,52 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     }
   }
 
+  _deleteRecipe() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: AppText(text: l10n.global_form_delete_message),
+            actions: [
+              TextButton(
+                child: AppText(text: l10n.global_form_cancel),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                  child: AppText(text: l10n.global_form_delete),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    var res = BlocProvider.of<AppCubits>(context)
+                        .deleteRecipe(_currentRecipe);
+                    if (res.statusCode == 204) {
+                      BlocProvider.of<AppCubits>(context).gotoRecipes();
+                    }
+                  }),
+            ],
+          );
+        });
+  }
+
   _discardRecipe() {
-    if (!_savedRecipe.equals(_currentRecipe)) {
+    if (_currentRecipe.id == "" || _savedRecipe.id == "") {
+      return BlocProvider.of<AppCubits>(context).gotoRecipes();
+    } else if (!_savedRecipe.equals(_currentRecipe)) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const AppText(text: 'Discard changes?'),
+              title: AppText(text: l10n.global_form_discard_message),
               actions: [
                 TextButton(
-                  child: const AppText(text: 'Cancel'),
+                  child: AppText(text: l10n.global_form_cancel),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 TextButton(
-                    child: const AppText(text: 'Discard'),
+                    child: AppText(text: l10n.global_form_discard),
                     onPressed: () {
                       Navigator.of(context).pop();
                       BlocProvider.of<AppCubits>(context)
@@ -85,7 +113,8 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
             );
           });
     } else {
-      BlocProvider.of<AppCubits>(context).gotoRecipeDetails(_savedRecipe);
+      return BlocProvider.of<AppCubits>(context)
+          .gotoRecipeDetails(_savedRecipe);
     }
   }
 
@@ -165,6 +194,10 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
               icon: const Icon(Icons.save),
               onPressed: () => ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(_updateRecipe())))),
+          IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () => ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(_deleteRecipe())))),
           Container(
               margin: const EdgeInsets.only(right: 4),
               child: IconButton(

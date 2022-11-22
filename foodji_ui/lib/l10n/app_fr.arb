@@ -6,6 +6,13 @@
   "global_slogan": "Remix ta bouffe comme tu l'aimes",
   "global_filter": "Filtrer",
 
+  "global_form_add": "Ajouter",
+  "global_form_cancel": "Annuler",
+  "global_form_delete": "Supprimer",
+  "global_form_discard": "Ignorer",
+  "global_form_discard_message": "Ignorer les changements?",
+  "global_form_delete_message": "Supprimer définitivement l'item?",
+
   "app_bar_recipe_details": "Détails de la recette",
 
   "demo_access": "Appuyez sur l'écran pour accéder à la démonstration",

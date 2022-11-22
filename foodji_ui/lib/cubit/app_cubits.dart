@@ -77,9 +77,36 @@ class AppCubits extends Cubit<CubitStates> {
     return targetRecipe;
   }
 
-  updateRecipe(RecipeModel recipe) async => await recipeServices.updateRecipe(recipe);
+  updateRecipe(RecipeModel recipe) async {
+    var res = await recipeServices.updateRecipe(recipe);
+    if (res.statusCode == 201) {
+      userData.recipes[userData.recipes.indexWhere((r) => r.id == recipe.id)] =
+          recipe;
+    } else {
+      emit(ErrorState());
+    }
+  }
 
-  createRecipe(RecipeModel recipe) async => await recipeServices.createRecipe(recipe);
+  createRecipe(RecipeModel recipe) async {
+    var res = await recipeServices.createRecipe(recipe);
+    print(res);
+    if (res.statusCode == 201) {
+      recipe.id = res.body.id; //TODO
+      userData.recipes.add(recipe);
+    } else {
+      emit(ErrorState());
+    }
+  }
+
+  deleteRecipe(RecipeModel recipe) async {
+    var res = await recipeServices.deleteRecipe(recipe.id.toString());
+    if (res.statusCode == 204) {
+      userData.recipes.removeWhere(
+          (recipe) => recipe.id.toString() == recipe.id.toString());
+    } else {
+      emit(ErrorState());
+    }
+  }
 
   // Navigation ----------------------------------
 
@@ -106,6 +133,15 @@ class AppCubits extends Cubit<CubitStates> {
     try {
       emit(AuthentifiedState(userData.recipes, [...userData.recipes],
           recipeIngredients, [...recipeIngredients]));
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  // To add recipe
+  void gotoAddRecipe() async {
+    try {
+      emit(RecipeEditorState(RecipeModel.newRecipeModel()));
     } catch (e) {
       emit(ErrorState());
     }

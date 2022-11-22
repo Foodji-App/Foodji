@@ -659,3 +659,8 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,androidstudio,jetbrains
 foodji_ui/windows/flutter/generated_plugin_registrant.cc
+foodji_ui/windows/flutter/generated_plugins.cmake
+foodji_ui/windows/flutter/generated_plugin_registrant.cc
+foodji_ui/macos/Flutter/GeneratedPluginRegistrant.swift
+foodji_ui/linux/flutter/generated_plugins.cmake
+foodji_ui/linux/flutter/generated_plugin_registrant.cc
