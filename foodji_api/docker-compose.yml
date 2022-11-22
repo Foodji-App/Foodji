@@ -18,7 +18,7 @@ services:
       - root_password
 
   api:
-    container_name: foodji-api
+    container_name: foodji-web
     restart: unless-stopped
     ports:
       - 7272:80
@@ -33,7 +33,6 @@ services:
 # https://docs.docker.com/storage/volumes/
 volumes:
   database:
-
 
 secrets:
   root_username:
