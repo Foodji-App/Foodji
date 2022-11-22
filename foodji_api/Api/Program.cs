@@ -51,7 +51,7 @@ if (connectionAddress == null)
 
 // Map dependency injection
 builder.Services.SetupInfra(
-    $"{builder.Configuration.GetSection("MongoDB")["ConnectionString"]}@{connectionAddress}");
+    $"{builder.Configuration.GetSection("MongoDB")["ConnectionPrefix"]}@{connectionAddress}");
 
 builder.Services.AddMediatR(Assembly.Load("Application"));
 builder.Services.AddAutoMapper(Assembly.Load("Application"));
