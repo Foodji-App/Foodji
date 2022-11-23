@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_adjacent_string_concatenation, prefer_interpolation_to_compose_strings
 
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:faker/faker.dart';
@@ -47,6 +48,20 @@ class RecipeModel {
         steps: json['steps'].cast<String>(),
         imageUri: json['imageUri'],
         isFavorite: Random.secure().nextBool());
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'createdAt': createdAt.toString(),
+      'category': category,
+      'description': description,
+      'details': jsonEncode(details),
+      'ingredients': ingredients.map((i) => jsonEncode(i)).toList(),
+      'steps': steps.map((s) => jsonEncode(s)).toList,
+      'imageUri': imageUri
+    };
   }
 
   String toText() =>

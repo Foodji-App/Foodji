@@ -7,6 +7,9 @@ import '../models/user_data_model.dart';
 import '../services/recipe_services.dart';
 import 'app_cubit_states.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class AppCubits extends Cubit<CubitStates> {
   AppCubits({required this.recipeServices}) : super(InitialState()) {
     emit(InitState());
@@ -78,31 +81,33 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   updateRecipe(RecipeModel recipe) async {
-    var res = await recipeServices.updateRecipe(recipe);
+    http.Response res = await recipeServices.updateRecipe(recipe);
     if (res.statusCode == 201) {
       userData.recipes[userData.recipes.indexWhere((r) => r.id == recipe.id)] =
           recipe;
+      return res;
     } else {
       emit(ErrorState());
     }
   }
 
   createRecipe(RecipeModel recipe) async {
-    var res = await recipeServices.createRecipe(recipe);
-    print(res);
+    http.Response res = await recipeServices.createRecipe(recipe);
     if (res.statusCode == 201) {
-      recipe.id = res.body.id; //TODO
+      recipe.id = json.decode(res.body)['id']; //TODO
       userData.recipes.add(recipe);
+      return res;
     } else {
       emit(ErrorState());
     }
   }
 
   deleteRecipe(RecipeModel recipe) async {
-    var res = await recipeServices.deleteRecipe(recipe.id.toString());
+    http.Response res = await recipeServices.deleteRecipe(recipe.id.toString());
     if (res.statusCode == 204) {
       userData.recipes.removeWhere(
           (recipe) => recipe.id.toString() == recipe.id.toString());
+      return res;
     } else {
       emit(ErrorState());
     }

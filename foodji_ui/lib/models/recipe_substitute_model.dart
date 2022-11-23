@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:faker/faker.dart';
 import 'package:foodji_ui/models/tags_enum.dart';
 
@@ -27,6 +29,17 @@ class RecipeSubstituteModel {
         description: json['description'],
         measurement: MeasurementModel.fromJson(json['measurement']),
         tags: json['tags'].cast<String>());
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'substitutionPrecisions': substitutionPrecisions,
+      'description': description,
+      'measurement': jsonEncode(measurement),
+      'tags': tags.map((t) => jsonEncode(t)).toList()
+    };
   }
 
   static RecipeSubstituteModel getSample() {

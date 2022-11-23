@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings, prefer_adjacent_string_concatenation
 
+import 'dart:convert';
+
 import 'package:faker/faker.dart';
 
 class RecipeDetailsModel {
@@ -23,6 +25,16 @@ class RecipeDetailsModel {
         restingTime: json['restingTime'],
         serves: json['serves'],
         totalTime: json['totalTime']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'cookingTime': cookingTime.toString(),
+      'preparationTime': preparationTime.toString(),
+      'restingTime': restingTime.toString(),
+      'serves': serves.toString(),
+      'totalTime': totalTime.toString()
+    };
   }
 
   toText() =>

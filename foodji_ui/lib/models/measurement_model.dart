@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:faker/faker.dart';
 import 'package:foodji_ui/models/unit_type_enum.dart';
 
@@ -16,6 +18,14 @@ class MeasurementModel {
         alternativeText: json['alternativeText'],
         value: json['value'],
         unitType: json['unitType']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'alternativeText': alternativeText,
+      'value': value.toString(),
+      'unitType': unitType
+    };
   }
 
   static MeasurementModel getSample() {

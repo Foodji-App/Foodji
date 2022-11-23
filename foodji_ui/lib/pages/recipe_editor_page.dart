@@ -42,12 +42,14 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     http.Response res;
     if (_formKey.currentState!.validate()) {
       if (_currentRecipe.id == null || _currentRecipe.id!.isEmpty) {
-        res = BlocProvider.of<AppCubits>(context).updateRecipe(_currentRecipe);
+        res = await BlocProvider.of<AppCubits>(context)
+            .updateRecipe(_currentRecipe);
       } else {
-        res = BlocProvider.of<AppCubits>(context).createRecipe(_currentRecipe);
+        res = await BlocProvider.of<AppCubits>(context)
+            .createRecipe(_currentRecipe);
       }
 
-      if (res.statusCode == 200) {
+      if (res.statusCode == 201) {
         setState(() {
           _savedRecipe = RecipeModel.deepCopy(_currentRecipe);
           _formKey.currentState!.save();
@@ -73,10 +75,11 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
               ),
               TextButton(
                   child: AppText(text: l10n.global_form_delete),
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.of(context).pop();
-                    var res = BlocProvider.of<AppCubits>(context)
-                        .deleteRecipe(_currentRecipe);
+                    http.Response res =
+                        await BlocProvider.of<AppCubits>(context)
+                            .deleteRecipe(_currentRecipe);
                     if (res.statusCode == 204) {
                       BlocProvider.of<AppCubits>(context).gotoRecipes();
                     }
@@ -194,10 +197,12 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
               icon: const Icon(Icons.save),
               onPressed: () => ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(_updateRecipe())))),
-          IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () => ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(_deleteRecipe())))),
+          _currentRecipe.id != ""
+              ? IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () => ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(_deleteRecipe()))))
+              : Container(),
           Container(
               margin: const EdgeInsets.only(right: 4),
               child: IconButton(
