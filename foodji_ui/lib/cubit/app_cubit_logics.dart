@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/pages/recipe_editor_page.dart';
-import 'package:foodji_ui/widgets/login_page.dart';
+import 'package:foodji_ui/pages/auth_page.dart';
 
 import '../pages/ingredient_detail_page.dart';
 import '../pages/recipe_detail_page.dart';
@@ -30,7 +30,7 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
       } else if (state is LoadingState) {
         return const Center(child: CircularProgressIndicator());
       } else if (state is AuthentificationRequestState) {
-        return const LoginPage();
+        return const AuthPage();
       } else if (state is RegistrationState) {
         return const RegistrationPage();
       } else if (state is AuthentifiedState) {
