@@ -24,16 +24,16 @@ builder.Services.AddSwaggerGen(c =>
         In = ParameterLocation.Header,
         Description = "JWT Authorization header using the Bearer scheme."
     });
-    
+
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
             new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference 
-                { 
-                    Type = ReferenceType.SecurityScheme, 
-                    Id = "bearerAuth" 
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "bearerAuth"
                 }
             },
             Array.Empty<string>()
@@ -41,10 +41,17 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// TODO use secrets - not critical for the moment in local development ONLY
+var connectionAddress = builder.Environment.IsDevelopment()
+    ? "localhost:27017"
+    : Environment.GetEnvironmentVariable("DB_ADDR");
+
+if (connectionAddress == null)
+    throw new Exception("Database address is null");
+
 // Map dependency injection
 builder.Services.SetupInfra(
-    // TODO use secrets - not critical for the moment in local development ONLY
-    builder.Configuration.GetSection("Database:MongoDB")["ConnectionString"]);
+    $"{builder.Configuration.GetSection("MongoDB")["ConnectionPrefix"]}@{connectionAddress}");
 
 builder.Services.AddMediatR(Assembly.Load("Application"));
 builder.Services.AddAutoMapper(Assembly.Load("Application"));
@@ -62,7 +69,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+/**
+ * À conserver pour des hostings futurs. Dans certains infras,
+ * on préfèrerait gérer le tout avec le reversed proxy et un certificate manager.
+**/
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
