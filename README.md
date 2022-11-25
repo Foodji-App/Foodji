@@ -10,15 +10,15 @@ Fini les petites notes sur le coin d'une feuille. Vous pourrez annoter et substi
 ## Installer et exécuter le projet
 
 ### Serveur API (Back-end)
-> Installer au préalable [Visual Studio 2022](https://visualstudio.microsoft.com/fr/vs/) avec botnet 6, ainsi que [débardeur bureau](https://www.docker.com/) pour exécuter l'environnement de développement.
+> Installer au préalable [Visual Studio 2022](https://visualstudio.microsoft.com/fr/vs/) avec botnet 6, ainsi que [Docker Desktop](https://www.docker.com/) pour exécuter l'environnement de développement.
 
-1. Ouvrir [FoodjiApi.sln](./foodji_api/FoodjiApi.slang) avec Visual Studio 2022.
+1. Ouvrir [FoodjiApi.sln](./foodji_api/FoodjiApi.sln) avec Visual Studio 2022.
 
 2. Créer un dossier appelé *secrets* à la racine du dossier [foodji_api](./foodji_api/). Créer dans celui-ci les fichiers *root_password.txt* et *root_username.txt*, avec les informations d'authentification nécessaires.
 
-3. Ouvrir une console dans [foodji_api](./foodji_api/) et exécuter *`débardeur-compose us`* afin de démarrer la base de données Mongo.
+3. Ouvrir une console dans [foodji_api](./foodji_api/) et exécuter *`docker-compose us`* afin de démarrer la base de données Mongo.
 
-### Application (Front-AMD)
+### Application (Frontend)
 > Consulter la documentation [Flutter](https://docs.flutter.dev) afin pour installer l'environnement de développement.
 
 *NB : La version actuellement développée fut optimisée pour la plateforme Android*
@@ -55,7 +55,7 @@ Membres du projet à l'automne 2022
 
 Inspiration, code snippets, etc.
 * [MongoDB](https://www.mongodb.com/)
-* [Débardeur](https://www.docker.com/)
+* [Docker](https://www.docker.com/)
 * [Firebase](https://firebase.google.com/)
 * [Flutter](https://docs.flutter.dev)
 * [FlutterTemplates](https://www.fluttertemplates.dev/)
