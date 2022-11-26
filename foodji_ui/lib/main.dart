@@ -11,7 +11,6 @@ import 'cubit/app_cubits.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'firebase_options.dart';
-import 'package:firebase_dart_flutter/firebase_dart_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +19,6 @@ void main() async {
   );
 
   FirebaseUIAuth.configureProviders([EmailAuthProvider()]);
-  await FirebaseDartFlutter.setup(isolated: true);
 
   runApp(const MyApp());
 }
