@@ -1,5 +1,8 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:foodji_ui/cubit/app_cubits.dart';
 import 'package:foodji_ui/misc/colors.dart';
 import 'package:foodji_ui/pages/exploration_page.dart';
 import 'package:foodji_ui/pages/ingredients_page.dart';
@@ -24,7 +27,15 @@ class NavigationBarState extends State<NavigationBar> {
   List pages = [
     const RecipesPage(),
     const ExplorationPage(),
-    const ProfilePage(),
+    // TODO - Add call to backend for recipe deletions when profile is deleted
+    MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.dark(),
+        home: ProfileScreen(actions: [
+          SignedOutAction((context) {
+            BlocProvider.of<AppCubits>(context).getInitialData();
+          })
+        ])),
     const ConverterPage(),
     const IngredientsPage(),
     const PantryPage(),
