@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings, prefer_adjacent_string_concatenation
 
-import 'dart:convert';
-
 import 'package:faker/faker.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'recipe_details_model.g.dart';
+
+@JsonSerializable()
 class RecipeDetailsModel {
   int? cookingTime;
   int? preparationTime;
@@ -18,24 +20,32 @@ class RecipeDetailsModel {
       required this.serves,
       required this.totalTime});
 
-  factory RecipeDetailsModel.fromJson(Map<String, dynamic> json) {
-    return RecipeDetailsModel(
-        cookingTime: json['cookingTime'],
-        preparationTime: json['preparationTime'],
-        restingTime: json['restingTime'],
-        serves: json['serves'],
-        totalTime: json['totalTime']);
-  }
+  /// Connect the generated [_$PersonFromJson] function to the `fromJson`
+  /// factory.
+  factory RecipeDetailsModel.fromJson(Map<String, dynamic> json) =>
+      _$RecipeDetailsModelFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {
-      'cookingTime': cookingTime.toString(),
-      'preparationTime': preparationTime.toString(),
-      'restingTime': restingTime.toString(),
-      'serves': serves.toString(),
-      'totalTime': totalTime.toString()
-    };
-  }
+  /// Connect the generated [_$PersonToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$RecipeDetailsModelToJson(this);
+
+  // factory RecipeDetailsModel.fromJson(Map<String, dynamic> json) {
+  //   return RecipeDetailsModel(
+  //       cookingTime: json['cookingTime'],
+  //       preparationTime: json['preparationTime'],
+  //       restingTime: json['restingTime'],
+  //       serves: json['serves'],
+  //       totalTime: json['totalTime']);
+  // }
+
+  // Map<String, dynamic> toJson() {
+  //   return {
+  //     'cookingTime': cookingTime.toString(),
+  //     'preparationTime': preparationTime.toString(),
+  //     'restingTime': restingTime.toString(),
+  //     'serves': serves.toString(),
+  //     'totalTime': totalTime.toString()
+  //   };
+  // }
 
   toText() =>
       'cookingTime: ${cookingTime.toString()}\n' +
