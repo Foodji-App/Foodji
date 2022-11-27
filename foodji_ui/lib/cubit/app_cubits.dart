@@ -28,15 +28,10 @@ class AppCubits extends Cubit<CubitStates> {
   // Getters -------------------------------------
 
   // Splash page
-  // Gets any data that is not linked to the user and then, the authentification
-  // request state or error state
+  // Gets the authentification request state or error state
   void getInitialData() async {
     try {
-      if (FirebaseAuth.instance.currentUser != null) {
-        retrieveUserData();
-      } else {
-        emit(AuthentificationRequestState());
-      }
+      emit(AuthentificationRequestState());
     } catch (e) {
       emit(ErrorState());
     }
