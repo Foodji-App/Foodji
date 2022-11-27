@@ -6,7 +6,6 @@ import 'package:foodji_ui/cubit/app_cubits.dart';
 import 'package:foodji_ui/misc/colors.dart';
 import 'package:foodji_ui/pages/exploration_page.dart';
 import 'package:foodji_ui/pages/ingredients_page.dart';
-import 'package:foodji_ui/pages/profile_page.dart';
 import 'package:foodji_ui/pages/recipes_page.dart';
 import '../widgets/app_bar.dart' as app_bar_widget;
 
@@ -27,7 +26,7 @@ class NavigationBarState extends State<NavigationBar> {
   List pages = [
     const RecipesPage(),
     const ExplorationPage(),
-    // TODO - Add call to backend for recipe deletions when profile is deleted
+    // TODO - Demander la suppression des recettes de l'utilisateur à la suppression du compte
     MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
@@ -130,6 +129,7 @@ class NavigationBarState extends State<NavigationBar> {
               buttonSize: const Size(41, 41),
               visible: true,
               closeManually: false,
+              //TODO - Cette fonctionnalité est nécessaire, mais n'est plus supportée tel quel.
               //marginEnd: (MediaQuery.of(context).size.width - 240) / 6,
               curve: Curves.bounceIn,
               overlayColor: Colors.black,
@@ -137,9 +137,11 @@ class NavigationBarState extends State<NavigationBar> {
               elevation: 0,
               openCloseDial: isDialOpen,
               onPress: () {
-                lastSelectedSpeedDial != -1
+                //TODO - Tester si le menu fonctionne toujours, puis retirer ce commentaire.
+                /*lastSelectedSpeedDial != -1
                     ? onSpeedDialTap(lastSelectedSpeedDial)
-                    : isDialOpen.value = true;
+                    :*/
+                isDialOpen.value = true;
               },
               children: [
                 SpeedDialChild(

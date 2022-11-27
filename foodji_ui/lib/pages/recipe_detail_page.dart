@@ -313,7 +313,6 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                     Container(
                         // Container is mandatory here, do not remove
                         width: MediaQuery.of(context).size.width,
-                        // HACK : Height here causes an issue. It cannot be removed, but cannot be set to child size either.
                         height: MediaQuery.of(context).size.height,
                         child: TabBarView(controller: tabController, children: <
                             Widget>[

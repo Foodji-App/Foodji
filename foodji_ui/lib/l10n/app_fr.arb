@@ -17,6 +17,9 @@
 
   "demo_access": "Appuyez sur l'écran pour accéder à la démonstration",
 
+  "authentification_sign_in": "Bienvenue sur Foodji! Connectez-vous ou créez un compte pour découvrir tout ce que nous avons à vous offrir.",
+  "authentification_sign_up": "Bienvenue sur Foodji! Créez un compte en remplissant les champs d'informations ci-dessous.",
+  "authentification_sign_up_instructions": "En vous créant un compte, vous acceptez des termes et conditions que nous n'avons pas encore exactement définis. Quand l'on y pense, c'est comme choisir la pilule rouge. Soyez un Néo. Nous pouvons vous promettre au moins une chose pour vous inciter à nous joindre ; nous avons des biscuits... Beaucoup de recettes de biscuits.",
   "authentification_email": "Courriel",
   "authentification_password": "Mot de passe",
   "authentification_login": "Connexion",

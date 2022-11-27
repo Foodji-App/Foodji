@@ -39,7 +39,6 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
     }
 
     CircleAvatar groceryListAvatar(index) {
-      //TODO - Adds or removes the item from the grocery list, and changes state accordingly.
       return CircleAvatar(
         backgroundColor: AppColors.backgroundColor,
         child: IconButton(
@@ -51,7 +50,6 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
     }
 
     CircleAvatar pantryAvatar(index) {
-      //TODO - Adds or removes the item from the pantry, and changes state accordingly.
       return CircleAvatar(
         backgroundColor: AppColors.backgroundColor,
         child: IconButton(
@@ -110,8 +108,7 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
               endIndent: 5,
             )),
             AppText(
-              text: AppLocalizations.of(context)!
-                  .recipe_ingredients,
+              text: AppLocalizations.of(context)!.recipe_ingredients,
               size: AppTextSize.subtitle,
             ),
             const Expanded(child: Divider(thickness: 2, indent: 5)),

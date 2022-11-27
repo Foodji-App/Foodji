@@ -29,7 +29,6 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   late RecipeModel _currentRecipe, _savedRecipe;
   late AppLocalizations l10n;
 
-  // TODO : change for api call
   final _dropdownValues = <String>[
     'Breakfast',
     'Lunch',
@@ -81,6 +80,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                         await BlocProvider.of<AppCubits>(context)
                             .deleteRecipe(_currentRecipe);
                     if (res.statusCode == 204) {
+                      // ignore: use_build_context_synchronously
                       BlocProvider.of<AppCubits>(context).gotoRecipes();
                     }
                   }),
@@ -239,7 +239,6 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   }
 
   Widget _buildCategory() {
-    // TODO : get from DB
     !_dropdownValues.contains(_currentRecipe.category)
         ? _dropdownValues.add(_currentRecipe.category)
         : null;

@@ -45,9 +45,6 @@ class AppCubits extends Cubit<CubitStates> {
         id: await FirebaseAuth.instance.currentUser!.getIdToken(),
         recipes: await RecipeServices().getRecipes());
 
-    // TODO - Make sure data loads correctly into the models so we can remove these lines
-    // Used to mock models, 100% WIP
-    //userData.recipes.addAll(RecipeModel.getSamples(20));
     recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
 
     emit(AuthentifiedState(userData.recipes, [...userData.recipes],
@@ -55,7 +52,7 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   // Creates an account, then go to the login page if successful
-  //TODO - Complete the registration process
+  //TODO - Compléter le processus de création de compte
   Future<bool> register(email, password) async {
     try {
       emit(AuthentificationRequestState());
@@ -89,7 +86,8 @@ class AppCubits extends Cubit<CubitStates> {
   createRecipe(RecipeModel recipe) async {
     http.Response res = await recipeServices.createRecipe(recipe);
     if (res.statusCode == 201) {
-      recipe.id = json.decode(res.body)['id']; //TODO
+      recipe.id = json.decode(res.body)[
+          'id']; //TODO - Valider le retour de fonction et le stockage de l'id dans la recette
       userData.recipes.add(recipe);
       return res;
     } else {
