@@ -4,11 +4,15 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:faker/faker.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:foodji_ui/models/recipe_details_model.dart';
 
 import 'categories_enum.dart';
 import 'recipe_ingredient_model.dart';
 
+part 'recipe_model.g.dart';
+
+@JsonSerializable()
 class RecipeModel {
   String? id;
   String name;
@@ -33,36 +37,13 @@ class RecipeModel {
       required this.isFavorite,
       this.createdAt});
 
-  factory RecipeModel.fromJson(Map<String, dynamic> json) {
-    return RecipeModel(
-        id: json['id'],
-        name: json['name'],
-        createdAt: DateTime.tryParse(json['createdAt']),
-        category: json['category'],
-        description: json['description'],
-        details: RecipeDetailsModel.fromJson(json['details']),
-        ingredients: json['ingredients']
-            .map<RecipeIngredientModel>(
-                (e) => RecipeIngredientModel.fromJson(e))
-            .toList(),
-        steps: json['steps'].cast<String>(),
-        imageUri: json['imageUri'],
-        isFavorite: Random.secure().nextBool());
-  }
+  /// Connect the generated [_$RecipeModelFromJson] function to the `fromJson`
+  /// factory.
+  factory RecipeModel.fromJson(Map<String, dynamic> json) =>
+      _$RecipeModelFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'createdAt': createdAt.toString(),
-      'category': category,
-      'description': description,
-      'details': jsonEncode(details),
-      'ingredients': ingredients.map((i) => jsonEncode(i)).toList(),
-      'steps': steps.map((s) => jsonEncode(s)).toList,
-      'imageUri': imageUri
-    };
-  }
+  /// Connect the generated [_$RecipeModelToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$RecipeModelToJson(this);
 
   String toText() =>
       'id: $id\n' +

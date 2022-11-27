@@ -1,10 +1,13 @@
 import 'dart:convert';
 
 import 'package:faker/faker.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:foodji_ui/models/tags_enum.dart';
 
 import 'measurement_model.dart';
+part 'recipe_substitute_model.g.dart';
 
+@JsonSerializable()
 class RecipeSubstituteModel {
   String? id;
   String name;
@@ -21,26 +24,13 @@ class RecipeSubstituteModel {
       required this.measurement,
       required this.tags});
 
-  factory RecipeSubstituteModel.fromJson(Map<String, dynamic> json) {
-    return RecipeSubstituteModel(
-        id: json['id'],
-        name: json['name'],
-        substitutionPrecisions: json['substitutionPrecisions'],
-        description: json['description'],
-        measurement: MeasurementModel.fromJson(json['measurement']),
-        tags: json['tags'].cast<String>());
-  }
+  /// Connect the generated [_$RecipeSubstituteModelFromJson] function to the `fromJson`
+  /// factory.
+  factory RecipeSubstituteModel.fromJson(Map<String, dynamic> json) =>
+      _$RecipeSubstituteModelFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'substitutionPrecisions': substitutionPrecisions,
-      'description': description,
-      'measurement': jsonEncode(measurement),
-      'tags': tags.map((t) => jsonEncode(t)).toList()
-    };
-  }
+  /// Connect the generated [_$RecipeSubstituteModelToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$RecipeSubstituteModelToJson(this);
 
   static RecipeSubstituteModel getSample() {
     var faker = Faker();

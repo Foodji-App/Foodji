@@ -127,10 +127,10 @@ class NavigationBarState extends State<NavigationBar> {
               activeForegroundColor: currentPage >= 2
                   ? AppColors.highlightColor3
                   : AppColors.textColor,
-              buttonSize: 41.0,
+              buttonSize: const Size(41, 41),
               visible: true,
               closeManually: false,
-              marginEnd: (MediaQuery.of(context).size.width - 240) / 6,
+              //marginEnd: (MediaQuery.of(context).size.width - 240) / 6,
               curve: Curves.bounceIn,
               overlayColor: Colors.black,
               overlayOpacity: 0.6,

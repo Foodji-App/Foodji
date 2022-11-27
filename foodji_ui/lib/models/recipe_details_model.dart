@@ -28,25 +28,6 @@ class RecipeDetailsModel {
   /// Connect the generated [_$PersonToJson] function to the `toJson` method.
   Map<String, dynamic> toJson() => _$RecipeDetailsModelToJson(this);
 
-  // factory RecipeDetailsModel.fromJson(Map<String, dynamic> json) {
-  //   return RecipeDetailsModel(
-  //       cookingTime: json['cookingTime'],
-  //       preparationTime: json['preparationTime'],
-  //       restingTime: json['restingTime'],
-  //       serves: json['serves'],
-  //       totalTime: json['totalTime']);
-  // }
-
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     'cookingTime': cookingTime.toString(),
-  //     'preparationTime': preparationTime.toString(),
-  //     'restingTime': restingTime.toString(),
-  //     'serves': serves.toString(),
-  //     'totalTime': totalTime.toString()
-  //   };
-  // }
-
   toText() =>
       'cookingTime: ${cookingTime.toString()}\n' +
       'preparationTime: ${preparationTime.toString()}\n' +
