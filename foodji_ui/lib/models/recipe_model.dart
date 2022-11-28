@@ -21,7 +21,6 @@ class RecipeModel {
   List<RecipeIngredientModel> ingredients;
   List<String> steps;
   DateTime? createdAt;
-  bool isFavorite;
 
   RecipeModel(
       {required this.id,
@@ -32,7 +31,6 @@ class RecipeModel {
       required this.details,
       required this.ingredients,
       required this.steps,
-      required this.isFavorite,
       this.createdAt});
 
   /// Connect the generated [_$RecipeModelFromJson] function to the `fromJson`
@@ -103,8 +101,7 @@ class RecipeModel {
             serves: 0,
             totalTime: 0),
         ingredients: [],
-        steps: [],
-        isFavorite: false);
+        steps: []);
   }
 
   static RecipeModel deepCopy(RecipeModel model) {
@@ -116,8 +113,7 @@ class RecipeModel {
         description: model.description,
         details: RecipeDetailsModel.deepCopy(model.details),
         ingredients: RecipeIngredientModel.deepCopy(model.ingredients),
-        steps: model.steps,
-        isFavorite: model.isFavorite);
+        steps: model.steps);
   }
 
   static RecipeModel getSample() {
@@ -132,8 +128,7 @@ class RecipeModel {
         details: RecipeDetailsModel.getSample(),
         ingredients:
             RecipeIngredientModel.getSamples(random.integer(10, min: 3)),
-        steps: faker.lorem.sentences(random.integer(10, min: 3)),
-        isFavorite: Random().nextInt(2) == 1 ? true : false);
+        steps: faker.lorem.sentences(random.integer(10, min: 3)));
   }
 
   static List<RecipeModel> getSamples(int amount) {

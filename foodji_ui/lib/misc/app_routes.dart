@@ -12,6 +12,6 @@ class AppRoutes {
     };
   }
 
-  static String baseUrl = 'https://localhost:7272';
+  static String baseUrl = 'http://localhost:7272';
   static String recipes = '/recipes';
 }

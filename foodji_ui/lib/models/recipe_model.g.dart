@@ -18,11 +18,10 @@ RecipeModel _$RecipeModelFromJson(Map<String, dynamic> json) => RecipeModel(
           .map((e) => RecipeIngredientModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       steps: (json['steps'] as List<dynamic>).map((e) => e as String).toList(),
-      isFavorite: json['isFavorite'] as bool,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
-    );
+    )..isFavorite = json['isFavorite'] as bool;
 
 Map<String, dynamic> _$RecipeModelToJson(RecipeModel instance) =>
     <String, dynamic>{
