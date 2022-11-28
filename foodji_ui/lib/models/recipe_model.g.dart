@@ -21,7 +21,7 @@ RecipeModel _$RecipeModelFromJson(Map<String, dynamic> json) => RecipeModel(
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
-    )..isFavorite = json['isFavorite'] as bool;
+    );
 
 Map<String, dynamic> _$RecipeModelToJson(RecipeModel instance) =>
     <String, dynamic>{
@@ -34,5 +34,4 @@ Map<String, dynamic> _$RecipeModelToJson(RecipeModel instance) =>
       'ingredients': instance.ingredients,
       'steps': instance.steps,
       'createdAt': instance.createdAt?.toIso8601String(),
-      'isFavorite': instance.isFavorite,
     };

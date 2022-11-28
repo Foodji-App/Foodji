@@ -22,6 +22,9 @@ class RecipeModel {
   List<String> steps;
   DateTime? createdAt;
 
+  @JsonKey(ignore: true)
+  bool isFavorite = Random().nextInt(2) == 1 ? true : false;
+
   RecipeModel(
       {required this.id,
       required this.name,
