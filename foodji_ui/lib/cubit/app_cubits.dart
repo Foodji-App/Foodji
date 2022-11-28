@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/recipe_ingredient_model.dart';
 import '../models/recipe_model.dart';
+import '../models/user_data_model.dart';
 import '../services/recipe_services.dart';
 import 'app_cubit_states.dart';
 
@@ -14,8 +16,8 @@ class AppCubits extends Cubit<CubitStates> {
 
   // Data ----------------------------------------
 
-  // Recipes
-  late List<RecipeModel> recipes = [];
+  // User
+  late UserDataModel userData;
 
   // Ingredients
   List<RecipeIngredientModel> recipeIngredients = [];
@@ -23,8 +25,7 @@ class AppCubits extends Cubit<CubitStates> {
   // Getters -------------------------------------
 
   // Splash page
-  // Gets any data that is not linked to the user and then, the authentification
-  // request state or error state
+  // Gets the authentification request state or error state
   void getInitialData() async {
     try {
       emit(AuthentificationRequestState());
@@ -33,34 +34,47 @@ class AppCubits extends Cubit<CubitStates> {
     }
   }
 
-  // Authentification page
+  // Authentication page
   // Authentifies the user and returns, gets the data linked to the user and
   // then, the authentified state or error state
-  void authentify() async {
+  void retrieveUserData() async {
+    userData = UserDataModel(
+        id: await FirebaseAuth.instance.currentUser!.getIdToken(),
+        recipes: await RecipeServices().getRecipes());
+
+    // TODO - Make sure data loads correctly into the models so we can remove these lines
+    // Used to mock models, 100% WIP
+    //userData.recipes.addAll(RecipeModel.getSamples(20));
+    recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
+
+    emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+        recipeIngredients, [...recipeIngredients]));
+  }
+
+  // Creates an account, then go to the login page if successful
+  //TODO - Complete the registration process
+  Future<bool> register(email, password) async {
     try {
-      // TODO : Make ternary operator for a config file
-      recipes.addAll(RecipeModel.getSamples(20));
-      // recipes = await recipeServices.getRecipes();
-      recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
-      emit(AuthentifiedState(recipes, [...recipes], recipeIngredients,
-          [...recipeIngredients])); //Deep copy
+      emit(AuthentificationRequestState());
+      return true;
     } catch (e) {
       emit(ErrorState());
     }
+    return false;
   }
 
   // Setters -------------------------------------
 
   toggleFavoriteStatus(recipe) {
     RecipeModel targetRecipe =
-        recipes.firstWhere((element) => element.id == recipe.id);
+        userData.recipes.firstWhere((element) => element.id == recipe.id);
     targetRecipe.isFavorite = !targetRecipe.isFavorite;
     return targetRecipe;
   }
 
   updateRecipe(recipe) {
     RecipeModel targetRecipe =
-        recipes.firstWhere((element) => element.id == recipe.id);
+        userData.recipes.firstWhere((element) => element.id == recipe.id);
     targetRecipe = recipe;
     return targetRecipe;
   }
@@ -76,11 +90,20 @@ class AppCubits extends Cubit<CubitStates> {
     }
   }
 
+  // To registration screen
+  void gotoRegistration() async {
+    try {
+      emit(RegistrationState());
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
   // To recipes
   void gotoRecipes() async {
     try {
-      emit(AuthentifiedState(
-          recipes, [...recipes], recipeIngredients, [...recipeIngredients]));
+      emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+          recipeIngredients, [...recipeIngredients]));
     } catch (e) {
       emit(ErrorState());
     }
@@ -106,8 +129,8 @@ class AppCubits extends Cubit<CubitStates> {
   // To ingredients
   void gotoIngredients() async {
     try {
-      emit(AuthentifiedState(
-          recipes, [...recipes], recipeIngredients, [...recipeIngredients]));
+      emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+          recipeIngredients, [...recipeIngredients]));
     } catch (e) {
       emit(ErrorState());
     }

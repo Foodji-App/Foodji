@@ -8,7 +8,18 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'cubit/app_cubit_logics.dart';
 import 'cubit/app_cubits.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  FirebaseUIAuth.configureProviders([EmailAuthProvider()]);
+
   runApp(const MyApp());
 }
 
