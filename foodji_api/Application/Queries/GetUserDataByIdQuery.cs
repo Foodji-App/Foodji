@@ -10,11 +10,11 @@ namespace Application.Queries;
 
 public class GetUserDataByIdQuery : IRequest<UserDataDto?>
 {
-    private ObjectId UserDataId { get; }
+    private string UserId { get; }
 
-    public GetUserDataByIdQuery(string recipeId)
+    public GetUserDataByIdQuery(string userId)
     {
-        UserDataId = new ObjectId(recipeId);
+        UserId = userId;
     }
     
     private class Handler : IRequestHandler<GetUserDataByIdQuery, UserDataDto?>
@@ -32,7 +32,7 @@ public class GetUserDataByIdQuery : IRequest<UserDataDto?>
         public async Task<UserDataDto?> Handle(GetUserDataByIdQuery request, CancellationToken cancellationToken)
         {
             var results = await _client.UsersData.FindAsync(
-                x => x.Id.Equals(request.UserDataId), cancellationToken: cancellationToken);
+                x => x.Id == request.UserId, cancellationToken: cancellationToken);
 
             var userData = results.SingleOrDefault(cancellationToken: cancellationToken);
 

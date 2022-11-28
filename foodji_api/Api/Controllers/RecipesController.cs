@@ -78,21 +78,20 @@ public class RecipesController : ControllerBase
         return CreatedAtAction(nameof(GetRecipe), new {id = result}, new {});
     }
     
-    [HttpPut]
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateRecipe([FromBody] RecipeDto recipe)
+    public async Task<IActionResult> UpdateRecipe([FromRoute] string id, [FromBody] RecipeDto recipe)
     {
         // Check access rights
-        // TODO refactor so the id is in the route, NOT the DTO (nullable warning)
-        var authResult = await Authorize(recipe.Id!, FoodjiRecipeAccessRequirement.Policy);
+        var authResult = await Authorize(id, FoodjiRecipeAccessRequirement.Policy);
 
         if (!authResult.Succeeded)
         {
             return Forbid();
         }
         
-        var command = new UpdateRecipeCommand(recipe);
+        var command = new UpdateRecipeCommand(id, recipe);
 
         var result = await _mediator.Send(command);
         

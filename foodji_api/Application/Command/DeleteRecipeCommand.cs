@@ -8,31 +8,35 @@ namespace Application.Command;
 
 public class DeleteRecipeCommand : IRequest<string?>
 {
-    private ObjectId RecipeId { get; }
+    private string RecipeId { get; }
     
     public DeleteRecipeCommand(string recipeId)
     {
-        RecipeId = new ObjectId(recipeId);
+        RecipeId = recipeId;
     }
     
     private class Handler : IRequestHandler<DeleteRecipeCommand, string?>
     {
         private readonly IFoodjiDbClient _client;
-        private readonly IMapper _mapper;
 
-        public Handler(IFoodjiDbClient client, IMapper mapper)
+        public Handler(IFoodjiDbClient client)
         {
             _client = client;
-            _mapper = mapper;
         }
         
         public async Task<string?> Handle(DeleteRecipeCommand request, CancellationToken cancellationToken)
         {
+            // Safe parsing the string into an ObjectId. Return null if the id is malformed
+            if (!ObjectId.TryParse(request.RecipeId, out var id))
+            {
+                return null;
+            }
+            
             var result = await _client.Recipes.DeleteOneAsync(
-                r => r.Id == request.RecipeId,
+                r => r.Id == id,
                 cancellationToken: cancellationToken);
 
-            return result.DeletedCount > 0 ? request.RecipeId.ToString() : null;
+            return result.DeletedCount > 0 ? request.RecipeId : null;
         }
     }
 }

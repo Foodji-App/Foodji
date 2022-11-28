@@ -2,7 +2,7 @@
 
 public class UserData
 {
-    // string for now
+    // string and not ObjectId because this is a Firebase id, not a Mongo one (different format)
     public string Id { get; set; }
     
     public IEnumerable<string> Recipes { get; set; }
