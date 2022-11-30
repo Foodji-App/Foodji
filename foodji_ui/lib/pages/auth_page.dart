@@ -48,8 +48,8 @@ class AuthPage extends StatelessWidget {
                 );
               },
               footerBuilder: (context, action) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 16),
+                return const Padding(
+                  padding: EdgeInsets.only(top: 16),
                   child: AppText(
                     text: /*AppLocalizations.of(context)!
                         .authentification_sign_up_instructions*/
