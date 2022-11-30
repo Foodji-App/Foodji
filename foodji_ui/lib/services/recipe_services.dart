@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class RecipeServices {
-  String baseUrl = "https://localhost:7272";
+  String baseUrl = "http://localhost:7272";
 
   // GET
   // Recipes
