@@ -70,8 +70,8 @@ if (app.Environment.IsDevelopment())
 }
 
 /**
- * À conserver pour des hostings futurs. Dans certains infras,
- * on préfèrerait gérer le tout avec le reversed proxy et un certificate manager.
+ * A conserver pour des hostings futurs. Dans certains infras,
+ * on prefererait gerer le tout avec le reversed proxy et un certificate manager.
 **/
 //app.UseHttpsRedirection();
 

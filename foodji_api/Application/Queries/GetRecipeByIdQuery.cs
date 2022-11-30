@@ -10,11 +10,11 @@ namespace Application.Queries;
 
 public class GetRecipeByIdQuery : IRequest<RecipeDto?>
 {
-    private ObjectId RecipeId { get; }
+    private string RecipeId { get; }
 
     public GetRecipeByIdQuery(string recipeId)
     {
-        RecipeId = new ObjectId(recipeId);
+        RecipeId = recipeId;
     }
     
     private class Handler : IRequestHandler<GetRecipeByIdQuery, RecipeDto?>
@@ -31,8 +31,14 @@ public class GetRecipeByIdQuery : IRequest<RecipeDto?>
 
         public async Task<RecipeDto?> Handle(GetRecipeByIdQuery request, CancellationToken cancellationToken)
         {
+            // Safe parsing the string into an ObjectId. Return null if the id is malformed
+            if (!ObjectId.TryParse(request.RecipeId, out var id))
+            {
+                return null;
+            }
+            
             var results = await _client.Recipes.FindAsync(
-                x => x.Id == request.RecipeId, cancellationToken: cancellationToken);
+                x => x.Id == id, cancellationToken: cancellationToken);
 
             var recipe = results.SingleOrDefault(cancellationToken: cancellationToken);
 
