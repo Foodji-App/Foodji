@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:foodji_ui/models/recipe_model.dart';
 
+import '../models/recipe_ingredient_model.dart';
+
 abstract class CubitStates extends Equatable {}
 
 // Default state when starting the app
@@ -30,11 +32,20 @@ class AuthentificationRequestState extends CubitStates {
   List<Object> get props => throw [];
 }
 
+// If user requests, go to new account registration page
+class RegistrationState extends CubitStates {
+  @override
+  List<Object> get props => throw [];
+}
+
 // Once authorized, displays the user's recipes list as the main page
 class AuthentifiedState extends CubitStates {
-  AuthentifiedState(this.recipes, this.filteredRecipes);
+  AuthentifiedState(this.recipes, this.filteredRecipes, this.ingredients,
+      this.filteredIngredients);
   final List<RecipeModel> recipes;
   final List<RecipeModel> filteredRecipes;
+  final List<RecipeIngredientModel> ingredients;
+  final List<RecipeIngredientModel> filteredIngredients;
   @override
   List<Object> get props => throw [recipes, filteredRecipes];
 }
@@ -45,6 +56,21 @@ class RecipeState extends CubitStates {
   final RecipeModel recipe;
   @override
   List<Object> get props => throw [recipe];
+}
+
+class RecipeEditorState extends CubitStates {
+  RecipeEditorState(this.recipe);
+  final RecipeModel recipe;
+  @override
+  List<Object> get props => throw [recipe];
+}
+
+// When an ingredient is selected, displays the ingredient details
+class IngredientState extends CubitStates {
+  IngredientState(this.ingredient);
+  final RecipeIngredientModel ingredient;
+  @override
+  List<Object> get props => throw [ingredient];
 }
 
 // If any error occurs, redirect to this page that displays the error message,

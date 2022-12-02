@@ -3,77 +3,142 @@
 import 'dart:math';
 
 import 'package:faker/faker.dart';
+import 'package:foodji_ui/models/recipe_details_model.dart';
 
-import 'ingredient_model.dart';
+import 'categories_enum.dart';
+import 'recipe_ingredient_model.dart';
 
 class RecipeModel {
-  int id;
+  String id;
   String name;
-  String img;
-  String category; // tags
-  String desc;
+  String imageUri;
+  String category;
+  String description;
   RecipeDetailsModel details;
-  List<IngredientModel> ingredients;
+  List<RecipeIngredientModel> ingredients;
   List<String> steps;
-  DateTime createdAt;
+  DateTime? createdAt;
   bool isFavorite;
 
   RecipeModel(
       {required this.id,
       required this.name,
-      required this.img,
+      required this.imageUri,
       required this.category,
-      required this.desc,
+      required this.description,
       required this.details,
       required this.ingredients,
       required this.steps,
-      required this.createdAt,
-      required this.isFavorite});
+      required this.isFavorite,
+      this.createdAt});
 
-  // TODO when recieved from server
-  //factory RecipeModel.fromJson(Map<String, dynamic> json) {
-  //   return RecipeModel();
-  // }
+  factory RecipeModel.fromJson(Map<String, dynamic> json) {
+    return RecipeModel(
+        id: json['id'],
+        name: json['name'],
+        createdAt: DateTime.tryParse(json['createdAt']),
+        category: json['category'],
+        description: json['description'],
+        details: RecipeDetailsModel.fromJson(json['details']),
+        ingredients: json['ingredients']
+            .map<RecipeIngredientModel>(
+                (e) => RecipeIngredientModel.fromJson(e))
+            .toList(),
+        steps: json['steps'].cast<String>(),
+        imageUri: json['imageUri'],
+        isFavorite: Random.secure().nextBool());
+  }
 
-  toText() =>
-      'id: ${id.toString()}\n' +
+  String toText() =>
+      'id: $id\n' +
       'name: $name\n' +
-      'img: $img\n' +
+      'img: $imageUri\n' +
       'category: $category\n' +
-      'desc: $desc\n' +
+      'desc: $description\n' +
       'details: ${details.toText()}\n' +
-      'ingredients: \n ${ingredients.join('\n - ')}\n' +
-      'steps: \n ${steps.join('\n - ')}\n' +
-      'createdAt: $createdAt' +
-      'isFavorite: ${isFavorite.toString()}';
+      'isFavorite: ${isFavorite.toString()}' +
+      'ingredients: \n - ${ingredients.join('\n - ')}\n\n' +
+      'steps: \n - ${steps.join('\n - ')}\n';
+
+  bool equals(RecipeModel other) =>
+      id == other.id &&
+      name == other.name &&
+      imageUri == other.imageUri &&
+      category == other.category &&
+      description == other.description &&
+      details.equals(other.details) &&
+      _equalsIngredients(other.ingredients) &&
+      _equalsSteps(other.steps) &&
+      isFavorite == other.isFavorite;
+
+  bool _equalsIngredients(List<RecipeIngredientModel> otherIngredients) {
+    if (ingredients.length != otherIngredients.length) {
+      return false;
+    }
+
+    for (var i = 0; i < ingredients.length; i++) {
+      if (!ingredients[i].equals(otherIngredients[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  bool _equalsSteps(List<String> other) {
+    if (steps.length != other.length) return false;
+
+    for (var i = 0; i < steps.length; i++) {
+      if (steps[i] != other[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   static RecipeModel newRecipeModel() {
     return RecipeModel(
-        id: 0,
+        id: '',
         name: '',
-        img: '',
+        imageUri: '',
         category: '',
-        desc: '',
-        details: RecipeDetailsModel.newRecipeModel(),
+        description: '',
+        details: RecipeDetailsModel(
+            cookingTime: 0,
+            preparationTime: 0,
+            restingTime: 0,
+            serves: 0,
+            totalTime: 0),
         ingredients: [],
         steps: [],
-        createdAt: DateTime.now(),
         isFavorite: false);
+  }
+
+  static RecipeModel deepCopy(RecipeModel model) {
+    return RecipeModel(
+        id: model.id,
+        name: model.name,
+        imageUri: model.imageUri,
+        category: model.category,
+        description: model.description,
+        details: RecipeDetailsModel.deepCopy(model.details),
+        ingredients: RecipeIngredientModel.deepCopy(model.ingredients),
+        steps: model.steps,
+        isFavorite: model.isFavorite);
   }
 
   static RecipeModel getSample() {
     var faker = Faker();
 
     return RecipeModel(
-        id: faker.guid.random.integer(99999999), // Not Fail Safe
+        id: faker.guid.random.string(16), // Not Fail Safe
         name: faker.food.dish(),
-        img: "https://picsum.photos/seed/${faker.food.dish()}/500/300",
-        category: faker.food.cuisine(),
-        desc: faker.lorem.sentences(random.integer(4, min: 1)).join(' '),
+        imageUri: "https://picsum.photos/seed/${faker.food.dish()}/500/300",
+        category: Categories.values[random.integer(5, min: 0)].name,
+        description: faker.lorem.sentences(random.integer(4, min: 1)).join(' '),
         details: RecipeDetailsModel.getSample(),
-        ingredients: IngredientModel.getSamples(random.integer(10, min: 3)),
+        ingredients:
+            RecipeIngredientModel.getSamples(random.integer(10, min: 3)),
         steps: faker.lorem.sentences(random.integer(10, min: 3)),
-        createdAt: faker.date.dateTime(),
         isFavorite: Random().nextInt(2) == 1 ? true : false);
   }
 
@@ -84,36 +149,5 @@ class RecipeModel {
       samples.add(getSample());
     }
     return samples;
-  }
-}
-
-class RecipeDetailsModel {
-  int prepTime;
-  int cookTime;
-  int serves;
-
-  int get totalTime => prepTime + cookTime;
-
-  RecipeDetailsModel({
-    required this.prepTime,
-    required this.cookTime,
-    required this.serves,
-  });
-
-  toText() => 'prepTime: $prepTime\ncookTime: $cookTime\nserves: $serves\n';
-
-  static RecipeDetailsModel newRecipeModel() {
-    return RecipeDetailsModel(
-      prepTime: 0,
-      cookTime: 0,
-      serves: 0,
-    );
-  }
-
-  static RecipeDetailsModel getSample() {
-    return RecipeDetailsModel(
-        prepTime: random.integer(90, min: 15),
-        cookTime: random.integer(270, min: 15),
-        serves: random.integer(8, min: 1));
   }
 }

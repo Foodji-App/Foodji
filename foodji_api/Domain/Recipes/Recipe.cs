@@ -25,17 +25,20 @@ public class Recipe
     
     public IEnumerable<string> Steps { get; private set; }
     
+    public string Author { get; private set; }
+    
     public Uri ImageUri { get; private set; }
     
     private Recipe(
-        string name, 
-        DateTime createdAt, 
-        RecipeCategory category, 
-        string description, 
-        RecipeDetails details, 
-        IEnumerable<RecipeIngredient> ingredients, 
+        string name,
+        DateTime createdAt,
+        RecipeCategory category,
+        string description,
+        RecipeDetails details,
+        IEnumerable<RecipeIngredient> ingredients,
         IEnumerable<string> steps,
-        Uri imageUri)
+        Uri imageUri,
+        string authorId)
     {
         Name = name;
         CreatedAt = createdAt;
@@ -45,19 +48,39 @@ public class Recipe
         Ingredients = ingredients.ToList();
         Steps = steps.ToList();
         ImageUri = imageUri;
+        Author = authorId;
     }
     public static Recipe Create(
-        string name, 
-        RecipeCategory category, 
-        string description, 
-        RecipeDetails details, 
-        IEnumerable<RecipeIngredient> ingredients, 
+        string name,
+        RecipeCategory category,
+        string description,
+        RecipeDetails details,
+        IEnumerable<RecipeIngredient> ingredients,
+        IEnumerable<string> steps,
+        Uri imageUri,
+        string authorId)
+    {
+        return new Recipe(name, DateTime.Now, category, description, details, ingredients, steps, imageUri, authorId);
+    }
+
+    public void Update(
+        string name,
+        RecipeCategory category,
+        string description,
+        RecipeDetails details,
+        IEnumerable<RecipeIngredient> ingredients,
         IEnumerable<string> steps,
         Uri imageUri)
     {
-        return new Recipe(name, DateTime.Now, category, description, details, ingredients, steps, imageUri);
+        Name = name;
+        Category = category;
+        Description = description;
+        Details = details;
+        Ingredients = ingredients.ToList();
+        Steps = steps.ToList();
+        ImageUri = imageUri;
     }
-    
+
     public void AddIngredient(RecipeIngredient ingredient)
     {
         var newIngredients = Ingredients.ToList();

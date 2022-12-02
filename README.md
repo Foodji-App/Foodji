@@ -1,62 +1,65 @@
 # Foodji
 
-Simple overview of use/purpose.
+Une application multiplateforme simple pour vos recettes!
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+Grâce à Foodji, il devient facile de pouvoir créer et personnaliser vos recettes!
+Fini les petites notes sur le coin d'une feuille. Vous pourrez annoter et substituer comme bons vous semblent les divers ingrédients de chacune de vos recettes!
 
-## Getting Started
+## Installer et exécuter le projet
 
-### Dependencies
+### Serveur API (Back-end)
+> Installer au préalable [Visual Studio 2022](https://visualstudio.microsoft.com/fr/vs/) avec botnet 6, ainsi que [Docker Desktop](https://www.docker.com/) pour exécuter l'environnement de développement.
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+1. Ouvrir [FoodjiApi.sln](./foodji_api/FoodjiApi.sln) avec Visual Studio 2022.
 
-### Installing
+2. Créer un dossier appelé *secrets* à la racine du dossier [foodji_api](./foodji_api/). Créer dans celui-ci les fichiers *root_password.txt* et *root_username.txt*, avec les informations d'authentification nécessaires.
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+3. Ouvrir une console dans [foodji_api](./foodji_api/) et exécuter *`docker-compose us`* afin de démarrer la base de données Mongo.
 
-### Executing program
+### Application (Frontend)
+> Consulter la documentation [Flutter](https://docs.flutter.dev) afin pour installer l'environnement de développement.
 
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
+*NB : La version actuellement développée fut optimisée pour la plateforme Android*
 
-## Help
+1. Ouvrir une console dans [foodji_ui](./foodji_ui/) et exécuter *`flutter run`*, puis choisir la plateforme cible désirée.
 
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
+## Auteurs
 
-## Authors
+Membres du projet à l'automne 2022
 
-Contributors names and contact info
+* Éloyze Brière-Alix
+* Mikaël Hubert-Deschamps
+* Francis Sarrazin
+* Guillaume Gervais
 
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
-
-## Version History
-
+## Historique des versions
+* 0.3 [WIP]
 * 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
+    * Authentification
+    * Formulaire de création de recettes
+    * Filtres avancés de recherche de recette
+    * Connexion bout en bout de la solution
 * 0.1
-    * Initial Release
+    * Instanciation des écrans Android
+        * Écran de démarrage
+        * Liste des recettes
+        * Details d'une recette
+    * Initialisation de l'api DotNet et de sa base de données MongoDB
+* 0.0
+    * Analyse et formation
+    * Démarrage du git
 
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-## Acknowledgments
+## Références
 
 Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+* [MongoDB](https://www.mongodb.com/)
+* [Docker](https://www.docker.com/)
+* [Firebase](https://firebase.google.com/)
+* [Flutter](https://docs.flutter.dev)
+* [FlutterTemplates](https://www.fluttertemplates.dev/)
+* [Tutoriel Flutter recommandé](https://youtu.be/x4DydJKVvQk)
+* [Icônes Material](https://fonts.google.com/icons?selected=Material+Icons)
+* [Internationalisation](https://phrase.com/blog/posts/flutter-localization/)
+

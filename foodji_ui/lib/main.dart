@@ -2,13 +2,24 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodji_ui/services/data_services.dart';
+import 'package:foodji_ui/services/recipe_services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'cubit/app_cubit_logics.dart';
 import 'cubit/app_cubits.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  FirebaseUIAuth.configureProviders([EmailAuthProvider()]);
+
   runApp(const MyApp());
 }
 
@@ -35,7 +46,7 @@ class MyApp extends StatelessWidget {
       scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
       supportedLocales: AppLocalizations.supportedLocales,
       home: BlocProvider<AppCubits>(
-          create: (context) => AppCubits(data: DataServices()),
+          create: (context) => AppCubits(recipeServices: RecipeServices()),
           child: const AppCubitLogics()),
     );
   }

@@ -6,15 +6,17 @@ public record UnitType
     
     public string Name { get; private set; }
     
-    public static UnitType Unit = new UnitType("unité");
-    public static UnitType Millilitre = new UnitType("ml");
-    public static UnitType Gram = new UnitType("g");
-    public static UnitType Cup = new UnitType("tasse");
-    public static UnitType TableSpoon = new UnitType("c. à table");
-    public static UnitType TeaSpoon = new UnitType("c. à thé");
-    public static UnitType FluidOunce = new UnitType("fl oz");
-    public static UnitType Ounce = new UnitType("oz");
-    public static UnitType Pound = new UnitType("lb");
+    public static UnitType Unit = new UnitType("unit");
+    public static UnitType Milliliter = new UnitType("milliliter");
+    public static UnitType Liter = new UnitType("liter");
+    public static UnitType Gram = new UnitType("gram");
+    public static UnitType Kilogram = new UnitType("kilogram");
+    public static UnitType Cup = new UnitType("cup");
+    public static UnitType Tablespoon = new UnitType("tablespoon");
+    public static UnitType Teaspoon = new UnitType("teaspoon");
+    public static UnitType FluidOunce = new UnitType("fluidOunce");
+    public static UnitType Ounce = new UnitType("ounce");
+    public static UnitType Pound = new UnitType("pound");
 
     private UnitType(string name)
     {
@@ -23,30 +25,33 @@ public record UnitType
 
     public static UnitType Create(string name)
     {
-        // TODO reconcile FE and BE on translation / uniformity here
         switch (name.ToLower())
         {
             // As in "one banana" - avoid adding additional arbitrary measures as much as possible, they are not uniform.
             // "A can" can be entirely different from one area to another, from a year to another (e.g. shrinkflation), etc.
             // TODO - have a tooltip to discourage such use on the front end whenever possible
-            case "unite":
-            case "unité":
+            case "unit":
                 return Unit;
-            case "ml":
-            case "millilitre":
-                return Millilitre;
-            case "g":
-            case "gramme":
+            case "milliliter":
+                return Milliliter;
+            case "liter":
+                return Liter;
+            case "gram":
                 return Gram;
-            case "t.":
-            case "tasse":
+            case "kilogram":
+                return Kilogram;
+            case "cup":
                 return Cup;
-            case "c. à soupe":
-            case "c. a soupe":
-                return TableSpoon;
-            case "c. à thé":
-            case "c. a the":
-                return TeaSpoon;
+            case "tablespoon":
+                return Tablespoon;
+            case "teaspoon":
+                return Teaspoon;
+            case "fluidOunce":
+                return FluidOunce;
+            case "ounce":
+                return Ounce;
+            case "pound":
+                return Pound;
             default:
                 throw new DomainException($"Unrecognized unit type {name}");
         }

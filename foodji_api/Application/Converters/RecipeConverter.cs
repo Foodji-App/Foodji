@@ -28,6 +28,8 @@ public class RecipeConverter : ITypeConverter<RecipeDto, Recipe>
             details,
             ingredients,
             source.Steps.ToList(),
-            source.ImageUri);
+            source.ImageUri,
+            // Shouldn't happen, as is set from auth context in controller
+            source.Author ?? throw new ArgumentException("Author id has not been set"));
     }
 }

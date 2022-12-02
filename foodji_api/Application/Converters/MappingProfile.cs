@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Ingredients;
 using Domain.Recipes;
+using Domain.Users;
 
 namespace Application.Converters;
 
@@ -46,5 +47,9 @@ public class MappingProfile : Profile
            .ConvertUsing(x => x.Name);
         CreateMap<string, UnitType>()
            .ConvertUsing(x => UnitType.Create(x));
+
+        CreateMap<UserData, UserDataDto>();
+        CreateMap<UserDataDto, UserData>()
+            .ConvertUsing(x => UserData.Create(x.Id, x.Recipes));
     }
 }

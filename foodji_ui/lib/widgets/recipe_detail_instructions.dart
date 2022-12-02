@@ -7,8 +7,9 @@ import '../models/recipe_model.dart';
 import 'app_text.dart';
 
 class RecipeDetailInstructions extends StatefulWidget {
-  const RecipeDetailInstructions(this.recipe, {super.key});
+  const RecipeDetailInstructions(this.recipe, this.isSelected, {super.key});
   final RecipeModel recipe;
+  final List<bool> isSelected;
   @override
   RecipeDetailInstructionsState createState() =>
       RecipeDetailInstructionsState();
@@ -16,10 +17,9 @@ class RecipeDetailInstructions extends StatefulWidget {
 
 class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
   ingredients(BuildContext context) {
-    var isSelected = List.filled(widget.recipe.steps.length, false);
     void toggleSelected(index) async {
       setState(() {
-        isSelected[index] = !isSelected[index];
+        widget.isSelected[index] = !widget.isSelected[index];
       });
     }
 
@@ -32,7 +32,7 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
                 clipBehavior: Clip.none,
                 backgroundColor: AppColors.backgroundColor,
                 label: AppText(
-                  color: isSelected[index]
+                  color: widget.isSelected[index]
                       ? AppColors.highlightColor3
                       : AppColors.highlightColor2,
                   text: (index + 1).toString(),
@@ -40,7 +40,7 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
                 shape: StadiumBorder(
                     side: BorderSide(
                   width: 2,
-                  color: isSelected[index]
+                  color: widget.isSelected[index]
                       ? AppColors.highlightColor3
                       : AppColors.highlightColor2,
                 )),
@@ -49,6 +49,7 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
 
     return ListView.builder(
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: widget.recipe.steps.length,
         itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
@@ -89,7 +90,7 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
             )),
             AppText(
               text: AppLocalizations.of(context)!
-                  .recipe_detail_instructions_instructions,
+                  .recipe_instructions,
               size: AppTextSize.subtitle,
             ),
             const Expanded(child: Divider(thickness: 2, indent: 5)),

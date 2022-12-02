@@ -10,11 +10,11 @@ namespace Application.Queries;
 
 public class GetRecipeByIdQuery : IRequest<RecipeDto?>
 {
-    public ObjectId RecipeId { get; }
+    private string RecipeId { get; }
 
     public GetRecipeByIdQuery(string recipeId)
     {
-        RecipeId = new ObjectId(recipeId);
+        RecipeId = recipeId;
     }
     
     private class Handler : IRequestHandler<GetRecipeByIdQuery, RecipeDto?>
@@ -31,24 +31,18 @@ public class GetRecipeByIdQuery : IRequest<RecipeDto?>
 
         public async Task<RecipeDto?> Handle(GetRecipeByIdQuery request, CancellationToken cancellationToken)
         {
-            var results = await _client.Recipes.FindAsync(x => x.Id == request.RecipeId, cancellationToken: cancellationToken);
-
-            var recipes = results.ToList();
-            
-            if (recipes.Count > 1)
-            {
-                // TODO More specific exception to go along better exception handling in the API layer
-                //      500 many with the same ID (bad news!)
-                //      shouldn't happen, but no "FindOne" method to make that check for us
-                throw new Exception($"{recipes.Count} recipes with the id {request.RecipeId}");
-            }
-
-            if (recipes.Count == 0)
+            // Safe parsing the string into an ObjectId. Return null if the id is malformed
+            if (!ObjectId.TryParse(request.RecipeId, out var id))
             {
                 return null;
             }
             
-            return _mapper.Map<Recipe, RecipeDto>(recipes[0]);
+            var results = await _client.Recipes.FindAsync(
+                x => x.Id == id, cancellationToken: cancellationToken);
+
+            var recipe = results.SingleOrDefault(cancellationToken: cancellationToken);
+
+            return recipe == null ? null : _mapper.Map<Recipe, RecipeDto>(recipe);
         }
     }
 }

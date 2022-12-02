@@ -7,18 +7,18 @@ import '../models/recipe_model.dart';
 import 'app_text.dart';
 
 class RecipeDetailPreparation extends StatefulWidget {
-  const RecipeDetailPreparation(this.recipe, {super.key});
+  const RecipeDetailPreparation(this.recipe, this.isSelected, {super.key});
   final RecipeModel recipe;
+  final List<bool> isSelected;
   @override
   RecipeDetailPreparationState createState() => RecipeDetailPreparationState();
 }
 
 class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
   ingredients(BuildContext context) {
-    var isSelected = List.filled(widget.recipe.ingredients.length, false);
-    void toggleSelected(index) async {
+    toggleSelected(index) {
       setState(() {
-        isSelected[index] = !isSelected[index];
+        widget.isSelected[index] = !widget.isSelected[index];
       });
     }
 
@@ -27,11 +27,11 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
         backgroundColor: AppColors.backgroundColor,
         child: IconButton(
           onPressed: () => toggleSelected(index),
-          icon: isSelected[index]
+          icon: widget.isSelected[index]
               ? const Icon(Icons.check_circle)
               : const Icon(Icons.check_circle_outline),
           iconSize: 24,
-          color: isSelected[index]
+          color: widget.isSelected[index]
               ? AppColors.highlightColor3
               : AppColors.highlightColor2,
         ),
@@ -64,6 +64,7 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
 
     return ListView.builder(
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: widget.recipe.ingredients.length,
         itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),
@@ -110,7 +111,7 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
             )),
             AppText(
               text: AppLocalizations.of(context)!
-                  .recipe_detail_preparation_ingredients,
+                  .recipe_ingredients,
               size: AppTextSize.subtitle,
             ),
             const Expanded(child: Divider(thickness: 2, indent: 5)),

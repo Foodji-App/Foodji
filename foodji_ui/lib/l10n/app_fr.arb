@@ -6,9 +6,17 @@
   "global_slogan": "Remix ta bouffe comme tu l'aimes",
   "global_filter": "Filtrer",
 
-"app_bar_recipe_details": "Détails de la recette",
+  "app_bar_recipe_details": "Détails de la recette",
 
   "demo_access": "Appuyez sur l'écran pour accéder à la démonstration",
+
+  "authentification_email": "Courriel",
+  "authentification_password": "Mot de passe",
+  "authentification_login": "Connexion",
+  "authentification_no_account": "Pas de compte?",
+  "authentification_register": "S'inscrire",
+  "authentification_error": "Veuillez vérifier les informations fournies et essayer de nouveau.",
+  "registration_error": "Le courriel est peut-être lié à un compte existant. Veuillez vérifier ou modifier les informations et essayer de nouveau.",
 
   "menu_recipes": "Recettes",
   "menu_exploration": "Explorer",
@@ -20,19 +28,77 @@
   "menu_pantry": "Garde-Manger",
   "menu_grocery": "Liste d'épicerie",
 
-  "recipe_detail_minutes": "min",
+  "minutes": "min",
 
-  "recipe_detail_preparation": "Préparation",
-  "recipe_detail_preparation_ingredients" : "Ingrédients",
-
-  "recipe_detail_instructions": "Instructions",
-  "recipe_detail_instructions_instructions" : "Instructions",
-
+  "recipe_name": "Nom",
   "recipe_description": "Description",
-  "recipe_steps": "Instructions",
+  "recipe_servings": "Portions",
+  "recipe_step": "Étape",
+  "recipe_steps": "Étapes",
+  "recipe_ingredient": "Ingrédient",
+  "recipe_ingredients": "Ingrédients",
+  "recipe_instructions": "Instructions",
+  "recipe_instruction": "Instruction",
+  "recipe_preparation": "Préparation",
+  "recipe_amount": "Quantité",
+
   "recipe_no_steps": "Aucune instruction n'a été ajoutée",
   "recipe_no_ingredients": "Aucun ingrédient n'a été ajouté",
+
+  "ingredient_substitutions": "Substitutions",
+
+  "tag_filter": "Filtres avancés",
+  "tag_vegan": "Végétalien",
+  "tag_vegetarian": "Végétarien",
+  "tag_gluten_free": "Sans gluten",
+  "tag_soy_free": "Sans soya",
+  "tag_egg_free": "Sans oeuf",
+  "tag_nut_free": "Sans noix",
+  "tag_peanut_free": "Sans arachide",
+  "tag_lactose_free": "Sans lactose",
+  "tag_milk_free": "Sans produit laitier",
+  "tag_wheat_free": "Sans blé",
+  "tag_seafood_free": "Sans produit de la mer",
+  "tag_halal": "Halal",
+  "tag_kosher": "Kascher",
+
+  "category": "Catégorie",
+  "category_main_course": "Repas principal",
+  "category_side_dish": "Accompagnement",
+  "category_appetizer": "Entrée",
+  "category_dessert": "Dessert",
+  "category_lunch": "Dîner",
+  "category_breakfast": "Déjeuner",
+  "category_beverage": "Breuvage",
+  "category_soup": "Soupe",
+  "category_sauce": "Sauce",
+  "category_bread": "Pain",
+  "category_snack": "Collation",
+
+  "form_is_required": "est requis",
+  "form_error": "Formulaire invalide",
+  "form_item_dismissed": "Item retiré",
+  "form_item": "Item",
+
+  "form_recipe_title": "Édition de recette",
+  "form_recipe_updated": "Recette mise à jour",
+  "form_recipe_error": "Formulaire invalide",
   
+  "value": "Valeur",
+  "result": "Résutat",
+
+  "unit_type_milliliter": "millilitre",
+  "unit_type_liter": "litre",
+  "unit_type_cup": "tasse",
+  "unit_type_tablespoon": "cuillère à table",
+  "unit_type_teaspoon": "cuillère à thé",
+  "unit_type_fluidOunce": "once liquide",
+  "unit_type_gram": "gramme",
+  "unit_type_kilogram": "kilogramme",
+  "unit_type_ounce": "once",
+  "unit_type_pound": "livre",
+  "unit_type_unit": "unité",
+
   "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Appuyez sur l'écran pour redémarrer l'application.",
   "error_authentification": "Une erreur d'authentification est survenue durant l'exécution. Pour accéder à cette fonctionnalité, appuyez sur l'écran pour redémarrer l'application."
 }

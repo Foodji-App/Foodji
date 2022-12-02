@@ -25,7 +25,7 @@ public class GetAllRecipesQuery : IRequest<IEnumerable<RecipeDto>>
         {
             var recipes = await _client.Recipes.FindAsync(_ => true, cancellationToken: cancellationToken);
 
-            return _mapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipes.ToList());
+            return _mapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipes.ToList(cancellationToken));
         }
     }
 }
