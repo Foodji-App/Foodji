@@ -32,11 +32,13 @@ public class UpdateRecipeCommand : IRequest<string?>
         
         public async Task<string?> Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
         {
+            // TODO Error about "standalone servers" not supporting transactions with Mongo, so commented out here
+            // But would still be relevant to fix to ensure the incoherence mentioned above
             // We're using a session to do everything in a single transaction to avoid data incoherence
-            using var session = await _client.StartSessionAsync(cancellationToken: cancellationToken);
-            
-            return await session.WithTransactionAsync<string?>(async (session, cancellationToken) =>
-                {
+            // using var session = await _client.StartSessionAsync(cancellationToken: cancellationToken);
+    
+            // return await session.WithTransactionAsync<string?>(async (session, cancellationToken) =>
+            //     {
                     // Safe parsing the string into an ObjectId. Return null if the id is malformed
                     if (!ObjectId.TryParse(request.RecipeId, out var recipeId))
                     {
@@ -69,7 +71,7 @@ public class UpdateRecipeCommand : IRequest<string?>
                     
                     return recipeToUpdate.Id.ToString();
 
-                }, cancellationToken: cancellationToken);
+                // }, cancellationToken: cancellationToken);
         }
     }
 }
