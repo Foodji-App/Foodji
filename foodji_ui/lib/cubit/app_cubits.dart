@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodji_ui/widgets/navigation_bar.dart';
 
 import '../models/recipe_ingredient_model.dart';
 import '../models/recipe_model.dart';
@@ -21,6 +22,9 @@ class AppCubits extends Cubit<CubitStates> {
 
   // Ingredients
   List<RecipeIngredientModel> recipeIngredients = [];
+
+  // Currently edited recipe
+  var currentlyEditedRecipe;
 
   // Getters -------------------------------------
 

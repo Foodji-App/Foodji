@@ -656,3 +656,4 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,androidstudio,jetbrains
+foodji_ui/.vscode/settings.json

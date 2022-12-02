@@ -61,7 +61,9 @@ class AuthPage extends StatelessWidget {
             ),
           );
         }
-        BlocProvider.of<AppCubits>(context).retrieveUserData();
+        //BlocProvider.of<AppCubits>(context).retrieveUserData();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const AuthPage()));
         return const SizedBox.shrink();
       },
     );

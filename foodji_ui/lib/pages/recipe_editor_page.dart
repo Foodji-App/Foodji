@@ -356,6 +356,17 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                 )
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: TextButton(
+                  // TODO - L10n
+                  child: const Text('Ajouter un substitut'),
+                  onPressed: () {},
+                ),
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),
