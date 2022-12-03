@@ -2,13 +2,13 @@ import 'dart:io';
 
 class AppRoutes {
   AppRoutes(this.token);
-  var token = "";
+  var token = '';
   Map<String, String> headers() {
     return {
       HttpHeaders.authorizationHeader: 'bearer $token',
-      HttpHeaders.contentEncodingHeader: 'application/json; charset=UTF-8',
-      HttpHeaders.accessControlAllowOriginHeader: "*",
-      HttpHeaders.accessControlAllowMethodsHeader: "POST, GET, PUT, DELETE"
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.accessControlAllowOriginHeader: '*',
+      HttpHeaders.accessControlAllowMethodsHeader: 'POST, GET, PUT, DELETE'
     };
   }
 

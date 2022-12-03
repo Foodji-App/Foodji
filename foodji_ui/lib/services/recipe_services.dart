@@ -24,24 +24,40 @@ class RecipeServices {
     }
   }
 
-  // PUT
-  updateRecipe(RecipeModel recipe) async {
-    return await http.put(Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}'),
-        headers: appRoutes.headers(), body: jsonEncode(recipe));
-  }
-
   // POST
   createRecipe(RecipeModel recipe) async {
+    recipe.createdAt = DateTime.now();
+    recipe.details.totalTime = (recipe.details.preparationTime ?? 0) +
+        (recipe.details.cookingTime ?? 0) +
+        (recipe.details.restingTime ?? 0);
+    appRoutes =
+        AppRoutes(await FirebaseAuth.instance.currentUser!.getIdToken());
     return await http.post(
         Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}'),
         headers: appRoutes.headers(),
         body: jsonEncode(recipe));
   }
 
+  // PUT
+  updateRecipe(RecipeModel recipe) async {
+    recipe.createdAt ??= DateTime.now();
+    recipe.details.totalTime = (recipe.details.preparationTime ?? 0) +
+        (recipe.details.cookingTime ?? 0) +
+        (recipe.details.restingTime ?? 0);
+    appRoutes =
+        AppRoutes(await FirebaseAuth.instance.currentUser!.getIdToken());
+    return await http.put(
+        Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}/${recipe.id}'),
+        headers: appRoutes.headers(),
+        body: jsonEncode(recipe));
+  }
+
   // DELETE
-  deleteRecipe(String recipeId) async {
-    return await http.post(
-        Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}/$recipeId'),
+  deleteRecipe(RecipeModel recipe) async {
+    appRoutes =
+        AppRoutes(await FirebaseAuth.instance.currentUser!.getIdToken());
+    return await http.delete(
+        Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}/${recipe.id}'),
         headers: appRoutes.headers());
   }
 }

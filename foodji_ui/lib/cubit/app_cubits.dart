@@ -96,10 +96,9 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   deleteRecipe(RecipeModel recipe) async {
-    http.Response res = await recipeServices.deleteRecipe(recipe.id.toString());
+    http.Response res = await recipeServices.deleteRecipe(recipe);
     if (res.statusCode == 204) {
-      userData.recipes.removeWhere(
-          (recipe) => recipe.id.toString() == recipe.id.toString());
+      userData.recipes.removeWhere((recipe2) => recipe2.id == recipe.id);
       return res;
     } else {
       emit(ErrorState());

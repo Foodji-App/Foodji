@@ -42,10 +42,10 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     if (_formKey.currentState!.validate()) {
       if (_currentRecipe.id == null || _currentRecipe.id!.isEmpty) {
         res = await BlocProvider.of<AppCubits>(context)
-            .updateRecipe(_currentRecipe);
+            .createRecipe(_currentRecipe);
       } else {
         res = await BlocProvider.of<AppCubits>(context)
-            .createRecipe(_currentRecipe);
+            .updateRecipe(_currentRecipe);
       }
 
       if (res.statusCode == 201) {
@@ -62,7 +62,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   _deleteRecipe() {
     showDialog(
         context: context,
-        builder: (BuildContext context) {
+        builder: (BuildContext context2) {
           return AlertDialog(
             title: AppText(text: l10n.global_form_delete_message),
             actions: [
@@ -95,7 +95,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     } else if (!_savedRecipe.equals(_currentRecipe)) {
       showDialog(
           context: context,
-          builder: (BuildContext context) {
+          builder: (BuildContext context2) {
             return AlertDialog(
               title: AppText(text: l10n.global_form_discard_message),
               actions: [

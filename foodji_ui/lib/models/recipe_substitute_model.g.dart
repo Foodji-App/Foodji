@@ -11,7 +11,7 @@ RecipeSubstituteModel _$RecipeSubstituteModelFromJson(
     RecipeSubstituteModel(
       id: json['id'] as String?,
       name: json['name'] as String,
-      substitutionPrecisions: json['substitutionPrecisions'] as String?,
+      substitutionPrecision: json['substitutionPrecision'] as String?,
       description: json['description'] as String?,
       measurement: MeasurementModel.fromJson(
           json['measurement'] as Map<String, dynamic>),
@@ -23,7 +23,7 @@ Map<String, dynamic> _$RecipeSubstituteModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'substitutionPrecisions': instance.substitutionPrecisions,
+      'substitutionPrecision': instance.substitutionPrecision,
       'description': instance.description,
       'measurement': instance.measurement,
       'tags': instance.tags,
