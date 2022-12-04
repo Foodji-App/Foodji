@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/misc/app_util.dart';
+import 'package:foodji_ui/models/categories_enum.dart';
 import 'package:foodji_ui/models/recipe_ingredient_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,15 +28,36 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   final ScrollController _scrollController = ScrollController();
 
   late RecipeModel _currentRecipe, _savedRecipe;
+  late bool flag = false;
   late AppLocalizations l10n;
 
-  final _dropdownValues = <String>[
-    'Breakfast',
-    'Lunch',
-    'Dinner',
-    'Dessert',
-    'Snack'
-  ];
+  String getCategoryString(category) {
+    if (category == Categories.mainCourse.name) {
+      return AppLocalizations.of(context)!.category_main_course;
+    } else if (category == Categories.sideDish.name) {
+      return AppLocalizations.of(context)!.category_side_dish;
+    } else if (category == Categories.appetizer.name) {
+      return AppLocalizations.of(context)!.category_appetizer;
+    } else if (category == Categories.dessert.name) {
+      return AppLocalizations.of(context)!.category_dessert;
+    } else if (category == Categories.lunch.name) {
+      return AppLocalizations.of(context)!.category_lunch;
+    } else if (category == Categories.breakfast.name) {
+      return AppLocalizations.of(context)!.category_breakfast;
+    } else if (category == Categories.beverage.name) {
+      return AppLocalizations.of(context)!.category_beverage;
+    } else if (category == Categories.soup.name) {
+      return AppLocalizations.of(context)!.category_soup;
+    } else if (category == Categories.sauce.name) {
+      return AppLocalizations.of(context)!.category_sauce;
+    } else if (category == Categories.bread.name) {
+      return AppLocalizations.of(context)!.category_bread;
+    } else if (category == Categories.snack.name) {
+      return AppLocalizations.of(context)!.category_snack;
+    } else {
+      return "";
+    }
+  }
 
   _updateRecipe() async {
     http.Response res;
@@ -128,8 +150,11 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     // Build a Form widget using the _formKey created above.
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is RecipeEditorState) {
-        _savedRecipe = state.recipe;
-        _currentRecipe = RecipeModel.deepCopy(_savedRecipe);
+        if (!flag) {
+          _savedRecipe = state.recipe;
+          _currentRecipe = RecipeModel.deepCopy(_savedRecipe);
+          flag = true;
+        }
         return Scaffold(
           appBar: _appBar(),
           body: Stack(
@@ -239,17 +264,13 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   }
 
   Widget _buildCategory() {
-    !_dropdownValues.contains(_currentRecipe.category)
-        ? _dropdownValues.add(_currentRecipe.category)
-        : null;
-
     return DropdownButtonFormField<String>(
       value: _currentRecipe.category,
       decoration: InputDecoration(hintText: l10n.category),
-      items: _dropdownValues.map<DropdownMenuItem<String>>((String value) {
+      items: Categories.values.map<DropdownMenuItem<String>>((element) {
         return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
+          value: element.name,
+          child: Text(getCategoryString(element.name)),
         );
       }).toList(),
       onChanged: (String? value) =>

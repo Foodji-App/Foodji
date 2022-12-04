@@ -86,8 +86,8 @@ class AppCubits extends Cubit<CubitStates> {
   createRecipe(RecipeModel recipe) async {
     http.Response res = await recipeServices.createRecipe(recipe);
     if (res.statusCode == 201) {
-      recipe.id = json.decode(res.body)[
-          'id']; //TODO - Valider le retour de fonction et le stockage de l'id dans la recette
+      recipe.id = res.headers['location']!
+          .substring(res.headers['location']!.lastIndexOf('/') + 1);
       userData.recipes.add(recipe);
       return res;
     } else {

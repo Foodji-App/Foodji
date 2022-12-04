@@ -95,7 +95,7 @@ class RecipeModel {
         id: '',
         name: '',
         imageUri: '',
-        category: '',
+        category: Categories.values[0].name,
         description: '',
         details: RecipeDetailsModel(
             cookingTime: 0,
