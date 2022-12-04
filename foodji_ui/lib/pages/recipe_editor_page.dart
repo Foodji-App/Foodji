@@ -220,13 +220,14 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
         actions: <Widget>[
           IconButton(
               icon: const Icon(Icons.save),
-              onPressed: () => ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(_updateRecipe())))),
+              onPressed: () async => ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(await _updateRecipe())))),
           _currentRecipe.id != ""
               ? IconButton(
                   icon: const Icon(Icons.delete),
-                  onPressed: () => ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(_deleteRecipe()))))
+                  onPressed: () async => ScaffoldMessenger.of(context)
+                      .showSnackBar(
+                          SnackBar(content: Text(await _deleteRecipe()))))
               : Container(),
           Container(
               margin: const EdgeInsets.only(right: 4),
