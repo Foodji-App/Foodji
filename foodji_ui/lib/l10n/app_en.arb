@@ -13,6 +13,8 @@
   "global_form_discard_message": "Discard changes?",
   "global_form_delete_message": "Definitely delete this item?",
 
+  "no_image": "NO IMAGE AVAILABLE",
+
   "app_bar_recipe_details": "Recipe details",
 
   "demo_access": "Press anywhere on the screen to access the demo",

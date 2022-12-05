@@ -142,26 +142,28 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                           Padding(
                               padding: const EdgeInsets.only(
                                   top: 55, left: 14, right: 14, bottom: 20),
-                              child: Card(
-                                  elevation: 4.0,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(40),
-                                          bottomRight: Radius.circular(40)),
-                                      side: BorderSide(
-                                          width: 2,
-                                          color: AppColors.backgroundColor)),
-                                  child: Center(
-                                      child: ClipRRect(
+                              child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height / 3.5,
+                                  alignment: Alignment.center,
+                                  decoration: recipe.imageUri != ""
+                                      ? BoxDecoration(
                                           borderRadius: const BorderRadius.only(
-                                              topLeft: Radius.circular(40),
-                                              bottomRight: Radius.circular(40)),
-                                          child: Image(
+                                              topLeft: Radius.circular(20),
+                                              bottomRight: Radius.circular(20)),
+                                          image: DecorationImage(
                                               image:
                                                   NetworkImage(recipe.imageUri),
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width))))),
+                                              fit: BoxFit.cover))
+                                      : null,
+                                  child: recipe.imageUri == ""
+                                      ? AppText(
+                                          size: AppTextSize.title,
+                                          color: AppColors.backgroundColor,
+                                          text: AppLocalizations.of(context)!
+                                              .no_image)
+                                      : null)),
                           Padding(
                               padding: const EdgeInsets.only(
                                   left: 16, right: 16, bottom: 16),
@@ -218,7 +220,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                         label: AppText(
                                             color: AppColors.backgroundColor,
                                             text:
-                                                '${recipe.details.totalTime} ${AppLocalizations.of(context)!.minutes}'),
+                                                '${recipe.details.totalTime ?? '?'} ${AppLocalizations.of(context)!.minutes}'),
                                         shape: const StadiumBorder(
                                             side: BorderSide(
                                           width: 1,

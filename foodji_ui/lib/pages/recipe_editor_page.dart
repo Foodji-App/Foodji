@@ -28,7 +28,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   final ScrollController _scrollController = ScrollController();
 
   late RecipeModel _currentRecipe, _savedRecipe;
-  late bool flag = false;
+  late bool isFirstBuild = true;
   late AppLocalizations l10n;
 
   String getCategoryString(category) {
@@ -150,10 +150,10 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     // Build a Form widget using the _formKey created above.
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is RecipeEditorState) {
-        if (!flag) {
+        if (isFirstBuild) {
           _savedRecipe = state.recipe;
           _currentRecipe = RecipeModel.deepCopy(_savedRecipe);
-          flag = true;
+          isFirstBuild = false;
         }
         return Scaffold(
           appBar: _appBar(),

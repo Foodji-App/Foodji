@@ -429,7 +429,9 @@ class RecipesPageState extends State<RecipesPage> {
                                                   .height /
                                               3.5,
                                           alignment: Alignment.center,
-                                          decoration: BoxDecoration(
+                                          decoration: filteredRecipes[index]
+                                                          .imageUri != ""
+                                      ? BoxDecoration(
                                               borderRadius:
                                                   const BorderRadius.only(
                                                       topLeft:
@@ -440,7 +442,14 @@ class RecipesPageState extends State<RecipesPage> {
                                                   image: NetworkImage(
                                                       filteredRecipes[index]
                                                           .imageUri),
-                                                  fit: BoxFit.cover))),
+                                                  fit: BoxFit.cover)) : null,
+                                  child: filteredRecipes[index].imageUri == ""
+                                      ? AppText(
+                                          size: AppTextSize.title,
+                                          color: AppColors.backgroundColor,
+                                          text: AppLocalizations.of(context)!
+                                              .no_image)
+                                      : null),
                                       Positioned(
                                           top: 0,
                                           left: 0,
