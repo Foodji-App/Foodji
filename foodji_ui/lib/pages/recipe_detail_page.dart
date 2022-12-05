@@ -298,7 +298,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                         child: TabBar(controller: tabController, tabs: <Tab>[
                           Tab(
                               text: AppLocalizations.of(context)!
-                                  .recipe_preparation),
+                                  .recipe_ingredients),
                           Tab(
                               text: AppLocalizations.of(context)!
                                   .recipe_instructions)

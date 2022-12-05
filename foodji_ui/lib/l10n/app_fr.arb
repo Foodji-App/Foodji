@@ -39,7 +39,6 @@
   "recipe_ingredients": "Ingrédients",
   "recipe_instructions": "Instructions",
   "recipe_instruction": "Instruction",
-  "recipe_preparation": "Préparation",
   "recipe_amount": "Quantité",
 
   "recipe_no_steps": "Aucune instruction n'a été ajoutée",
