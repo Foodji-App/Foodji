@@ -40,12 +40,9 @@ class RegistrationState extends CubitStates {
 
 // Once authorized, displays the user's recipes list as the main page
 class AuthentifiedState extends CubitStates {
-  AuthentifiedState(this.recipes, this.filteredRecipes, this.ingredients,
-      this.filteredIngredients);
+  AuthentifiedState(this.recipes, this.filteredRecipes);
   final List<RecipeModel> recipes;
   final List<RecipeModel> filteredRecipes;
-  final List<RecipeIngredientModel> ingredients;
-  final List<RecipeIngredientModel> filteredIngredients;
   @override
   List<Object> get props => throw [recipes, filteredRecipes];
 }

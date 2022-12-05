@@ -53,7 +53,7 @@ class AppBarState extends State<AppBar> {
       if (mounted) {
         page = globals.getActivePage();
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          setState(() {});
+          //setState(() {});
         });
       }
     });

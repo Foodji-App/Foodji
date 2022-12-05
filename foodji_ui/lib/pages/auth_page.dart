@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodji_ui/cubit/app_cubit_states.dart';
 
 import '../cubit/app_cubits.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterfire_ui/auth.dart';
+import '../widgets/navigation_bar.dart' as navigation_bar_widget;
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -61,9 +63,12 @@ class AuthPage extends StatelessWidget {
             ),
           );
         }
-        //BlocProvider.of<AppCubits>(context).retrieveUserData();
+        /*BlocProvider.of<AppCubits>(context).retrieveUserData();*/
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const AuthPage()));
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    const navigation_bar_widget.NavigationBar()));
         return const SizedBox.shrink();
       },
     );

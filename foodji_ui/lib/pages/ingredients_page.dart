@@ -47,9 +47,8 @@ class IngredientsPageState extends State<IngredientsPage> {
     globals.setActivePage(5);
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is AuthentifiedState) {
-        List<RecipeIngredientModel> filteredIngredients =
-            state.filteredIngredients;
-        List<RecipeIngredientModel> ingredients = state.ingredients;
+        List<RecipeIngredientModel> filteredIngredients = [];
+        List<RecipeIngredientModel> ingredients = [];
 
         // Widget method to have access to state
         List<RecipeIngredientModel> applyAdvancedFilters(recipes) {

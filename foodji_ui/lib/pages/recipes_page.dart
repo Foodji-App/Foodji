@@ -12,6 +12,7 @@ import '../misc/colors.dart';
 import '../models/categories_enum.dart';
 import '../models/recipe_ingredient_model.dart';
 import '../models/recipe_substitute_model.dart';
+import '../services/recipe_services.dart';
 import '../widgets/app_text.dart';
 
 // Inner class only needed here
@@ -37,6 +38,14 @@ class RecipesPageState extends State<RecipesPage> {
   // Les advancedFilters sont les tags de base, lesquels sont au nombre de 13.
   List<bool> advancedFilters = List.filled(13, false);
   bool advancedFilterSelected = false;
+
+  List<RecipeModel> recipes = [];
+  List<RecipeModel> filteredRecipes = [];
+
+  void retrieveRecipes() async {
+    recipes = await RecipeServices().getRecipes();
+    filteredRecipes = [...recipes];
+  }
 
   toggleFavoriteStatus(recipe) {
     setState(() {

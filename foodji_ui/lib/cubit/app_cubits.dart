@@ -51,8 +51,8 @@ class AppCubits extends Cubit<CubitStates> {
     //userData.recipes.addAll(RecipeModel.getSamples(20));
     recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
 
-    emit(AuthentifiedState(userData.recipes, [...userData.recipes],
-        recipeIngredients, [...recipeIngredients]));
+    /*emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+        recipeIngredients, [...recipeIngredients]));*/
   }
 
   // Creates an account, then go to the login page if successful
@@ -106,8 +106,8 @@ class AppCubits extends Cubit<CubitStates> {
   // To recipes
   void gotoRecipes() async {
     try {
-      emit(AuthentifiedState(userData.recipes, [...userData.recipes],
-          recipeIngredients, [...recipeIngredients]));
+      /*emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+          recipeIngredients, [...recipeIngredients]));*/
     } catch (e) {
       emit(ErrorState());
     }
@@ -133,8 +133,8 @@ class AppCubits extends Cubit<CubitStates> {
   // To ingredients
   void gotoIngredients() async {
     try {
-      emit(AuthentifiedState(userData.recipes, [...userData.recipes],
-          recipeIngredients, [...recipeIngredients]));
+      /*emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+          recipeIngredients, [...recipeIngredients]));*/
     } catch (e) {
       emit(ErrorState());
     }

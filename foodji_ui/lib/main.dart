@@ -8,7 +8,6 @@ import 'package:foodji_ui/pages/splash_page.dart';
 import 'package:foodji_ui/services/recipe_services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'cubit/app_cubit_logics.dart';
 import 'cubit/app_cubits.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -48,9 +47,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
         supportedLocales: AppLocalizations.supportedLocales,
-        // home: BlocProvider<AppCubits>(
-        //     create: (context) => AppCubits(recipeServices: RecipeServices()),
-        //     child: const AppCubitLogics()),
-        home: const SplashPage());
+        home: BlocProvider<AppCubits>(
+            create: (context) => AppCubits(recipeServices: RecipeServices()),
+            child: const SplashPage()));
   }
 }
