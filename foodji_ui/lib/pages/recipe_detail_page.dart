@@ -173,7 +173,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                     clipBehavior: Clip.none,
                                     backgroundColor: AppColors.textColor,
                                     label: AppText(
-                                        size: AppTextSize.small,
+                                        size: AppTextSize.verySmall,
                                         color: AppColors.backgroundColor,
                                         text:
                                             getCategoryString(recipe.category)),

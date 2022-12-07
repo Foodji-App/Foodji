@@ -563,7 +563,7 @@ class RecipesPageState extends State<RecipesPage> {
                                                                         itemCount: tagsWithColors(filteredRecipes[index]).length,
                                                                         itemBuilder: (context, indexSecondary) {
                                                                           return AppText(
-                                                                              size: AppTextSize.small,
+                                                                              size: AppTextSize.verySmall,
                                                                               color: tagsWithColors(filteredRecipes[index])[indexSecondary].isIngredients ? AppColors.backgroundColor : AppColors.starColor1,
                                                                               text: indexSecondary < tagsWithColors(filteredRecipes[index]).length - 1 ? "${getTagString(tagsWithColors(filteredRecipes[index])[indexSecondary].tag)}, " : getTagString(tagsWithColors(filteredRecipes[index])[indexSecondary].tag));
                                                                         }))

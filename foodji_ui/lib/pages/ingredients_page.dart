@@ -306,7 +306,8 @@ class IngredientsPageState extends State<IngredientsPage> {
                                                   itemBuilder: (context,
                                                       indexSecondary) {
                                                     return AppText(
-                                                        size: AppTextSize.small,
+                                                        size: AppTextSize
+                                                            .verySmall,
                                                         color: tagsWithColors(
                                                                         filteredIngredients[
                                                                             index])[
