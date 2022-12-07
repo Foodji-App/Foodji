@@ -5,6 +5,7 @@ import 'package:foodji_ui/models/measurement_model.dart';
 import 'package:foodji_ui/models/recipe_ingredient_model.dart';
 import 'package:foodji_ui/models/recipe_substitute_model.dart';
 
+import '../misc/translation_util.dart';
 import '../misc/colors.dart';
 import '../models/recipe_model.dart';
 import '../models/tags_enum.dart';
@@ -25,65 +26,6 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
       setState(() {
         widget.isSelected[index] = !widget.isSelected[index];
       });
-    }
-
-    String getUnitTypeString(context, unitType) {
-      if (unitType == UnitType.cup.name) {
-        return AppLocalizations.of(context)!.unit_type_cup;
-      } else if (unitType == UnitType.tablespoon.name) {
-        return AppLocalizations.of(context)!.unit_type_tablespoon;
-      } else if (unitType == UnitType.fluidOunce.name) {
-        return AppLocalizations.of(context)!.unit_type_fluidOunce;
-      } else if (unitType == UnitType.gram.name) {
-        return AppLocalizations.of(context)!.unit_type_gram;
-      } else if (unitType == UnitType.kilogram.name) {
-        return AppLocalizations.of(context)!.unit_type_kilogram;
-      } else if (unitType == UnitType.liter.name) {
-        return AppLocalizations.of(context)!.unit_type_liter;
-      } else if (unitType == UnitType.milliliter.name) {
-        return AppLocalizations.of(context)!.unit_type_milliliter;
-      } else if (unitType == UnitType.ounce.name) {
-        return AppLocalizations.of(context)!.unit_type_ounce;
-      } else if (unitType == UnitType.pound.name) {
-        return AppLocalizations.of(context)!.unit_type_pound;
-      } else if (unitType == UnitType.teaspoon.name) {
-        return AppLocalizations.of(context)!.unit_type_teaspoon;
-      } else if (unitType == UnitType.unit.name) {
-        return AppLocalizations.of(context)!.unit_type_unit;
-      }
-      return "";
-    }
-
-    String getTagString(context, tag) {
-      if (tag == Tags.vegan.name) {
-        return AppLocalizations.of(context)!.tag_vegan;
-      } else if (tag == Tags.vegetarian.name) {
-        return AppLocalizations.of(context)!.tag_vegetarian;
-      } else if (tag == Tags.glutenFree.name) {
-        return AppLocalizations.of(context)!.tag_gluten_free;
-      } else if (tag == Tags.soyFree.name) {
-        return AppLocalizations.of(context)!.tag_soy_free;
-      } else if (tag == Tags.eggFree.name) {
-        return AppLocalizations.of(context)!.tag_egg_free;
-      } else if (tag == Tags.nutFree.name) {
-        return AppLocalizations.of(context)!.tag_nut_free;
-      } else if (tag == Tags.peanutFree.name) {
-        return AppLocalizations.of(context)!.tag_peanut_free;
-      } else if (tag == Tags.lactoseFree.name) {
-        return AppLocalizations.of(context)!.tag_lactose_free;
-      } else if (tag == Tags.milkFree.name) {
-        return AppLocalizations.of(context)!.tag_milk_free;
-      } else if (tag == Tags.wheatFree.name) {
-        return AppLocalizations.of(context)!.tag_wheat_free;
-      } else if (tag == Tags.seafoodFree.name) {
-        return AppLocalizations.of(context)!.tag_seafood_free;
-      } else if (tag == Tags.halal.name) {
-        return AppLocalizations.of(context)!.tag_halal;
-      } else if (tag == Tags.kosher.name) {
-        return AppLocalizations.of(context)!.tag_kosher;
-      } else {
-        return tag;
-      }
     }
 
     CircleAvatar selectedAvatar(index) {
@@ -130,7 +72,7 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
       var result = "";
       if (measurement.value != 0) {
         result =
-            "${measurement.value} ${getUnitTypeString(context, measurement.unitType)}";
+            "${measurement.value} ${TranslationUtil.getUnitTypeString(context, measurement.unitType)}";
       }
       if (measurement.alternativeText.isNotEmpty) {
         if (result.isNotEmpty) {
@@ -195,8 +137,8 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
                                   size: AppTextSize.verySmall,
                                   color: AppColors.subtitleText,
                                   text: index < substitute.tags.length - 1
-                                      ? "${getTagString(context, substitute.tags[index])}, "
-                                      : getTagString(
+                                      ? "${TranslationUtil.getTagString(context, substitute.tags[index])}, "
+                                      : TranslationUtil.getTagString(
                                           context, substitute.tags[index]));
                             }))
                   ],
@@ -258,8 +200,8 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
                                 size: AppTextSize.verySmall,
                                 color: AppColors.subtitleText,
                                 text: index < ingredient.tags.length - 1
-                                    ? "${getTagString(context, ingredient.tags[index])}, "
-                                    : getTagString(
+                                    ? "${TranslationUtil.getTagString(context, ingredient.tags[index])}, "
+                                    : TranslationUtil.getTagString(
                                         context, ingredient.tags[index]));
                           }))
                 ],

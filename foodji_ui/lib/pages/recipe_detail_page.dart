@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/widgets/app_text.dart';
+import '../misc/translation_util.dart';
 import '../models/categories_enum.dart';
 import '../models/recipe_ingredient_model.dart';
 import '../models/recipe_substitute_model.dart';
@@ -48,66 +49,6 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
       if (state is RecipeState) {
         TabController tabController = TabController(length: 2, vsync: this);
         RecipeModel recipe = state.recipe;
-
-        String getTagString(tag) {
-          if (tag == Tags.vegan.name) {
-            return AppLocalizations.of(context)!.tag_vegan;
-          } else if (tag == Tags.vegetarian.name) {
-            return AppLocalizations.of(context)!.tag_vegetarian;
-          } else if (tag == Tags.glutenFree.name) {
-            return AppLocalizations.of(context)!.tag_gluten_free;
-          } else if (tag == Tags.soyFree.name) {
-            return AppLocalizations.of(context)!.tag_soy_free;
-          } else if (tag == Tags.eggFree.name) {
-            return AppLocalizations.of(context)!.tag_egg_free;
-          } else if (tag == Tags.nutFree.name) {
-            return AppLocalizations.of(context)!.tag_nut_free;
-          } else if (tag == Tags.peanutFree.name) {
-            return AppLocalizations.of(context)!.tag_peanut_free;
-          } else if (tag == Tags.lactoseFree.name) {
-            return AppLocalizations.of(context)!.tag_lactose_free;
-          } else if (tag == Tags.milkFree.name) {
-            return AppLocalizations.of(context)!.tag_milk_free;
-          } else if (tag == Tags.wheatFree.name) {
-            return AppLocalizations.of(context)!.tag_wheat_free;
-          } else if (tag == Tags.seafoodFree.name) {
-            return AppLocalizations.of(context)!.tag_seafood_free;
-          } else if (tag == Tags.halal.name) {
-            return AppLocalizations.of(context)!.tag_halal;
-          } else if (tag == Tags.kosher.name) {
-            return AppLocalizations.of(context)!.tag_kosher;
-          } else {
-            return tag;
-          }
-        }
-
-        String getCategoryString(category) {
-          if (category == Categories.mainCourse.name) {
-            return AppLocalizations.of(context)!.category_main_course;
-          } else if (category == Categories.sideDish.name) {
-            return AppLocalizations.of(context)!.category_side_dish;
-          } else if (category == Categories.appetizer.name) {
-            return AppLocalizations.of(context)!.category_appetizer;
-          } else if (category == Categories.dessert.name) {
-            return AppLocalizations.of(context)!.category_dessert;
-          } else if (category == Categories.lunch.name) {
-            return AppLocalizations.of(context)!.category_lunch;
-          } else if (category == Categories.breakfast.name) {
-            return AppLocalizations.of(context)!.category_breakfast;
-          } else if (category == Categories.beverage.name) {
-            return AppLocalizations.of(context)!.category_beverage;
-          } else if (category == Categories.soup.name) {
-            return AppLocalizations.of(context)!.category_soup;
-          } else if (category == Categories.sauce.name) {
-            return AppLocalizations.of(context)!.category_sauce;
-          } else if (category == Categories.bread.name) {
-            return AppLocalizations.of(context)!.category_bread;
-          } else if (category == Categories.snack.name) {
-            return AppLocalizations.of(context)!.category_snack;
-          } else {
-            return "";
-          }
-        }
 
         List<TagsWithColor> tagsWithColors(recipe) {
           List<TagsWithColor> tags = [];
@@ -175,8 +116,8 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                     label: AppText(
                                         size: AppTextSize.verySmall,
                                         color: AppColors.backgroundColor,
-                                        text:
-                                            getCategoryString(recipe.category)),
+                                        text: TranslationUtil.getCategoryString(
+                                            context, recipe.category)),
                                     shape: const StadiumBorder(
                                         side: BorderSide(
                                       width: 1,
@@ -246,10 +187,12 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                                     tagsWithColors(recipe)
                                                             .length -
                                                         1
-                                                ? "${getTagString(tagsWithColors(recipe)[index].tag)}, "
-                                                : getTagString(tagsWithColors(
-                                                        recipe)[index]
-                                                    .tag));
+                                                ? "${TranslationUtil.getTagString(context, tagsWithColors(recipe)[index].tag)}, "
+                                                : TranslationUtil.getTagString(
+                                                    context,
+                                                    tagsWithColors(
+                                                            recipe)[index]
+                                                        .tag));
                                       }))),
                           Padding(
                               padding:
