@@ -82,6 +82,7 @@
   "form_recipe_title": "Édition de recette",
   "form_recipe_updated": "Recette mise à jour",
   "form_recipe_error": "Formulaire invalide",
+  "form_recipe_ingredient_substitute_add": "Ajouter un substitut",
   
   "value": "Valeur",
   "result": "Résutat",

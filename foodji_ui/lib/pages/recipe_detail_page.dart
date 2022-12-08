@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/widgets/app_text.dart';
 import '../misc/translation_util.dart';
-import '../models/categories_enum.dart';
 import '../models/recipe_ingredient_model.dart';
 import '../models/recipe_substitute_model.dart';
 import '../models/tags_enum.dart';
 import '../widgets/recipe_detail_instructions.dart';
-import '../widgets/recipe_detail_preparation.dart';
+import '../widgets/recipe_detail_ingredients.dart';
 import '../widgets/stateless_app_bar.dart' as stateless_app_bar_widget;
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -43,6 +42,8 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
     });
   }
 
+  final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
@@ -72,7 +73,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                 appBar: stateless_app_bar_widget.AppBar(
                     AppLocalizations.of(context)!.app_bar_recipe_details),
                 backgroundColor: AppColors.backgroundColor,
-                body: CustomScrollView(slivers: [
+                body: CustomScrollView(controller: _scrollController, slivers: [
                   SliverAppBar(
                     backgroundColor: AppColors.textColor,
                     foregroundColor: AppColors.backgroundColor,
@@ -252,19 +253,30 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                   ),
                   SliverList(
                       delegate: SliverChildListDelegate([
-                    // ignore: sized_box_for_whitespace
-                    Container(
-                        // Container is mandatory here, do not remove
+                    SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        // HACK : Height here causes an issue. It cannot be removed, but cannot be set to child size either.
-                        height: MediaQuery.of(context).size.height,
-                        child: TabBarView(controller: tabController, children: <
-                            Widget>[
-                          RecipeDetailPreparation(recipe,
-                              List.filled(recipe.ingredients.length, false)),
-                          RecipeDetailInstructions(
-                              recipe, List.filled(recipe.steps.length, false))
-                        ]))
+                        height: MediaQuery.of(context).size.height * 0.85,
+                        child: TabBarView(
+                            controller: tabController,
+                            children: <Widget>[
+                              SingleChildScrollView(
+                                  controller: _scrollController,
+                                  child: ConstrainedBox(
+                                      constraints: const BoxConstraints(),
+                                      child: RecipeDetailIngredients(
+                                          recipe,
+                                          List.filled(
+                                              recipe.ingredients.length, false),
+                                          _scrollController))),
+                              SingleChildScrollView(
+                                  child: ConstrainedBox(
+                                      constraints: const BoxConstraints(),
+                                      child: RecipeDetailInstructions(
+                                          recipe,
+                                          List.filled(
+                                              recipe.steps.length, false),
+                                          _scrollController)))
+                            ]))
                   ]))
                 ])));
       } else {

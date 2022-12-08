@@ -8,19 +8,20 @@ import 'package:foodji_ui/models/recipe_substitute_model.dart';
 import '../misc/translation_util.dart';
 import '../misc/colors.dart';
 import '../models/recipe_model.dart';
-import '../models/tags_enum.dart';
-import '../models/unit_type_enum.dart';
 import 'app_text.dart';
 
-class RecipeDetailPreparation extends StatefulWidget {
-  const RecipeDetailPreparation(this.recipe, this.isSelected, {super.key});
+class RecipeDetailIngredients extends StatefulWidget {
+  const RecipeDetailIngredients(
+      this.recipe, this.isSelected, this.scrollController,
+      {super.key});
   final RecipeModel recipe;
   final List<bool> isSelected;
+  final ScrollController scrollController;
   @override
-  RecipeDetailPreparationState createState() => RecipeDetailPreparationState();
+  RecipeDetailIngredientsState createState() => RecipeDetailIngredientsState();
 }
 
-class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
+class RecipeDetailIngredientsState extends State<RecipeDetailIngredients> {
   ingredients(BuildContext context) {
     toggleSelected(index) {
       setState(() {
@@ -130,6 +131,7 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
                         width: MediaQuery.of(context).size.width * 0.75,
                         height: MediaQuery.of(context).size.height * 0.02,
                         child: ListView.builder(
+                            controller: widget.scrollController,
                             scrollDirection: Axis.horizontal,
                             itemCount: substitute.tags.length,
                             itemBuilder: (context, index) {
@@ -217,10 +219,10 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
           children: [
             SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: ingredient.substitutes.length * 85,
+                height: ingredient.substitutes.length * 90,
                 child: ListView.builder(
+                    controller: widget.scrollController,
                     physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
                     itemCount: ingredient.substitutes.length,
                     itemBuilder: (context, index) {
                       return Column(children: [
@@ -231,16 +233,13 @@ class RecipeDetailPreparationState extends State<RecipeDetailPreparation> {
     }
 
     return ListView.builder(
+        controller: widget.scrollController,
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
         itemCount: widget.recipe.ingredients.length,
         itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),
               child: Column(children: [
                 buildIngredient(widget.recipe.ingredients[index]),
-                Row(children: const <Widget>[
-                  Expanded(child: Divider(thickness: 1))
-                ])
               ]),
             ));
   }

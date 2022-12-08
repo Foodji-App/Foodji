@@ -361,8 +361,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: TextButton(
-                  // TODO - L10n
-                  child: const Text('Ajouter un substitut'),
+                  child: Text(l10n.form_recipe_ingredient_substitute_add),
                   onPressed: () {},
                 ),
               ),

@@ -82,6 +82,7 @@
   "form_recipe_title": "Recipe Editor",
   "form_recipe_updated": "Recipe updated",
   "form_recipe_error": "Form not valid",
+  "form_recipe_ingredient_substitute_add": "Add a substitute",
 
   "value": "Value",
   "result": "Result",
