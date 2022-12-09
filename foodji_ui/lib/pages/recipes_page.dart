@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:foodji_ui/misc/translation_util.dart';
 import 'package:foodji_ui/models/recipe_model.dart';
 import 'package:foodji_ui/models/tags_enum.dart';
 
@@ -167,66 +168,6 @@ class RecipesPageState extends State<RecipesPage> {
           filterSearchResults(filterQuery);
         }
 
-        String getTagString(tag) {
-          if (tag == Tags.vegan.name) {
-            return AppLocalizations.of(context)!.tag_vegan;
-          } else if (tag == Tags.vegetarian.name) {
-            return AppLocalizations.of(context)!.tag_vegetarian;
-          } else if (tag == Tags.glutenFree.name) {
-            return AppLocalizations.of(context)!.tag_gluten_free;
-          } else if (tag == Tags.soyFree.name) {
-            return AppLocalizations.of(context)!.tag_soy_free;
-          } else if (tag == Tags.eggFree.name) {
-            return AppLocalizations.of(context)!.tag_egg_free;
-          } else if (tag == Tags.nutFree.name) {
-            return AppLocalizations.of(context)!.tag_nut_free;
-          } else if (tag == Tags.peanutFree.name) {
-            return AppLocalizations.of(context)!.tag_peanut_free;
-          } else if (tag == Tags.lactoseFree.name) {
-            return AppLocalizations.of(context)!.tag_lactose_free;
-          } else if (tag == Tags.milkFree.name) {
-            return AppLocalizations.of(context)!.tag_milk_free;
-          } else if (tag == Tags.wheatFree.name) {
-            return AppLocalizations.of(context)!.tag_wheat_free;
-          } else if (tag == Tags.seafoodFree.name) {
-            return AppLocalizations.of(context)!.tag_seafood_free;
-          } else if (tag == Tags.halal.name) {
-            return AppLocalizations.of(context)!.tag_halal;
-          } else if (tag == Tags.kosher.name) {
-            return AppLocalizations.of(context)!.tag_kosher;
-          } else {
-            return tag;
-          }
-        }
-
-        String getCategoryString(category) {
-          if (category == Categories.mainCourse.name) {
-            return AppLocalizations.of(context)!.category_main_course;
-          } else if (category == Categories.sideDish.name) {
-            return AppLocalizations.of(context)!.category_side_dish;
-          } else if (category == Categories.appetizer.name) {
-            return AppLocalizations.of(context)!.category_appetizer;
-          } else if (category == Categories.dessert.name) {
-            return AppLocalizations.of(context)!.category_dessert;
-          } else if (category == Categories.lunch.name) {
-            return AppLocalizations.of(context)!.category_lunch;
-          } else if (category == Categories.breakfast.name) {
-            return AppLocalizations.of(context)!.category_breakfast;
-          } else if (category == Categories.beverage.name) {
-            return AppLocalizations.of(context)!.category_beverage;
-          } else if (category == Categories.soup.name) {
-            return AppLocalizations.of(context)!.category_soup;
-          } else if (category == Categories.sauce.name) {
-            return AppLocalizations.of(context)!.category_sauce;
-          } else if (category == Categories.bread.name) {
-            return AppLocalizations.of(context)!.category_bread;
-          } else if (category == Categories.snack.name) {
-            return AppLocalizations.of(context)!.category_snack;
-          } else {
-            return "";
-          }
-        }
-
         List<TagsWithColor> tagsWithColors(recipe) {
           List<TagsWithColor> tags = [];
           for (var i = 0; i < 13; i++) {
@@ -245,343 +186,346 @@ class RecipesPageState extends State<RecipesPage> {
         }
 
         return Scaffold(
-          body: Container(
-              width: double.maxFinite,
-              height: double.maxFinite,
-              padding: const EdgeInsets.only(
-                  left: 10, top: 12, right: 10, bottom: 14),
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('img/background-gradient.png'),
-                      fit: BoxFit.fill)),
-              alignment: Alignment.center,
-              child: Column(children: [
-                Padding(
-                    padding: const EdgeInsets.only(bottom: 0),
-                    child: Material(
-                      color: AppColors.backgroundColor,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20.0),
-                          topRight: Radius.circular(0),
-                          bottomLeft: Radius.circular(0),
-                          bottomRight: Radius.circular(0)),
-                      child: TextField(
-                        onChanged: (value) {
-                          filterSearchResults(value);
-                        },
-                        controller: searchBoxController,
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(3),
-                            focusColor: AppColors.highlightColor3,
-                            hintText:
-                                AppLocalizations.of(context)!.global_filter,
-                            prefixIcon: const Icon(Icons.search),
-                            suffixIcon: Padding(
-                                padding: const EdgeInsets.only(right: 7),
-                                child: IconButton(
-                                    onPressed: () => showFavoritesOnly(),
-                                    color: favoritesOnly
-                                        ? AppColors.highlightColor3
-                                        : AppColors.textColor,
-                                    icon: favoritesOnly
-                                        ? const Icon(Icons.star)
-                                        : const Icon(Icons.star_outline))),
-                            border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20.0),
-                                    topRight: Radius.circular(0),
-                                    bottomLeft: Radius.circular(0),
-                                    bottomRight: Radius.circular(0)))),
-                      ),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.all(0),
-                    child: Material(
-                      color: AppColors.highlightColor3,
-                      borderRadius: const BorderRadius.all(Radius.circular(0)),
-                      child: ExpansionTile(
-                        title: AppText(
-                          text: category == null
-                              ? AppLocalizations.of(context)!.category
-                              : getCategoryString(category),
-                          size: AppTextSize.normal,
-                          color: category != null
+            body: Container(
+                width: double.maxFinite,
+                height: double.maxFinite,
+                padding: const EdgeInsets.only(
+                    left: 10, top: 12, right: 10, bottom: 14),
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('img/background-gradient.png'),
+                        fit: BoxFit.fill)),
+                alignment: Alignment.center,
+                child: Column(children: [
+                  Padding(
+                      padding: const EdgeInsets.only(bottom: 0),
+                      child: Material(
+                        color: AppColors.backgroundColor,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20.0),
+                            topRight: Radius.circular(0),
+                            bottomLeft: Radius.circular(0),
+                            bottomRight: Radius.circular(0)),
+                        child: TextField(
+                          onChanged: (value) {
+                            filterSearchResults(value);
+                          },
+                          controller: searchBoxController,
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(3),
+                              focusColor: AppColors.highlightColor3,
+                              hintText:
+                                  AppLocalizations.of(context)!.global_filter,
+                              prefixIcon: const Icon(Icons.search),
+                              suffixIcon: Padding(
+                                  padding: const EdgeInsets.only(right: 7),
+                                  child: IconButton(
+                                      onPressed: () => showFavoritesOnly(),
+                                      color: favoritesOnly
+                                          ? AppColors.highlightColor3
+                                          : AppColors.textColor,
+                                      icon: favoritesOnly
+                                          ? const Icon(Icons.star)
+                                          : const Icon(Icons.star_outline))),
+                              border: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      topRight: Radius.circular(0),
+                                      bottomLeft: Radius.circular(0),
+                                      bottomRight: Radius.circular(0)))),
+                        ),
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Material(
+                        color: AppColors.highlightColor3,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(0)),
+                        child: ExpansionTile(
+                          title: AppText(
+                            text: category == null
+                                ? AppLocalizations.of(context)!.category
+                                : TranslationUtil.getCategoryString(
+                                    context, category),
+                            size: AppTextSize.normal,
+                            color: category != null
+                                ? AppColors.textColor
+                                : AppColors.backgroundColor,
+                            backgroundColor: Colors.transparent,
+                          ),
+                          iconColor: category != null
                               ? AppColors.textColor
                               : AppColors.backgroundColor,
-                          backgroundColor: Colors.transparent,
-                        ),
-                        iconColor: category != null
-                            ? AppColors.textColor
-                            : AppColors.backgroundColor,
-                        collapsedIconColor: category != null
-                            ? AppColors.textColor
-                            : AppColors.backgroundColor,
-                        children: <Widget>[
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height / 2.7,
-                              child: ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: 11,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      title: AppText(
-                                        text: getCategoryString(
-                                            Categories.values[index].name),
-                                        size: AppTextSize.normal,
-                                        color: category ==
+                          collapsedIconColor: category != null
+                              ? AppColors.textColor
+                              : AppColors.backgroundColor,
+                          children: <Widget>[
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height / 2.7,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: 11,
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                        title: AppText(
+                                          text:
+                                              TranslationUtil.getCategoryString(
+                                                  context,
+                                                  Categories
+                                                      .values[index].name),
+                                          size: AppTextSize.normal,
+                                          color: category ==
+                                                  Categories.values[index].name
+                                              ? AppColors.textColor
+                                              : AppColors.backgroundColor,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                        trailing: category ==
                                                 Categories.values[index].name
-                                            ? AppColors.textColor
-                                            : AppColors.backgroundColor,
-                                        backgroundColor: Colors.transparent,
-                                      ),
-                                      trailing: category ==
-                                              Categories.values[index].name
-                                          ? const Icon(Icons.check,
-                                              color: AppColors.textColor)
-                                          : const SizedBox(width: 0, height: 0),
-                                      onTap: () => toggleCategoryFilter(index),
-                                    );
-                                  }))
-                        ],
-                      ),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: Material(
-                      color: AppColors.textColor,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(0),
-                          bottomLeft: Radius.circular(0),
-                          bottomRight: Radius.circular(20)),
-                      child: ExpansionTile(
-                        title: AppText(
-                          text: AppLocalizations.of(context)!.tag_filter,
-                          size: AppTextSize.normal,
-                          color: advancedFilterSelected
+                                            ? const Icon(Icons.check,
+                                                color: AppColors.textColor)
+                                            : const SizedBox(
+                                                width: 0, height: 0),
+                                        onTap: () =>
+                                            toggleCategoryFilter(index),
+                                      );
+                                    }))
+                          ],
+                        ),
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.only(bottom: 14),
+                      child: Material(
+                        color: AppColors.textColor,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(0),
+                            topRight: Radius.circular(0),
+                            bottomLeft: Radius.circular(0),
+                            bottomRight: Radius.circular(20)),
+                        child: ExpansionTile(
+                          title: AppText(
+                            text: AppLocalizations.of(context)!.tag_filter,
+                            size: AppTextSize.normal,
+                            color: advancedFilterSelected
+                                ? AppColors.highlightColor3
+                                : AppColors.backgroundColor,
+                            backgroundColor: Colors.transparent,
+                          ),
+                          iconColor: advancedFilterSelected
                               ? AppColors.highlightColor3
                               : AppColors.backgroundColor,
-                          backgroundColor: Colors.transparent,
+                          collapsedIconColor: advancedFilterSelected
+                              ? AppColors.highlightColor3
+                              : AppColors.backgroundColor,
+                          children: <Widget>[
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height / 2.5,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: 13,
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                        title: AppText(
+                                          text: TranslationUtil.getTagString(
+                                              context, Tags.values[index].name),
+                                          size: AppTextSize.normal,
+                                          color: advancedFilters[index]
+                                              ? AppColors.highlightColor3
+                                              : AppColors.backgroundColor,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                        trailing: advancedFilters[index]
+                                            ? const Icon(Icons.check,
+                                                color:
+                                                    AppColors.highlightColor3)
+                                            : const SizedBox(
+                                                width: 0, height: 0),
+                                        onTap: () =>
+                                            toggleAdvancedFilter(index),
+                                      );
+                                    }))
+                          ],
                         ),
-                        iconColor: advancedFilterSelected
-                            ? AppColors.highlightColor3
-                            : AppColors.backgroundColor,
-                        collapsedIconColor: advancedFilterSelected
-                            ? AppColors.highlightColor3
-                            : AppColors.backgroundColor,
-                        children: <Widget>[
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height / 2.5,
-                              child: ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: 13,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      title: AppText(
-                                        text: getTagString(
-                                            Tags.values[index].name),
-                                        size: AppTextSize.normal,
-                                        color: advancedFilters[index]
-                                            ? AppColors.highlightColor3
-                                            : AppColors.backgroundColor,
-                                        backgroundColor: Colors.transparent,
-                                      ),
-                                      trailing: advancedFilters[index]
-                                          ? const Icon(Icons.check,
-                                              color: AppColors.highlightColor3)
-                                          : const SizedBox(width: 0, height: 0),
-                                      onTap: () => toggleAdvancedFilter(index),
-                                    );
-                                  }))
-                        ],
-                      ),
-                    )),
-                Expanded(
-                    child: ListView.builder(
-                  itemCount: filteredRecipes.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    return Container(
-                        color: Colors.transparent,
-                        padding: const EdgeInsets.only(bottom: 6),
-                        child: Material(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(10),
-                            //Material required to solve known issue with Gesture Detector, see https://github.com/flutter/flutter/issues/83108
-                            child: GestureDetector(
-                                onTap: () => BlocProvider.of<AppCubits>(context)
-                                    .gotoRecipeDetails(filteredRecipes[index]),
-                                child: ListTile(
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(30),
-                                            bottomRight: Radius.circular(30))),
-                                    contentPadding: const EdgeInsets.all(0),
-                                    tileColor: Colors.transparent,
-                                    title: Stack(children: [
-                                      Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              3.5,
-                                          alignment: Alignment.center,
-                                          decoration: filteredRecipes[index]
-                                                          .imageUri != ""
-                                      ? BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(20),
-                                                      bottomRight:
-                                                          Radius.circular(20)),
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                      filteredRecipes[index]
-                                                          .imageUri),
-                                                  fit: BoxFit.cover)) : null,
-                                  child: filteredRecipes[index].imageUri == ""
-                                      ? AppText(
-                                          size: AppTextSize.title,
-                                          color: AppColors.backgroundColor,
-                                          text: AppLocalizations.of(context)!
-                                              .no_image)
-                                      : null),
-                                      Positioned(
-                                          top: 0,
-                                          left: 0,
-                                          child: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 40,
-                                              decoration: const BoxDecoration(
-                                                  color: Colors.black54,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  20))),
-                                              child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 20, right: 30),
-                                                  child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        AppText(
-                                                            color: AppColors
-                                                                .backgroundColor,
-                                                            text:
-                                                                filteredRecipes[
-                                                                        index]
-                                                                    .name),
-                                                        IconButton(
-                                                            onPressed: () =>
-                                                                updateFavoriteStatus(
-                                                                    filteredRecipes[
-                                                                        index]),
-                                                            color: filteredRecipes[
-                                                                        index]
-                                                                    .isFavorite
-                                                                ? AppColors
-                                                                    .starColor1
-                                                                : AppColors
-                                                                    .backgroundColor,
-                                                            icon: filteredRecipes[
-                                                                        index]
-                                                                    .isFavorite
-                                                                ? const Icon(
-                                                                    Icons.star)
-                                                                : const Icon(Icons
-                                                                    .star_outline))
-                                                      ])))),
-                                      Positioned(
-                                          bottom: 0,
-                                          left: 0,
-                                          child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  20,
-                                              height: 50,
-                                              decoration: const BoxDecoration(
-                                                  color: Colors.black54,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  20))),
-                                              child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 20,
-                                                          right: 30,
-                                                          top: 5,
-                                                          bottom: 2),
-                                                  child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              AppText(
-                                                                  color: AppColors
-                                                                      .backgroundColor,
-                                                                  text: getCategoryString(
+                      )),
+                  Expanded(
+                      child: ListView.builder(
+                    itemCount: filteredRecipes.length,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      return Container(
+                          color: Colors.transparent,
+                          padding: const EdgeInsets.only(bottom: 6),
+                          child: Material(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(10),
+                              //Material required to solve known issue with Gesture Detector, see https://github.com/flutter/flutter/issues/83108
+                              child: GestureDetector(
+                                  onTap: () =>
+                                      BlocProvider.of<AppCubits>(context)
+                                          .gotoRecipeDetails(
+                                              filteredRecipes[index]),
+                                  child: ListTile(
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30),
+                                              bottomRight:
+                                                  Radius.circular(30))),
+                                      contentPadding: const EdgeInsets.all(0),
+                                      tileColor: Colors.transparent,
+                                      title: Stack(children: [
+                                        Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                3.5,
+                                            alignment: Alignment.center,
+                                            decoration: filteredRecipes[index].imageUri != ""
+                                                ? BoxDecoration(
+                                                    borderRadius: const BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(20),
+                                                        bottomRight: Radius.circular(
+                                                            20)),
+                                                    image: DecorationImage(
+                                                        image: NetworkImage(
+                                                            filteredRecipes[index]
+                                                                .imageUri),
+                                                        fit: BoxFit.cover))
+                                                : null,
+                                            child: filteredRecipes[index].imageUri == ""
+                                                ? AppText(
+                                                    size: AppTextSize.title,
+                                                    color: AppColors.backgroundColor,
+                                                    text: AppLocalizations.of(context)!.no_image)
+                                                : null),
+                                        Positioned(
+                                            top: 0,
+                                            left: 0,
+                                            child: Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: 40,
+                                                decoration: const BoxDecoration(
+                                                    color: Colors.black54,
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    20))),
+                                                child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 20,
+                                                            right: 30),
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          AppText(
+                                                              color: AppColors
+                                                                  .backgroundColor,
+                                                              text:
+                                                                  filteredRecipes[
+                                                                          index]
+                                                                      .name),
+                                                          IconButton(
+                                                              onPressed: () =>
+                                                                  updateFavoriteStatus(
                                                                       filteredRecipes[
-                                                                              index]
-                                                                          .category)),
-                                                              SizedBox(
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width -
-                                                                      70,
-                                                                  height: 2),
-                                                              SizedBox(
-                                                                  width: MediaQuery.of(context)
-                                                                          .size
-                                                                          .width -
-                                                                      70,
-                                                                  height: 20,
-                                                                  child: ListView
-                                                                      .builder(
-                                                                          scrollDirection: Axis
-                                                                              .horizontal,
-                                                                          itemCount: tagsWithColors(filteredRecipes[index])
-                                                                              .length,
-                                                                          itemBuilder:
-                                                                              (context, indexSecondary) {
-                                                                            return AppText(
-                                                                                size: AppTextSize.small,
-                                                                                color: tagsWithColors(filteredRecipes[index])[indexSecondary].isIngredients ? AppColors.backgroundColor : AppColors.starColor1,
-                                                                                text: indexSecondary < tagsWithColors(filteredRecipes[index]).length - 1 ? "${getTagString(tagsWithColors(filteredRecipes[index])[indexSecondary].tag)}, " : getTagString(tagsWithColors(filteredRecipes[index])[indexSecondary].tag));
-                                                                          }))
-                                                            ])
-                                                      ]))))
-                                    ]),
-                                    isThreeLine: false))));
-                  },
-                ))
-              ])),
-          floatingActionButton: FloatingActionButton(
-              backgroundColor: AppColors.highlightColor3,
-              onPressed: () =>
-                  BlocProvider.of<AppCubits>(context).gotoAddRecipe(),
-              child: AppText(
-                  color: AppColors.backgroundColor,
-                  text: AppLocalizations.of(context)!.global_form_add)),
-        );
+                                                                          index]),
+                                                              color: filteredRecipes[
+                                                                          index]
+                                                                      .isFavorite
+                                                                  ? AppColors
+                                                                      .starColor1
+                                                                  : AppColors
+                                                                      .backgroundColor,
+                                                              icon: filteredRecipes[
+                                                                          index]
+                                                                      .isFavorite
+                                                                  ? const Icon(
+                                                                      Icons
+                                                                          .star)
+                                                                  : const Icon(Icons
+                                                                      .star_outline))
+                                                        ])))),
+                                        Positioned(
+                                            bottom: 0,
+                                            left: 0,
+                                            child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    20,
+                                                height: 50,
+                                                decoration: const BoxDecoration(
+                                                    color: Colors.black54,
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    20))),
+                                                child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 20,
+                                                            right: 30,
+                                                            top: 5,
+                                                            bottom: 2),
+                                                    child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                AppText(
+                                                                    color: AppColors
+                                                                        .backgroundColor,
+                                                                    text: TranslationUtil.getCategoryString(
+                                                                        context,
+                                                                        filteredRecipes[index]
+                                                                            .category)),
+                                                                SizedBox(
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width -
+                                                                        70,
+                                                                    height: 2),
+                                                                SizedBox(
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width -
+                                                                        70,
+                                                                    height: 20,
+                                                                    child: ListView.builder(
+                                                                        scrollDirection: Axis.horizontal,
+                                                                        itemCount: tagsWithColors(filteredRecipes[index]).length,
+                                                                        itemBuilder: (context, indexSecondary) {
+                                                                          return AppText(
+                                                                              size: AppTextSize.verySmall,
+                                                                              color: tagsWithColors(filteredRecipes[index])[indexSecondary].isIngredients ? AppColors.backgroundColor : AppColors.starColor1,
+                                                                              text: indexSecondary < tagsWithColors(filteredRecipes[index]).length - 1 ? "${TranslationUtil.getTagString(context, tagsWithColors(filteredRecipes[index])[indexSecondary].tag)}, " : TranslationUtil.getTagString(context, tagsWithColors(filteredRecipes[index])[indexSecondary].tag));
+                                                                        }))
+                                                              ])
+                                                        ]))))
+                                      ]),
+                                      isThreeLine: false))));
+                    },
+                  ))
+                ])));
       } else {
         return Scaffold(
             body: Container(

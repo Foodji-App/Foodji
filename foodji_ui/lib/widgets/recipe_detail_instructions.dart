@@ -7,9 +7,12 @@ import '../models/recipe_model.dart';
 import 'app_text.dart';
 
 class RecipeDetailInstructions extends StatefulWidget {
-  const RecipeDetailInstructions(this.recipe, this.isSelected, {super.key});
+  const RecipeDetailInstructions(
+      this.recipe, this.isSelected, this.scrollController,
+      {super.key});
   final RecipeModel recipe;
   final List<bool> isSelected;
+  final ScrollController scrollController;
   @override
   RecipeDetailInstructionsState createState() =>
       RecipeDetailInstructionsState();
@@ -48,8 +51,8 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
     }
 
     return ListView.builder(
+        controller: widget.scrollController,
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
         itemCount: widget.recipe.steps.length,
         itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
