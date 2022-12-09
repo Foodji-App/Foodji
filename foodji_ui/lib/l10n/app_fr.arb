@@ -112,5 +112,11 @@
   "unit_type_unit": "unité",
 
   "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Appuyez sur l'écran pour redémarrer l'application.",
-  "error_authentification": "Une erreur d'authentification est survenue durant l'exécution. Pour accéder à cette fonctionnalité, appuyez sur l'écran pour redémarrer l'application."
+  "error_authentification": "Une erreur d'authentification est survenue durant l'exécution. Pour accéder à cette fonctionnalité, appuyez sur l'écran pour redémarrer l'application.",
+
+  "feature_exploration": "Cette page affichera la liste des recettes partagées par les autres utilisateurs, que vous pourrez télécharger et modifier à votre goût.",
+  "feature_grocery": "This page will display the required ingredients of choosen recipes that you do not currently own in your pantry.",
+  "feature_ingredients": "This page will display all the known ingredients and their generic substitutes that may apply in most of the situations.",
+  "feature_pantry": "This page will help you manage the ingredients you have at your disposal, which will in turn allow us to remove them from your grocery list as well as to suggest you recipes you can currently cook.",
+  "feature_profile": "This page will display your profile informations and allow you to change most of them, including your profile picture."
 }
