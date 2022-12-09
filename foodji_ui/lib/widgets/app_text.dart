@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodji_ui/misc/colors.dart';
 
-enum AppTextSize { small, normal, subtitle, title }
+enum AppTextSize { verySmall, small, normal, subtitle, title }
 
 enum AppFontFamily { bauhaus, forte }
 
@@ -11,6 +11,7 @@ class AppText extends StatelessWidget {
   final Color color;
   final AppFontFamily fontFamily;
   final Color backgroundColor;
+  final FontStyle fontStyle;
 
   const AppText(
       {Key? key,
@@ -18,15 +19,19 @@ class AppText extends StatelessWidget {
       required this.text,
       this.color = AppColors.textColor,
       this.fontFamily = AppFontFamily.bauhaus,
-      this.backgroundColor = AppColors.none})
+      this.backgroundColor = AppColors.none,
+      this.fontStyle = FontStyle.normal})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double resolvedSize;
     switch (size) {
-      case AppTextSize.small:
+      case AppTextSize.verySmall:
         resolvedSize = 12;
+        break;
+      case AppTextSize.small:
+        resolvedSize = 14;
         break;
       case AppTextSize.normal:
         resolvedSize = 16;
@@ -53,14 +58,14 @@ class AppText extends StatelessWidget {
         resolvedFontFamily = 'bauhaus';
         break;
     }
-    return 
-    backgroundColor == AppColors.none
+    return backgroundColor == AppColors.none
         ? Text(
             text,
             style: TextStyle(
                 color: color,
                 fontSize: resolvedSize,
-                fontFamily: resolvedFontFamily),
+                fontFamily: resolvedFontFamily,
+                fontStyle: fontStyle),
           )
         : Container(
             padding: const EdgeInsets.all(8),

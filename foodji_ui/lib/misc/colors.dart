@@ -10,4 +10,5 @@ class AppColors {
   static const Color none = Color(0x00000000);
   static const Color starColor1 = Color(0xFFf9a65d);
   static const Color starColor2 = Color(0xFFe7bb4e);
+  static const Color subtitleText = Color.fromARGB(255, 110, 105, 109);
 }
