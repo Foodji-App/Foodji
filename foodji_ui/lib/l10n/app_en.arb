@@ -39,7 +39,6 @@
   "recipe_ingredients": "Ingredients",
   "recipe_instructions": "Instructions",
   "recipe_instruction": "Instruction",
-  "recipe_preparation": "Preparation",
   "recipe_amount": "Amount",
 
   "recipe_no_steps": "Aucune instruction n'a été ajoutée",
@@ -83,6 +82,7 @@
   "form_recipe_title": "Recipe Editor",
   "form_recipe_updated": "Recipe updated",
   "form_recipe_error": "Form not valid",
+  "form_recipe_ingredient_substitute_add": "Add a substitute",
 
   "value": "Value",
   "result": "Result",

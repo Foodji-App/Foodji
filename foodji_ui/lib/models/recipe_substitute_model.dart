@@ -6,7 +6,7 @@ import 'measurement_model.dart';
 class RecipeSubstituteModel {
   String? id;
   String name;
-  String? substitutionPrecisions;
+  String? substitutionPrecision;
   String? description;
   MeasurementModel measurement;
   List<String> tags;
@@ -14,7 +14,7 @@ class RecipeSubstituteModel {
   RecipeSubstituteModel(
       {required this.id,
       required this.name,
-      required this.substitutionPrecisions,
+      required this.substitutionPrecision,
       required this.description,
       required this.measurement,
       required this.tags});
@@ -23,7 +23,7 @@ class RecipeSubstituteModel {
     return RecipeSubstituteModel(
         id: json['id'],
         name: json['name'],
-        substitutionPrecisions: json['substitutionPrecisions'],
+        substitutionPrecision: json['substitutionPrecision'],
         description: json['description'],
         measurement: MeasurementModel.fromJson(json['measurement']),
         tags: json['tags'].cast<String>());
@@ -35,7 +35,7 @@ class RecipeSubstituteModel {
     return RecipeSubstituteModel(
         id: faker.guid.random.string(16), // Not Fail Safe
         name: faker.food.cuisine(),
-        substitutionPrecisions:
+        substitutionPrecision:
             faker.lorem.sentences(random.integer(1, min: 0)).join(' '),
         description: faker.lorem.sentences(random.integer(2, min: 1)).join(' '),
         measurement: MeasurementModel.getSamples(1)[0],
@@ -61,7 +61,7 @@ class RecipeSubstituteModel {
       copy.add(RecipeSubstituteModel(
           id: ingredient.id,
           name: ingredient.name,
-          substitutionPrecisions: ingredient.substitutionPrecisions,
+          substitutionPrecision: ingredient.substitutionPrecision,
           description: ingredient.description,
           measurement: ingredient.measurement,
           tags: ingredient.tags));
@@ -72,7 +72,7 @@ class RecipeSubstituteModel {
   bool equals(RecipeSubstituteModel other) {
     return id == other.id &&
         name == other.name &&
-        substitutionPrecisions == other.substitutionPrecisions &&
+        substitutionPrecision == other.substitutionPrecision &&
         description == other.description &&
         measurement.equals(other.measurement) &&
         tags == other.tags;

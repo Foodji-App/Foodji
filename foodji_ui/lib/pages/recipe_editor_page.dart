@@ -356,6 +356,16 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                 )
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: TextButton(
+                  child: Text(l10n.form_recipe_ingredient_substitute_add),
+                  onPressed: () {},
+                ),
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),
