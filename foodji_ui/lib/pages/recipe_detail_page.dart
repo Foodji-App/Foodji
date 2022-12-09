@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodji_ui/widgets/app_text.dart';
-import '../models/categories_enum.dart';
+import '../misc/translation_util.dart';
 import '../models/recipe_ingredient_model.dart';
 import '../models/recipe_substitute_model.dart';
 import '../models/tags_enum.dart';
 import '../widgets/recipe_detail_instructions.dart';
-import '../widgets/recipe_detail_preparation.dart';
+import '../widgets/recipe_detail_ingredients.dart';
 import '../widgets/stateless_app_bar.dart' as stateless_app_bar_widget;
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -42,72 +42,14 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
     });
   }
 
+  final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is RecipeState) {
         TabController tabController = TabController(length: 2, vsync: this);
         RecipeModel recipe = state.recipe;
-
-        String getTagString(tag) {
-          if (tag == Tags.vegan.name) {
-            return AppLocalizations.of(context)!.tag_vegan;
-          } else if (tag == Tags.vegetarian.name) {
-            return AppLocalizations.of(context)!.tag_vegetarian;
-          } else if (tag == Tags.glutenFree.name) {
-            return AppLocalizations.of(context)!.tag_gluten_free;
-          } else if (tag == Tags.soyFree.name) {
-            return AppLocalizations.of(context)!.tag_soy_free;
-          } else if (tag == Tags.eggFree.name) {
-            return AppLocalizations.of(context)!.tag_egg_free;
-          } else if (tag == Tags.nutFree.name) {
-            return AppLocalizations.of(context)!.tag_nut_free;
-          } else if (tag == Tags.peanutFree.name) {
-            return AppLocalizations.of(context)!.tag_peanut_free;
-          } else if (tag == Tags.lactoseFree.name) {
-            return AppLocalizations.of(context)!.tag_lactose_free;
-          } else if (tag == Tags.milkFree.name) {
-            return AppLocalizations.of(context)!.tag_milk_free;
-          } else if (tag == Tags.wheatFree.name) {
-            return AppLocalizations.of(context)!.tag_wheat_free;
-          } else if (tag == Tags.seafoodFree.name) {
-            return AppLocalizations.of(context)!.tag_seafood_free;
-          } else if (tag == Tags.halal.name) {
-            return AppLocalizations.of(context)!.tag_halal;
-          } else if (tag == Tags.kosher.name) {
-            return AppLocalizations.of(context)!.tag_kosher;
-          } else {
-            return tag;
-          }
-        }
-
-        String getCategoryString(category) {
-          if (category == Categories.mainCourse.name) {
-            return AppLocalizations.of(context)!.category_main_course;
-          } else if (category == Categories.sideDish.name) {
-            return AppLocalizations.of(context)!.category_side_dish;
-          } else if (category == Categories.appetizer.name) {
-            return AppLocalizations.of(context)!.category_appetizer;
-          } else if (category == Categories.dessert.name) {
-            return AppLocalizations.of(context)!.category_dessert;
-          } else if (category == Categories.lunch.name) {
-            return AppLocalizations.of(context)!.category_lunch;
-          } else if (category == Categories.breakfast.name) {
-            return AppLocalizations.of(context)!.category_breakfast;
-          } else if (category == Categories.beverage.name) {
-            return AppLocalizations.of(context)!.category_beverage;
-          } else if (category == Categories.soup.name) {
-            return AppLocalizations.of(context)!.category_soup;
-          } else if (category == Categories.sauce.name) {
-            return AppLocalizations.of(context)!.category_sauce;
-          } else if (category == Categories.bread.name) {
-            return AppLocalizations.of(context)!.category_bread;
-          } else if (category == Categories.snack.name) {
-            return AppLocalizations.of(context)!.category_snack;
-          } else {
-            return "";
-          }
-        }
 
         List<TagsWithColor> tagsWithColors(recipe) {
           List<TagsWithColor> tags = [];
@@ -131,7 +73,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                 appBar: stateless_app_bar_widget.AppBar(
                     AppLocalizations.of(context)!.app_bar_recipe_details),
                 backgroundColor: AppColors.backgroundColor,
-                body: CustomScrollView(slivers: [
+                body: CustomScrollView(controller: _scrollController, slivers: [
                   SliverAppBar(
                     backgroundColor: AppColors.textColor,
                     foregroundColor: AppColors.backgroundColor,
@@ -173,10 +115,10 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                     clipBehavior: Clip.none,
                                     backgroundColor: AppColors.textColor,
                                     label: AppText(
-                                        size: AppTextSize.small,
+                                        size: AppTextSize.verySmall,
                                         color: AppColors.backgroundColor,
-                                        text:
-                                            getCategoryString(recipe.category)),
+                                        text: TranslationUtil.getCategoryString(
+                                            context, recipe.category)),
                                     shape: const StadiumBorder(
                                         side: BorderSide(
                                       width: 1,
@@ -246,10 +188,12 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                                                     tagsWithColors(recipe)
                                                             .length -
                                                         1
-                                                ? "${getTagString(tagsWithColors(recipe)[index].tag)}, "
-                                                : getTagString(tagsWithColors(
-                                                        recipe)[index]
-                                                    .tag));
+                                                ? "${TranslationUtil.getTagString(context, tagsWithColors(recipe)[index].tag)}, "
+                                                : TranslationUtil.getTagString(
+                                                    context,
+                                                    tagsWithColors(
+                                                            recipe)[index]
+                                                        .tag));
                                       }))),
                           Padding(
                               padding:
@@ -298,7 +242,7 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                         child: TabBar(controller: tabController, tabs: <Tab>[
                           Tab(
                               text: AppLocalizations.of(context)!
-                                  .recipe_preparation),
+                                  .recipe_ingredients),
                           Tab(
                               text: AppLocalizations.of(context)!
                                   .recipe_instructions)
@@ -309,19 +253,30 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
                   ),
                   SliverList(
                       delegate: SliverChildListDelegate([
-                    // ignore: sized_box_for_whitespace
-                    Container(
-                        // Container is mandatory here, do not remove
+                    SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        // HACK : Height here causes an issue. It cannot be removed, but cannot be set to child size either.
-                        height: MediaQuery.of(context).size.height,
-                        child: TabBarView(controller: tabController, children: <
-                            Widget>[
-                          RecipeDetailPreparation(recipe,
-                              List.filled(recipe.ingredients.length, false)),
-                          RecipeDetailInstructions(
-                              recipe, List.filled(recipe.steps.length, false))
-                        ]))
+                        height: MediaQuery.of(context).size.height * 0.85,
+                        child: TabBarView(
+                            controller: tabController,
+                            children: <Widget>[
+                              SingleChildScrollView(
+                                  controller: _scrollController,
+                                  child: ConstrainedBox(
+                                      constraints: const BoxConstraints(),
+                                      child: RecipeDetailIngredients(
+                                          recipe,
+                                          List.filled(
+                                              recipe.ingredients.length, false),
+                                          _scrollController))),
+                              SingleChildScrollView(
+                                  child: ConstrainedBox(
+                                      constraints: const BoxConstraints(),
+                                      child: RecipeDetailInstructions(
+                                          recipe,
+                                          List.filled(
+                                              recipe.steps.length, false),
+                                          _scrollController)))
+                            ]))
                   ]))
                 ])));
       } else {
