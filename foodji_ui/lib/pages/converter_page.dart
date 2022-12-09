@@ -96,7 +96,7 @@ class ConverterPageState extends State<ConverterPage> {
   @override
   Widget build(BuildContext context) {
     l10n = AppLocalizations.of(context)!;
-    globals.setActivePage(4);
+    globals.setActivePage(3);
     initUnits();
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       return Scaffold(
@@ -124,7 +124,8 @@ class ConverterPageState extends State<ConverterPage> {
                                 children: [
                               Row(children: [
                                 Expanded(
-                                    flex: 1, child: AppText(text: '${l10n.value}:')),
+                                    flex: 1,
+                                    child: AppText(text: '${l10n.value}:')),
                                 const SizedBox(width: 12),
                                 Expanded(
                                     flex: 5, child: buildOriginMeasurement()),
@@ -140,7 +141,8 @@ class ConverterPageState extends State<ConverterPage> {
                               const SizedBox(height: 12),
                               Row(children: [
                                 Expanded(
-                                    flex: 1, child: AppText(text: '${l10n.result}:')),
+                                    flex: 1,
+                                    child: AppText(text: '${l10n.result}:')),
                                 const SizedBox(width: 12),
                                 Expanded(
                                     flex: 5, child: buildConversionResult()),

@@ -53,12 +53,13 @@ class RecipeDetailPageState extends State<RecipeDetailPage>
 
         List<TagsWithColor> tagsWithColors(recipe) {
           List<TagsWithColor> tags = [];
-          for (var i = 0; i < 12; i++) {
-            if (recipe.ingredients.any((RecipeIngredientModel ig) =>
+          for (var i = 0; i < 13; i++) {
+            if (recipe.ingredients.every((RecipeIngredientModel ig) =>
                 ig.tags.any((t) => t == Tags.values[i].name))) {
               tags.add(
                   TagsWithColor(tag: Tags.values[i].name, isIngredients: true));
-            } else if (recipe.ingredients.any((RecipeIngredientModel ig) =>
+            } else if (recipe.ingredients.every((RecipeIngredientModel ig) =>
+                ig.tags.any((t) => t == Tags.values[i].name) ||
                 ig.substitutes.any((RecipeSubstituteModel s) =>
                     s.tags.any((t) => t == Tags.values[i].name)))) {
               tags.add(TagsWithColor(

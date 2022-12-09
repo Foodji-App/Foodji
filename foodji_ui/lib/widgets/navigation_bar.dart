@@ -8,6 +8,7 @@ import 'package:foodji_ui/pages/exploration_page.dart';
 import 'package:foodji_ui/pages/ingredients_page.dart';
 import 'package:foodji_ui/pages/recipes_page.dart';
 import '../widgets/app_bar.dart' as app_bar_widget;
+import '../cubit/app_globals.dart' as globals;
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -51,6 +52,7 @@ class NavigationBarState extends State<NavigationBar> {
   }
 
   void onSpeedDialTap(int speedDialIndex) {
+    if (speedDialIndex == 0) globals.setActivePage(2);
     setState(() {
       currentMenu = 2;
       currentPage = currentMenu + speedDialIndex;

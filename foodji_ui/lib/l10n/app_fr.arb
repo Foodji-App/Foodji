@@ -115,8 +115,8 @@
   "error_authentification": "Une erreur d'authentification est survenue durant l'exécution. Pour accéder à cette fonctionnalité, appuyez sur l'écran pour redémarrer l'application.",
 
   "feature_exploration": "Cette page affichera la liste des recettes partagées par les autres utilisateurs, que vous pourrez télécharger et modifier à votre goût.",
-  "feature_grocery": "This page will display the required ingredients of choosen recipes that you do not currently own in your pantry.",
-  "feature_ingredients": "This page will display all the known ingredients and their generic substitutes that may apply in most of the situations.",
-  "feature_pantry": "This page will help you manage the ingredients you have at your disposal, which will in turn allow us to remove them from your grocery list as well as to suggest you recipes you can currently cook.",
-  "feature_profile": "This page will display your profile informations and allow you to change most of them, including your profile picture."
+  "feature_grocery": "Cette page affichera les ingrédients des recettes choisies que vous n'avez présentement pas en votre possession dans votre garde-manger.",
+  "feature_ingredients": "Cette page affichera tous les ingrédients connus ainsi qu'une liste de leur substituts génériques.",
+  "feature_pantry": "Cette page vous aidera a gérer l'ensemble des ingrédients que vous avez en votre possession, ce qui nous permettra de les retirer de votre liste d'épicerie ainsi que de vous recommander des recettes que vous pouvez présentement réaliser.",
+  "feature_profile": "Cette page affichera vos informations de profil et vous permettra d'en modifier la plupart, incluant votre photo de profil."
 }
