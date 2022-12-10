@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterfire_ui/i10n.dart';
 
 import '../cubit/app_cubits.dart';
-//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterfire_ui/auth.dart';
@@ -19,8 +20,17 @@ class AuthPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return MaterialApp(
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              FlutterFireUILocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme:
+                ThemeData(fontFamily: 'bauhaus', brightness: Brightness.dark),
             debugShowCheckedModeBanner: false,
-            theme: ThemeData.dark(),
             home: SignInScreen(
               providerConfigs: const [
                 EmailProviderConfiguration(),
@@ -33,32 +43,20 @@ class AuthPage extends StatelessWidget {
               },
               subtitleBuilder: (context, action) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: AppText(
-                    text: action == AuthAction.signIn
-                        //TODO - AppLocalizations retourne null
-                        ? /*AppLocalizations.of(context)!.authentification_sign_in*/ "Welcome to Foodji! Sign in or create a new account to discover everything we have to offer."
-                        : /*AppLocalizations.of(context)!
-                            .authentification_sign_up*/
-                        "Welcome to Foodji! Sign up by entering your informations below.",
-                    size: AppTextSize.normal,
-                    color: Colors.grey,
-                    backgroundColor: Colors.transparent,
-                  ),
-                );
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: action == AuthAction.signIn
+                        ? Text(AppLocalizations.of(context)!
+                            .authentication_welcome_sign_in)
+                        : Text(AppLocalizations.of(context)!
+                            .authentication_welcome_sign_up));
               },
               footerBuilder: (context, action) {
-                return const Padding(
-                  padding: EdgeInsets.only(top: 16),
-                  child: AppText(
-                    text: /*AppLocalizations.of(context)!
-                        .authentification_sign_up_instructions*/
-                        "By using Foodji, you agree to terms and conditions we haven't exactly defined yet. When you think about it, it's like choosing the red pill. Be a Neo. We can only promise you one thing for joining us ; we have cookie... recipes.",
-                    size: AppTextSize.normal,
-                    color: Colors.grey,
-                    backgroundColor: Colors.transparent,
-                  ),
-                );
+                return Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text(
+                        AppLocalizations.of(context)!
+                            .authentication_terms_and_conditions,
+                        style: const TextStyle(color: Colors.grey)));
               },
               sideBuilder: (context, shrinkOffset) {
                 return Padding(
