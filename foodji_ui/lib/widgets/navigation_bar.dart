@@ -1,21 +1,17 @@
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:flutterfire_ui/i10n.dart';
-import 'package:foodji_ui/cubit/app_cubits.dart';
 import 'package:foodji_ui/misc/colors.dart';
 import 'package:foodji_ui/pages/exploration_page.dart';
 import 'package:foodji_ui/pages/ingredients_page.dart';
+import 'package:foodji_ui/pages/profile_page.dart';
+import 'package:foodji_ui/pages/converter_page.dart';
+import 'package:foodji_ui/pages/grocery_page.dart';
+import 'package:foodji_ui/pages/pantry_page.dart';
 import 'package:foodji_ui/pages/recipes_page.dart';
 import '../widgets/app_bar.dart' as app_bar_widget;
 import '../cubit/app_globals.dart' as globals;
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../pages/converter_page.dart';
-import '../pages/grocery_page.dart';
-import '../pages/pantry_page.dart';
 
 class NavigationBar extends StatefulWidget {
   const NavigationBar({super.key});
