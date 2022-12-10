@@ -1,33 +1,63 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:foodji_ui/models/recipe_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../misc/app_routes.dart';
+
 class RecipeServices {
-  String baseUrl = "http://localhost:7272";
+  AppRoutes appRoutes = AppRoutes("");
 
   // GET
-  // Recipes
   Future<List<RecipeModel>> getRecipes() async {
-    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+    appRoutes =
+        AppRoutes(await FirebaseAuth.instance.currentUser!.getIdToken());
+    http.Response res = await http.get(
+        Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}'),
+        headers: appRoutes.headers());
 
-    var apiUrl = '/recipes';
-    // FOR IT TO WORK:
-    // https://stackoverflow.com/questions/65630743/how-to-solve-flutter-web-api-cors-error-only-with-dart-code
-    http.Response res = await http.get(Uri.parse(baseUrl + apiUrl),
-        headers: {HttpHeaders.authorizationHeader: 'bearer $token'});
-
-    try {
-      if (res.statusCode == 200) {
-        List<dynamic> list = json.decode(res.body);
-        return list.map<RecipeModel>((e) => RecipeModel.fromJson(e)).toList();
-      } else {
-        throw res.statusCode;
-      }
-    } catch (e) {
+    if (res.statusCode == 200) {
+      List<dynamic> list = json.decode(res.body);
+      return list.map<RecipeModel>((e) => RecipeModel.fromJson(e)).toList();
+    } else {
       return <RecipeModel>[];
     }
+  }
+
+  // POST
+  createRecipe(RecipeModel recipe) async {
+    recipe.createdAt = DateTime.now();
+    recipe.details.totalTime = (recipe.details.preparationTime ?? 0) +
+        (recipe.details.cookingTime ?? 0) +
+        (recipe.details.restingTime ?? 0);
+    appRoutes =
+        AppRoutes(await FirebaseAuth.instance.currentUser!.getIdToken());
+    return await http.post(
+        Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}'),
+        headers: appRoutes.headers(),
+        body: jsonEncode(recipe));
+  }
+
+  // PUT
+  updateRecipe(RecipeModel recipe) async {
+    recipe.createdAt ??= DateTime.now();
+    recipe.details.totalTime = (recipe.details.preparationTime ?? 0) +
+        (recipe.details.cookingTime ?? 0) +
+        (recipe.details.restingTime ?? 0);
+    appRoutes =
+        AppRoutes(await FirebaseAuth.instance.currentUser!.getIdToken());
+    return await http.put(
+        Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}/${recipe.id}'),
+        headers: appRoutes.headers(),
+        body: jsonEncode(recipe));
+  }
+
+  // DELETE
+  deleteRecipe(RecipeModel recipe) async {
+    appRoutes =
+        AppRoutes(await FirebaseAuth.instance.currentUser!.getIdToken());
+    return await http.delete(
+        Uri.parse('${AppRoutes.baseUrl}${AppRoutes.recipes}/${recipe.id}'),
+        headers: appRoutes.headers());
   }
 }

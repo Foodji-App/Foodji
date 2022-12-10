@@ -1,9 +1,13 @@
 import 'package:faker/faker.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:foodji_ui/models/tags_enum.dart';
 import 'package:foodji_ui/models/recipe_substitute_model.dart';
 
 import 'measurement_model.dart';
 
+part 'recipe_ingredient_model.g.dart';
+
+@JsonSerializable()
 class RecipeIngredientModel {
   String? id;
   String name;
@@ -20,18 +24,13 @@ class RecipeIngredientModel {
       required this.tags,
       required this.substitutes});
 
-  factory RecipeIngredientModel.fromJson(Map<String, dynamic> json) {
-    return RecipeIngredientModel(
-        id: json['id'],
-        name: json['name'],
-        description: json['description'],
-        measurement: MeasurementModel.fromJson(json['measurement']),
-        substitutes: json['substitutes']
-            .map<RecipeSubstituteModel>(
-                (e) => RecipeSubstituteModel.fromJson(e))
-            .toList(),
-        tags: json['tags'].cast<String>());
-  }
+  /// Connect the generated [_$RecipeIngredientModelFromJson] function to the `fromJson`
+  /// factory.
+  factory RecipeIngredientModel.fromJson(Map<String, dynamic> json) =>
+      _$RecipeIngredientModelFromJson(json);
+
+  /// Connect the generated [_$RecipeIngredientModelToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$RecipeIngredientModelToJson(this);
 
   static RecipeIngredientModel getSample() {
     var faker = Faker();

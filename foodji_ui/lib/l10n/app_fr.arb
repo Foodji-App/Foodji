@@ -6,6 +6,15 @@
   "global_slogan": "Remix ta bouffe comme tu l'aimes",
   "global_filter": "Filtrer",
 
+  "global_form_add": "Ajouter",
+  "global_form_cancel": "Annuler",
+  "global_form_delete": "Supprimer",
+  "global_form_discard": "Ignorer",
+  "global_form_discard_message": "Ignorer les changements?",
+  "global_form_delete_message": "Supprimer définitivement l'item?",
+
+  "no_image": "AUCUNE IMAGE DISPONIBLE",
+
   "app_bar_recipe_details": "Détails de la recette",
 
   "demo_access": "Appuyez sur l'écran pour accéder à la démonstration",
@@ -96,5 +105,11 @@
   "unit_type_unit": "unités",
 
   "error_unknown": "Une erreur inconnue est survenue durant l'exécution. Appuyez sur l'écran pour redémarrer l'application.",
-  "error_authentification": "Une erreur d'authentification est survenue durant l'exécution. Pour accéder à cette fonctionnalité, appuyez sur l'écran pour redémarrer l'application."
+  "error_authentication": "Une erreur d'authentification est survenue durant l'exécution. Pour accéder à cette fonctionnalité, appuyez sur l'écran pour redémarrer l'application.",
+
+  "feature_exploration": "Cette page affichera la liste des recettes partagées par les autres utilisateurs, que vous pourrez télécharger et modifier à votre goût.",
+  "feature_grocery": "Cette page affichera les ingrédients des recettes choisies que vous n'avez présentement pas en votre possession dans votre garde-manger.",
+  "feature_ingredients": "Cette page affichera tous les ingrédients connus ainsi qu'une liste de leur substituts génériques.",
+  "feature_pantry": "Cette page vous aidera a gérer l'ensemble des ingrédients que vous avez en votre possession, ce qui nous permettra de les retirer de votre liste d'épicerie ainsi que de vous recommander des recettes que vous pouvez présentement réaliser.",
+  "feature_profile": "Cette page affichera vos informations de profil et vous permettra d'en modifier la plupart, incluant votre photo de profil."
 }

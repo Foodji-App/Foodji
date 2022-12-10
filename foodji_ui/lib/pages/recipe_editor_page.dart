@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodji_ui/misc/app_util.dart';
+import 'package:foodji_ui/models/categories_enum.dart';
 import 'package:foodji_ui/models/recipe_ingredient_model.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
+import '../misc/translation_util.dart';
 import '../models/recipe_model.dart';
 import '../widgets/app_text.dart';
 import '../widgets/recipe_form/app_reorderable_text_form_fields.dart';
@@ -21,57 +25,83 @@ class RecipeEditorPage extends StatefulWidget {
 
 class RecipeEditorPageState extends State<RecipeEditorPage>
     with TickerProviderStateMixin {
-  late RecipeModel _currentRecipe, _savedRecipe;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ScrollController _scrollController = ScrollController();
 
+  late RecipeModel _currentRecipe, _savedRecipe;
+  late bool isFirstBuild = true;
   late AppLocalizations l10n;
 
-  final _dropdownValues = <String>[
-    'Breakfast',
-    'Lunch',
-    'Dinner',
-    'Dessert',
-    'Snack'
-  ];
-
-  final _tileShape = const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15), bottomRight: Radius.circular(15)));
-
-  final _formKey = GlobalKey<FormState>();
-
-  final _scrollController = ScrollController();
-
-  _updateRecipe() {
+  _updateRecipe() async {
+    http.Response res;
     if (_formKey.currentState!.validate()) {
-      setState(() {
-        // TODO : Send recipe to database
-        // _savedRecipe = BlocProvider.....
-        BlocProvider.of<AppCubits>(context)
-            .updateRecipe(RecipeModel.deepCopy(_currentRecipe));
-        _savedRecipe = RecipeModel.deepCopy(_currentRecipe);
-        _formKey.currentState!.save();
-      });
-      return l10n.form_recipe_updated;
+      if (_currentRecipe.id == null || _currentRecipe.id!.isEmpty) {
+        res = await BlocProvider.of<AppCubits>(context)
+            .createRecipe(_currentRecipe);
+      } else {
+        res = await BlocProvider.of<AppCubits>(context)
+            .updateRecipe(_currentRecipe);
+      }
+
+      if (res.statusCode == 201) {
+        setState(() {
+          _savedRecipe = RecipeModel.deepCopy(_currentRecipe);
+          _formKey.currentState!.save();
+        });
+        return l10n.form_recipe_updated;
+      }
+      return l10n.form_error;
     }
-    return l10n.form_error;
+  }
+
+  _deleteRecipe() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context2) {
+          return AlertDialog(
+            title: AppText(text: l10n.global_form_delete_message),
+            actions: [
+              TextButton(
+                child: AppText(text: l10n.global_form_cancel),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                  child: AppText(text: l10n.global_form_delete),
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    http.Response res =
+                        await BlocProvider.of<AppCubits>(context)
+                            .deleteRecipe(_currentRecipe);
+                    if (res.statusCode == 204) {
+                      // ignore: use_build_context_synchronously
+                      BlocProvider.of<AppCubits>(context).gotoRecipes();
+                    }
+                  }),
+            ],
+          );
+        });
   }
 
   _discardRecipe() {
-    if (!_savedRecipe.equals(_currentRecipe)) {
+    if (_currentRecipe.id == "" || _savedRecipe.id == "") {
+      return BlocProvider.of<AppCubits>(context).gotoRecipes();
+    } else if (!_savedRecipe.equals(_currentRecipe)) {
       showDialog(
           context: context,
-          builder: (BuildContext context) {
+          builder: (BuildContext context2) {
             return AlertDialog(
-              title: const AppText(text: 'Discard changes?'),
+              title: AppText(text: l10n.global_form_discard_message),
               actions: [
                 TextButton(
-                  child: const AppText(text: 'Cancel'),
+                  child: AppText(text: l10n.global_form_cancel),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 TextButton(
-                    child: const AppText(text: 'Discard'),
+                    child: AppText(text: l10n.global_form_discard),
                     onPressed: () {
                       Navigator.of(context).pop();
                       BlocProvider.of<AppCubits>(context)
@@ -81,7 +111,8 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
             );
           });
     } else {
-      BlocProvider.of<AppCubits>(context).gotoRecipeDetails(_savedRecipe);
+      return BlocProvider.of<AppCubits>(context)
+          .gotoRecipeDetails(_savedRecipe);
     }
   }
 
@@ -92,8 +123,11 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
     // Build a Form widget using the _formKey created above.
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is RecipeEditorState) {
-        _savedRecipe = state.recipe;
-        _currentRecipe = RecipeModel.deepCopy(_savedRecipe);
+        if (isFirstBuild) {
+          _savedRecipe = state.recipe;
+          _currentRecipe = RecipeModel.deepCopy(_savedRecipe);
+          isFirstBuild = false;
+        }
         return Scaffold(
           appBar: _appBar(),
           body: Stack(
@@ -115,7 +149,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                       child: Column(
                         children: [
                           Material(
-                            shape: _tileShape,
+                            shape: AppUtil.fullTile,
                             color: AppColors.backgroundColor,
                             child: ListTile(
                                 title: Column(
@@ -159,8 +193,15 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
         actions: <Widget>[
           IconButton(
               icon: const Icon(Icons.save),
-              onPressed: () => ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(_updateRecipe())))),
+              onPressed: () async => ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(await _updateRecipe())))),
+          _currentRecipe.id != ""
+              ? IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () async => ScaffoldMessenger.of(context)
+                      .showSnackBar(
+                          SnackBar(content: Text(await _deleteRecipe()))))
+              : Container(),
           Container(
               margin: const EdgeInsets.only(right: 4),
               child: IconButton(
@@ -197,18 +238,13 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   }
 
   Widget _buildCategory() {
-    // TODO : get from DB
-    !_dropdownValues.contains(_currentRecipe.category)
-        ? _dropdownValues.add(_currentRecipe.category)
-        : null;
-
     return DropdownButtonFormField<String>(
       value: _currentRecipe.category,
       decoration: InputDecoration(hintText: l10n.category),
-      items: _dropdownValues.map<DropdownMenuItem<String>>((String value) {
+      items: Categories.values.map<DropdownMenuItem<String>>((element) {
         return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
+          value: element.name,
+          child: Text(TranslationUtil.getCategoryString(context, element.name)),
         );
       }).toList(),
       onChanged: (String? value) =>
@@ -232,7 +268,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   Widget _buildSteps() {
     return Material(
       color: AppColors.backgroundColor,
-      shape: _tileShape,
+      shape: AppUtil.fullTile,
       child: ExpansionTile(
         title: AppText(text: l10n.recipe_steps),
         children: [
@@ -255,7 +291,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   Widget _buildIngredients() {
     return Material(
       color: AppColors.backgroundColor,
-      shape: _tileShape,
+      shape: AppUtil.fullTile,
       child: ExpansionTile(
         title: AppText(text: l10n.recipe_ingredients),
         children: [
