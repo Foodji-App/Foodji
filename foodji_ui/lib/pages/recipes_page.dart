@@ -52,7 +52,7 @@ class RecipesPageState extends State<RecipesPage> {
   Widget build(BuildContext context) {
     globals.setActivePage(0);
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
-      if (state is AuthentifiedState) {
+      if (state is AuthenticatedState) {
         List<RecipeModel> filteredRecipes = state.filteredRecipes;
         List<RecipeModel> recipes = state.recipes;
 
@@ -547,7 +547,7 @@ class RecipesPageState extends State<RecipesPage> {
                         },
                         child: AppText(
                             text: AppLocalizations.of(context)!
-                                .error_authentification,
+                                .error_authentication,
                             color: AppColors.backgroundColor,
                             size: AppTextSize.normal,
                             fontFamily: AppFontFamily.bauhaus)))));

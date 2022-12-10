@@ -27,20 +27,14 @@ class LoadingState extends CubitStates {
 
 // After splash screen, when loading is complete, display an authorization
 // request screen
-class AuthentificationRequestState extends CubitStates {
-  @override
-  List<Object> get props => throw [];
-}
-
-// If user requests, go to new account registration page
-class RegistrationState extends CubitStates {
+class AuthenticationRequestState extends CubitStates {
   @override
   List<Object> get props => throw [];
 }
 
 // Once authorized, displays the user's recipes list as the main page
-class AuthentifiedState extends CubitStates {
-  AuthentifiedState(this.recipes, this.filteredRecipes, this.ingredients,
+class AuthenticatedState extends CubitStates {
+  AuthenticatedState(this.recipes, this.filteredRecipes, this.ingredients,
       this.filteredIngredients);
   final List<RecipeModel> recipes;
   final List<RecipeModel> filteredRecipes;

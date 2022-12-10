@@ -27,33 +27,31 @@ class AppCubits extends Cubit<CubitStates> {
   // Getters -------------------------------------
 
   // Splash page
-  // Gets the authentification request state or error state
+  // Gets the authentication request state or error state
   void getInitialData() async {
     try {
-      emit(AuthentificationRequestState());
+      emit(AuthenticationRequestState());
     } catch (e) {
       emit(ErrorState());
     }
   }
 
   // Authentication page
-  // Authentifies the user and returns, gets the data linked to the user and
-  // then, the authentified state or error state
+  // Authenticates the user and returns, gets the data linked to the user and
+  // then, the authenticated state or error state
   void retrieveUserData() async {
     userData = UserDataModel(
         id: await FirebaseAuth.instance.currentUser!.getIdToken(),
         recipes: await RecipeServices().getRecipes());
 
-    recipeIngredients.addAll(RecipeIngredientModel.getSamples(20));
-
-    emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+    emit(AuthenticatedState(userData.recipes, [...userData.recipes],
         recipeIngredients, [...recipeIngredients]));
   }
 
   // Creates an account, then go to the login page if successful
   Future<bool> register(email, password) async {
     try {
-      emit(AuthentificationRequestState());
+      emit(AuthenticationRequestState());
       return true;
     } catch (e) {
       emit(ErrorState());
@@ -114,19 +112,10 @@ class AppCubits extends Cubit<CubitStates> {
     }
   }
 
-  // To registration screen
-  void gotoRegistration() async {
-    try {
-      emit(RegistrationState());
-    } catch (e) {
-      emit(ErrorState());
-    }
-  }
-
   // To recipes
   void gotoRecipes() async {
     try {
-      emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+      emit(AuthenticatedState(userData.recipes, [...userData.recipes],
           recipeIngredients, [...recipeIngredients]));
     } catch (e) {
       emit(ErrorState());
@@ -162,7 +151,7 @@ class AppCubits extends Cubit<CubitStates> {
   // To ingredients
   void gotoIngredients() async {
     try {
-      emit(AuthentifiedState(userData.recipes, [...userData.recipes],
+      emit(AuthenticatedState(userData.recipes, [...userData.recipes],
           recipeIngredients, [...recipeIngredients]));
     } catch (e) {
       emit(ErrorState());

@@ -105,7 +105,7 @@
   "unit_type_unit": "unit",
 
   "error_unknown": "An unknown error occured during the execution. Press anywhere to restart the application.",
-  "error_authentification": "An authentication error occured during the execution. To access this feature, press anywhere on this page to restart the application.",
+  "error_authentication": "An authentication error occured during the execution. To access this feature, press anywhere on this page to restart the application.",
 
   "feature_exploration": "This page will display a list of recipes shared by other users, which you will be able to download and adjust to your own taste.",
   "feature_grocery": "This page will display the required ingredients of choosen recipes that you do not currently own in your pantry.",

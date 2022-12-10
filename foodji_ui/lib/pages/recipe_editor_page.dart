@@ -10,6 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../cubit/app_cubit_states.dart';
 import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
+import '../misc/translation_util.dart';
 import '../models/recipe_model.dart';
 import '../widgets/app_text.dart';
 import '../widgets/recipe_form/app_reorderable_text_form_fields.dart';
@@ -30,34 +31,6 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   late RecipeModel _currentRecipe, _savedRecipe;
   late bool isFirstBuild = true;
   late AppLocalizations l10n;
-
-  String getCategoryString(category) {
-    if (category == Categories.mainCourse.name) {
-      return AppLocalizations.of(context)!.category_main_course;
-    } else if (category == Categories.sideDish.name) {
-      return AppLocalizations.of(context)!.category_side_dish;
-    } else if (category == Categories.appetizer.name) {
-      return AppLocalizations.of(context)!.category_appetizer;
-    } else if (category == Categories.dessert.name) {
-      return AppLocalizations.of(context)!.category_dessert;
-    } else if (category == Categories.lunch.name) {
-      return AppLocalizations.of(context)!.category_lunch;
-    } else if (category == Categories.breakfast.name) {
-      return AppLocalizations.of(context)!.category_breakfast;
-    } else if (category == Categories.beverage.name) {
-      return AppLocalizations.of(context)!.category_beverage;
-    } else if (category == Categories.soup.name) {
-      return AppLocalizations.of(context)!.category_soup;
-    } else if (category == Categories.sauce.name) {
-      return AppLocalizations.of(context)!.category_sauce;
-    } else if (category == Categories.bread.name) {
-      return AppLocalizations.of(context)!.category_bread;
-    } else if (category == Categories.snack.name) {
-      return AppLocalizations.of(context)!.category_snack;
-    } else {
-      return "";
-    }
-  }
 
   _updateRecipe() async {
     http.Response res;
@@ -271,7 +244,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
       items: Categories.values.map<DropdownMenuItem<String>>((element) {
         return DropdownMenuItem<String>(
           value: element.name,
-          child: Text(getCategoryString(element.name)),
+          child: Text(TranslationUtil.getCategoryString(context, element.name)),
         );
       }).toList(),
       onChanged: (String? value) =>
