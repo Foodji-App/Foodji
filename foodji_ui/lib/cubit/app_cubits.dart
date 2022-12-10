@@ -51,7 +51,6 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   // Creates an account, then go to the login page if successful
-  //TODO - Compléter le processus de création de compte
   Future<bool> register(email, password) async {
     try {
       emit(AuthentificationRequestState());
