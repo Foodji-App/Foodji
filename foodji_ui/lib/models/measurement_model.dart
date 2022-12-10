@@ -1,6 +1,10 @@
 import 'package:faker/faker.dart';
 import 'package:foodji_ui/models/unit_type_enum.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'measurement_model.g.dart';
+
+@JsonSerializable()
 class MeasurementModel {
   String alternativeText;
   String unitType;
@@ -11,12 +15,13 @@ class MeasurementModel {
       required this.unitType,
       required this.value});
 
-  factory MeasurementModel.fromJson(Map<String, dynamic> json) {
-    return MeasurementModel(
-        alternativeText: json['alternativeText'],
-        value: json['value'],
-        unitType: json['unitType']);
-  }
+  /// Connect the generated [_$PersonFromJson] function to the `fromJson`
+  /// factory.
+  factory MeasurementModel.fromJson(Map<String, dynamic> json) =>
+      _$MeasurementModelFromJson(json);
+
+  /// Connect the generated [_$PersonToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$MeasurementModelToJson(this);
 
   static MeasurementModel getSample() {
     var faker = Faker();

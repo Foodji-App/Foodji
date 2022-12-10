@@ -8,6 +8,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterfire_ui/auth.dart';
 
+import '../widgets/app_text.dart';
+
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
 

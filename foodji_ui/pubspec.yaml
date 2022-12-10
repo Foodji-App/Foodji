@@ -34,7 +34,7 @@ dependencies:
   flutter_localizations: 
     sdk: flutter   
   intl: any
-  flutter_speed_dial: ^3.0.5
+  flutter_speed_dial: ^6.2.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -44,14 +44,17 @@ dependencies:
   equatable: ^2.0.5
   http: ^0.13.5
   font_awesome_flutter: ^10.2.1
-  firebase_core: ^1.23.0
+  firebase_core: ^2.3.0
   faker: ^2.0.0
   observable: ^0.24.0
   file_picker: ^5.2.2
-  firebase_auth: ^3.11.2
+  firebase_auth: ^4.1.4
   firebase_ui_auth: ^1.0.0-dev.0
-  flutterfire_ui: ^0.3.0
-  firebase_dynamic_links: ^4.3.11
+  flutterfire_ui: ^0.4.3+20
+  firebase_dynamic_links: ^5.0.6
+  json_serializable: ^6.5.4
+  build_runner: ^2.3.2
+  json_annotation: ^4.7.0
 
 dev_dependencies:
   flutter_test:

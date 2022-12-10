@@ -27,18 +27,16 @@ class AppBarState extends State<AppBar> {
       case 0:
         return AppLocalizations.of(context)!.menu_recipes;
       case 1:
-        return AppLocalizations.of(context)!.menu_favourites;
-      case 2:
         return AppLocalizations.of(context)!.menu_exploration;
-      case 3:
+      case 2:
         return AppLocalizations.of(context)!.menu_profile;
-      case 4:
+      case 3:
         return AppLocalizations.of(context)!.menu_converter;
-      case 5:
+      case 4:
         return AppLocalizations.of(context)!.menu_ingredients;
-      case 6:
+      case 5:
         return AppLocalizations.of(context)!.menu_pantry;
-      case 7:
+      case 6:
         return AppLocalizations.of(context)!.menu_grocery;
       default:
         return "";

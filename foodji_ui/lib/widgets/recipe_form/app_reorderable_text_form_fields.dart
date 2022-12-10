@@ -61,7 +61,7 @@ class AppReorderableTextFormFieldsState
             },
             style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    AppUtil().lastTile)),
+                    AppUtil.lastTile)),
             child: Container(
                 width: double.maxFinite,
                 padding: const EdgeInsets.symmetric(vertical: 10),

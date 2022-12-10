@@ -102,8 +102,7 @@ class RecipeDetailInstructionsState extends State<RecipeDetailInstructions> {
           ),
           widget.recipe.ingredients.isNotEmpty
               ? ingredients(context)
-              : AppText(
-                  text: AppLocalizations.of(context)!.recipe_no_ingredients)
+              : AppText(text: AppLocalizations.of(context)!.recipe_no_steps)
         ]));
   }
 }

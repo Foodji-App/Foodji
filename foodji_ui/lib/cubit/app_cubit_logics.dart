@@ -28,9 +28,9 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
         return const SplashPage();
       } else if (state is LoadingState) {
         return const Center(child: CircularProgressIndicator());
-      } else if (state is AuthentificationRequestState) {
+      } else if (state is AuthenticationRequestState) {
         return const AuthPage();
-      } else if (state is AuthentifiedState) {
+      } else if (state is AuthenticatedState) {
         return const navigation_bar_widget.NavigationBar();
       } else if (state is RecipeState) {
         return const RecipeDetailPage();

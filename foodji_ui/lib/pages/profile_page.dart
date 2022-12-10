@@ -18,7 +18,7 @@ class ProfilePage extends StatefulWidget {
 class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    globals.setActivePage(3);
+    globals.setActivePage(2);
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       return MaterialApp(
           localizationsDelegates: [

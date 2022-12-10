@@ -1,15 +1,18 @@
 // ignore_for_file: prefer_adjacent_string_concatenation, prefer_interpolation_to_compose_strings
-
 import 'dart:math';
 
 import 'package:faker/faker.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:foodji_ui/models/recipe_details_model.dart';
 
 import 'categories_enum.dart';
 import 'recipe_ingredient_model.dart';
 
+part 'recipe_model.g.dart';
+
+@JsonSerializable()
 class RecipeModel {
-  String id;
+  String? id;
   String name;
   String imageUri;
   String category;
@@ -18,7 +21,9 @@ class RecipeModel {
   List<RecipeIngredientModel> ingredients;
   List<String> steps;
   DateTime? createdAt;
-  bool isFavorite;
+
+  @JsonKey(ignore: true)
+  bool isFavorite = Random().nextInt(2) == 1 ? true : false;
 
   RecipeModel(
       {required this.id,
@@ -29,25 +34,15 @@ class RecipeModel {
       required this.details,
       required this.ingredients,
       required this.steps,
-      required this.isFavorite,
       this.createdAt});
 
-  factory RecipeModel.fromJson(Map<String, dynamic> json) {
-    return RecipeModel(
-        id: json['id'],
-        name: json['name'],
-        createdAt: DateTime.tryParse(json['createdAt']),
-        category: json['category'],
-        description: json['description'],
-        details: RecipeDetailsModel.fromJson(json['details']),
-        ingredients: json['ingredients']
-            .map<RecipeIngredientModel>(
-                (e) => RecipeIngredientModel.fromJson(e))
-            .toList(),
-        steps: json['steps'].cast<String>(),
-        imageUri: json['imageUri'],
-        isFavorite: Random.secure().nextBool());
-  }
+  /// Connect the generated [_$RecipeModelFromJson] function to the `fromJson`
+  /// factory.
+  factory RecipeModel.fromJson(Map<String, dynamic> json) =>
+      _$RecipeModelFromJson(json);
+
+  /// Connect the generated [_$RecipeModelToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$RecipeModelToJson(this);
 
   String toText() =>
       'id: $id\n' +
@@ -100,7 +95,7 @@ class RecipeModel {
         id: '',
         name: '',
         imageUri: '',
-        category: '',
+        category: Categories.values[0].name,
         description: '',
         details: RecipeDetailsModel(
             cookingTime: 0,
@@ -109,8 +104,7 @@ class RecipeModel {
             serves: 0,
             totalTime: 0),
         ingredients: [],
-        steps: [],
-        isFavorite: false);
+        steps: []);
   }
 
   static RecipeModel deepCopy(RecipeModel model) {
@@ -122,8 +116,7 @@ class RecipeModel {
         description: model.description,
         details: RecipeDetailsModel.deepCopy(model.details),
         ingredients: RecipeIngredientModel.deepCopy(model.ingredients),
-        steps: model.steps,
-        isFavorite: model.isFavorite);
+        steps: model.steps);
   }
 
   static RecipeModel getSample() {
@@ -138,8 +131,7 @@ class RecipeModel {
         details: RecipeDetailsModel.getSample(),
         ingredients:
             RecipeIngredientModel.getSamples(random.integer(10, min: 3)),
-        steps: faker.lorem.sentences(random.integer(10, min: 3)),
-        isFavorite: Random().nextInt(2) == 1 ? true : false);
+        steps: faker.lorem.sentences(random.integer(10, min: 3)));
   }
 
   static List<RecipeModel> getSamples(int amount) {

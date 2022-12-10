@@ -52,7 +52,7 @@ class RecipesPageState extends State<RecipesPage> {
   Widget build(BuildContext context) {
     globals.setActivePage(0);
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
-      if (state is AuthentifiedState) {
+      if (state is AuthenticatedState) {
         List<RecipeModel> filteredRecipes = state.filteredRecipes;
         List<RecipeModel> recipes = state.recipes;
 
@@ -171,11 +171,12 @@ class RecipesPageState extends State<RecipesPage> {
         List<TagsWithColor> tagsWithColors(recipe) {
           List<TagsWithColor> tags = [];
           for (var i = 0; i < 13; i++) {
-            if (recipe.ingredients.any((RecipeIngredientModel ig) =>
+            if (recipe.ingredients.every((RecipeIngredientModel ig) =>
                 ig.tags.any((t) => t == Tags.values[i].name))) {
               tags.add(
                   TagsWithColor(tag: Tags.values[i].name, isIngredients: true));
-            } else if (recipe.ingredients.any((RecipeIngredientModel ig) =>
+            } else if (recipe.ingredients.every((RecipeIngredientModel ig) =>
+                ig.tags.any((t) => t == Tags.values[i].name) ||
                 ig.substitutes.any((RecipeSubstituteModel s) =>
                     s.tags.any((t) => t == Tags.values[i].name)))) {
               tags.add(TagsWithColor(
@@ -386,19 +387,25 @@ class RecipesPageState extends State<RecipesPage> {
                                                     .height /
                                                 3.5,
                                             alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    const BorderRadius.only(
+                                            decoration: filteredRecipes[index].imageUri != ""
+                                                ? BoxDecoration(
+                                                    borderRadius: const BorderRadius.only(
                                                         topLeft:
                                                             Radius.circular(20),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                20)),
-                                                image: DecorationImage(
-                                                    image: NetworkImage(
-                                                        filteredRecipes[index]
-                                                            .imageUri),
-                                                    fit: BoxFit.cover))),
+                                                        bottomRight: Radius.circular(
+                                                            20)),
+                                                    image: DecorationImage(
+                                                        image: NetworkImage(
+                                                            filteredRecipes[index]
+                                                                .imageUri),
+                                                        fit: BoxFit.cover))
+                                                : null,
+                                            child: filteredRecipes[index].imageUri == ""
+                                                ? AppText(
+                                                    size: AppTextSize.title,
+                                                    color: AppColors.backgroundColor,
+                                                    text: AppLocalizations.of(context)!.no_image)
+                                                : null),
                                         Positioned(
                                             top: 0,
                                             left: 0,
@@ -540,7 +547,7 @@ class RecipesPageState extends State<RecipesPage> {
                         },
                         child: AppText(
                             text: AppLocalizations.of(context)!
-                                .error_authentification,
+                                .error_authentication,
                             color: AppColors.backgroundColor,
                             size: AppTextSize.normal,
                             fontFamily: AppFontFamily.bauhaus)))));

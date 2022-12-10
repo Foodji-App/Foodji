@@ -6,6 +6,15 @@
   "global_slogan": "Remix your meals to your heart's content",
   "global_filter": "Filter",
 
+  "global_form_add": "Add",
+  "global_form_cancel": "Cancel",
+  "global_form_delete": "Delete",
+  "global_form_discard": "Discard",
+  "global_form_discard_message": "Discard changes?",
+  "global_form_delete_message": "Definitely delete this item?",
+
+  "no_image": "NO IMAGE AVAILABLE",
+
   "app_bar_recipe_details": "Recipe details",
 
   "demo_access": "Press anywhere on the screen to access the demo",
@@ -96,5 +105,11 @@
   "unit_type_unit": "unit",
 
   "error_unknown": "An unknown error occured during the execution. Press anywhere to restart the application.",
-  "error_authentification": "An authentication error occured during the execution. To access this feature, press anywhere on this page to restart the application."
+  "error_authentication": "An authentication error occured during the execution. To access this feature, press anywhere on this page to restart the application.",
+
+  "feature_exploration": "This page will display a list of recipes shared by other users, which you will be able to download and adjust to your own taste.",
+  "feature_grocery": "This page will display the required ingredients of choosen recipes that you do not currently own in your pantry.",
+  "feature_ingredients": "This page will display all the known ingredients and their generic substitutes that may apply in most of the situations.",
+  "feature_pantry": "This page will help you manage the ingredients you have at your disposal, which will in turn allow us to remove them from your grocery list as well as to suggest you recipes you can currently cook.",
+  "feature_profile": "This page will display your profile informations and allow you to change most of them, including your profile picture."
 }
