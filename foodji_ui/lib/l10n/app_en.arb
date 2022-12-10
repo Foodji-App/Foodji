@@ -19,19 +19,9 @@
 
   "demo_access": "Press anywhere on the screen to access the demo",
   
-  "authentification_sign_in": "Welcome to Foodji! Sign in or create a new account to discover everything we have to offer.",
-  "authentification_sign_up": "Welcome to Foodji! Sign up by entering your informations below.",
-  "authentification_sign_up_instructions": "By using Foodji, you agree to terms and conditions we haven't exactly defined yet. When you think about it, it's like choosing the red pill. Be a Neo. We can only promise you one thing for joining us ; we have cookie... recipes.",
   "authentication_welcome_sign_in": "Welcome to Foodji, please sign in!",
   "authentication_welcome_sign_up": "Welcome to Foodji, please sign up!",
   "authentication_terms_and_conditions": "By signing in or registering, you agree to our terms and conditions.",
-  "authentification_email": "Email",
-  "authentification_password": "Password",
-  "authentification_login": "Login",
-  "authentification_no_account": "No account yet?",
-  "authentification_register": "Create account",
-  "authentification_error": "Please verify the provided informations and try again.",
-  "registration_error": "The provided email may already be linked to an existing account. Please verify or modify the provided informations and try again.",
 
   "menu_recipes": "Recipes",
   "menu_exploration": "Explore",

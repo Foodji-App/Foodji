@@ -19,19 +19,9 @@
 
   "demo_access": "Appuyez sur l'écran pour accéder à la démonstration",
 
-  "authentification_sign_in": "Bienvenue sur Foodji! Connectez-vous ou créez un compte pour découvrir tout ce que nous avons à vous offrir.",
-  "authentification_sign_up": "Bienvenue sur Foodji! Créez un compte en remplissant les champs d'informations ci-dessous.",
-  "authentification_sign_up_instructions": "En utilisant Foodji, vous acceptez des termes et conditions que nous n'avons pas encore exactement définis. Quand l'on y pense, c'est comme choisir la pilule rouge. Soyez un Néo. Nous pouvons vous promettre au moins une chose pour vous inciter à nous joindre ; nous avons des biscuits... Beaucoup de recettes de biscuits.",
   "authentication_welcome_sign_in": "Bienvenue sur Foodji, veuillez vous connecter!",
   "authentication_welcome_sign_up": "Bienvenue sur Foodji, veuillez vous créer un compte!",
   "authentication_terms_and_conditions": "En vous connectant ou en vous inscrivant, vouz acceptez les modalités et conditions d'utilisation de l'application.",
-  "authentification_email": "Courriel",
-  "authentification_password": "Mot de passe",
-  "authentification_login": "Connexion",
-  "authentification_no_account": "Pas de compte?",
-  "authentification_register": "S'inscrire",
-  "authentification_error": "Veuillez vérifier les informations fournies et essayer de nouveau.",
-  "registration_error": "Le courriel est peut-être lié à un compte existant. Veuillez vérifier ou modifier les informations et essayer de nouveau.",
 
   "menu_recipes": "Recettes",
   "menu_exploration": "Explorer",
