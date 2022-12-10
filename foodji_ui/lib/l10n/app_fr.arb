@@ -10,13 +10,9 @@
 
   "demo_access": "Appuyez sur l'écran pour accéder à la démonstration",
 
-  "authentification_email": "Courriel",
-  "authentification_password": "Mot de passe",
-  "authentification_login": "Connexion",
-  "authentification_no_account": "Pas de compte?",
-  "authentification_register": "S'inscrire",
-  "authentification_error": "Veuillez vérifier les informations fournies et essayer de nouveau.",
-  "registration_error": "Le courriel est peut-être lié à un compte existant. Veuillez vérifier ou modifier les informations et essayer de nouveau.",
+  "authentication_welcome_sign_in": "Bienvenue sur Foodji, veuillez vous connecter!",
+  "authentication_welcome_sign_up": "Bienvenue sur Foodji, veuillez vous créer un compte!",
+  "authentication_terms_and_conditions": "En vous connectant ou en vous inscrivant, vouz acceptez les modalités et conditions d'utilisation de l'application.",
 
   "menu_recipes": "Recettes",
   "menu_exploration": "Explorer",
