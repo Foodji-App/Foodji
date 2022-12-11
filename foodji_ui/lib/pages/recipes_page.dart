@@ -526,7 +526,14 @@ class RecipesPageState extends State<RecipesPage> {
                                       isThreeLine: false))));
                     },
                   ))
-                ])));
+                ])),
+          floatingActionButton: FloatingActionButton(
+              backgroundColor: AppColors.highlightColor3,
+              onPressed: () =>
+                  BlocProvider.of<AppCubits>(context).gotoAddRecipe(),
+              child: AppText(
+                  color: AppColors.backgroundColor,
+                  text: AppLocalizations.of(context)!.global_form_add)));
       } else {
         return Scaffold(
             body: Container(
