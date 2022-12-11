@@ -63,8 +63,7 @@ class RecipeModel {
       description == other.description &&
       details.equals(other.details) &&
       _equalsIngredients(other.ingredients) &&
-      _equalsSteps(other.steps) &&
-      isFavorite == other.isFavorite;
+      _equalsSteps(other.steps);
 
   bool _equalsIngredients(List<RecipeIngredientModel> otherIngredients) {
     if (ingredients.length != otherIngredients.length) {
