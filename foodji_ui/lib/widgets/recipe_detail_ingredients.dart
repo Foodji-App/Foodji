@@ -248,20 +248,26 @@ class RecipeDetailIngredientsState extends State<RecipeDetailIngredients> {
   Widget build(BuildContext context) {
     return Padding(
         padding:
-            const EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 30),
+            const EdgeInsets.only(top: 24, left: 1, right: 1, bottom: 30),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(children: <Widget>[
-            const Expanded(
-                child: Divider(
-              thickness: 2,
-              endIndent: 5,
-            )),
-            AppText(
-              text: AppLocalizations.of(context)!.recipe_ingredients,
-              size: AppTextSize.subtitle,
-            ),
-            const Expanded(child: Divider(thickness: 2, indent: 5)),
-          ]),
+          Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(children: <Widget>[
+              const Expanded(
+                  child: Divider(
+                thickness: 2,
+                endIndent: 5,
+              )),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: AppText(
+                  text: AppLocalizations.of(context)!.recipe_ingredients,
+                  size: AppTextSize.subtitle,
+                ),
+              ),
+              const Expanded(child: Divider(thickness: 2, indent: 5)),
+            ]),
+          ),
           const SizedBox(
             height: 10,
           ),
