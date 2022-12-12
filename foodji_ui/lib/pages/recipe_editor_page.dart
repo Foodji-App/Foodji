@@ -397,6 +397,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                       items: UnitType.values
                           .map<DropdownMenuItem<String>>((element) {
                         return DropdownMenuItem<String>(
+                          key: ValueKey('ingredient-$index-measurement-${element.name}'),
                           value: element.name,
                           child: Text(TranslationUtil.getUnitTypeString(
                               context, element.name)),
