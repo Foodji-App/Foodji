@@ -96,12 +96,7 @@ class RecipeModel {
         imageUri: '',
         category: Categories.values[0].name,
         description: '',
-        details: RecipeDetailsModel(
-            cookingTime: 0,
-            preparationTime: 0,
-            restingTime: 0,
-            serves: 0,
-            totalTime: 0),
+        details: RecipeDetailsModel.newRecipeDetailsModel(),
         ingredients: [],
         steps: []);
   }

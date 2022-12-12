@@ -12,6 +12,7 @@ import '../cubit/app_cubits.dart';
 import '../misc/colors.dart';
 import '../misc/translation_util.dart';
 import '../models/recipe_model.dart';
+import '../models/unit_type_enum.dart';
 import '../widgets/app_text.dart';
 import '../widgets/recipe_form/app_reorderable_text_form_fields.dart';
 import 'error_page.dart';
@@ -255,7 +256,9 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   Widget _buildServes() {
     return TextFormField(
       keyboardType: TextInputType.number,
-      initialValue: _currentRecipe.details.serves.toString(),
+      initialValue: _currentRecipe.details.serves == null
+          ? ''
+          : _currentRecipe.details.serves.toString(),
       decoration: InputDecoration(hintText: l10n.recipe_servings),
       validator: (String? value) => (value!.isEmpty)
           ? '${l10n.recipe_servings} ${l10n.form_is_required}'
@@ -339,59 +342,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                     : null,
                 onChanged: (value) =>
                     _currentRecipe.ingredients[index].name = value),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          // amount
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                                keyboardType: TextInputType.number,
-                                initialValue: _currentRecipe
-                                    .ingredients[index].measurement.value
-                                    .toString(),
-                                decoration: InputDecoration(
-                                  hintText: l10n.recipe_amount,
-                                ),
-                                validator: (value) => (value == null ||
-                                        value.isEmpty)
-                                    ? '${l10n.recipe_amount} ${l10n.form_is_required}'
-                                    : null,
-                                onChanged: (value) => _currentRecipe
-                                    .ingredients[index]
-                                    .measurement
-                                    .value = int.parse(value)),
-                          ),
-                          const SizedBox(width: 15),
-                          // unit
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                                initialValue: _currentRecipe
-                                    .ingredients[index].measurement.unitType,
-                                decoration: InputDecoration(
-                                  hintText: l10n.recipe_amount,
-                                ),
-                                validator: (value) => (value == null ||
-                                        value.isEmpty)
-                                    ? '${l10n.recipe_amount} ${l10n.form_is_required}'
-                                    : null,
-                                onChanged: (value) => _currentRecipe
-                                    .ingredients[index]
-                                    .measurement
-                                    .unitType = value),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+            _measurementBuilder(index),
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Align(
@@ -409,6 +360,67 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
         ),
         trailing: const Icon(Icons.drag_handle),
       ),
+    );
+  }
+
+  Widget _measurementBuilder(int index) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  // amount
+                  Expanded(
+                    flex: 1,
+                    child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        initialValue: _currentRecipe
+                                    .ingredients[index].measurement.value ==
+                                null
+                            ? ''
+                            : _currentRecipe
+                                .ingredients[index].measurement.value
+                                .toString(),
+                        decoration: InputDecoration(
+                          hintText: l10n.recipe_amount,
+                        ),
+                        validator: (value) => (value == null || value.isEmpty)
+                            ? '${l10n.recipe_amount} ${l10n.form_is_required}'
+                            : null,
+                        onChanged: (value) => _currentRecipe.ingredients[index]
+                            .measurement.value = int.parse(value)),
+                  ),
+                  const SizedBox(width: 15),
+                  // unit
+                  Expanded(
+                    flex: 1,
+                    child: DropdownButtonFormField<String>(
+                      value: _currentRecipe
+                          .ingredients[index].measurement.unitType,
+                      decoration: InputDecoration(hintText: l10n.recipe_amount),
+                      items: UnitType.values
+                          .map<DropdownMenuItem<String>>((element) {
+                        return DropdownMenuItem<String>(
+                          key: ValueKey(
+                              'ingredient-${AppUtil.keyDirtyFix[index]}-measurement-${element.name}'),
+                          value: element.name,
+                          child: Text(TranslationUtil.getUnitTypeString(
+                              context, element.name)),
+                        );
+                      }).toList(),
+                      onChanged: (String? value) => setState(() =>
+                          _currentRecipe.ingredients[index].measurement
+                              .unitType = value!),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
