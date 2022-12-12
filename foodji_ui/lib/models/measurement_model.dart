@@ -25,8 +25,9 @@ class MeasurementModel {
 
   static MeasurementModel newMeasurementModel() {
     return MeasurementModel(
-        alternativeText: '', value: 0, 
-        unitType: ''
+        alternativeText: '',
+        value: 0, 
+        unitType: UnitType.values[0].name
     );
   }
 

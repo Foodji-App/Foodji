@@ -62,7 +62,7 @@ class RecipeIngredientModel {
         id: null,
         name: '',
         description: '',
-        measurement: MeasurementModel.getSamples(1)[0],
+        measurement: MeasurementModel.newMeasurementModel(),
         tags: [],
         substitutes: []);
   }
