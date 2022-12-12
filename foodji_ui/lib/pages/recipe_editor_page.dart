@@ -256,7 +256,9 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
   Widget _buildServes() {
     return TextFormField(
       keyboardType: TextInputType.number,
-      initialValue: _currentRecipe.details.serves.toString(),
+      initialValue: _currentRecipe.details.serves == null
+          ? ''
+          : _currentRecipe.details.serves.toString(),
       decoration: InputDecoration(hintText: l10n.recipe_servings),
       validator: (String? value) => (value!.isEmpty)
           ? '${l10n.recipe_servings} ${l10n.form_is_required}'
@@ -375,8 +377,12 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                     child: TextFormField(
                         keyboardType: TextInputType.number,
                         initialValue: _currentRecipe
-                            .ingredients[index].measurement.value
-                            .toString(),
+                                    .ingredients[index].measurement.value ==
+                                null
+                            ? ''
+                            : _currentRecipe
+                                .ingredients[index].measurement.value
+                                .toString(),
                         decoration: InputDecoration(
                           hintText: l10n.recipe_amount,
                         ),
@@ -391,13 +397,14 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
                   Expanded(
                     flex: 1,
                     child: DropdownButtonFormField<String>(
-                      value: _currentRecipe.ingredients[index].measurement
-                              .unitType,
+                      value: _currentRecipe
+                          .ingredients[index].measurement.unitType,
                       decoration: InputDecoration(hintText: l10n.recipe_amount),
                       items: UnitType.values
                           .map<DropdownMenuItem<String>>((element) {
                         return DropdownMenuItem<String>(
-                          key: ValueKey('ingredient-$index-measurement-${element.name}'),
+                          key: ValueKey(
+                              'ingredient-${AppUtil.keyDirtyFix[index]}-measurement-${element.name}'),
                           value: element.name,
                           child: Text(TranslationUtil.getUnitTypeString(
                               context, element.name)),

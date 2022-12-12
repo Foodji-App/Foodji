@@ -75,4 +75,13 @@ class RecipeDetailsModel {
         serves == other.serves &&
         totalTime == other.totalTime;
   }
+
+  static newRecipeDetailsModel() {
+    return RecipeDetailsModel(
+        cookingTime: 0,
+        preparationTime: 0,
+        restingTime: 0,
+        totalTime: 0,
+        serves: null);
+  }
 }
