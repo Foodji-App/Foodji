@@ -49,7 +49,7 @@ class AppReorderableTextFormFieldsState
     return Column(
       children: [
         ReorderableListView(
-          key: UniqueKey(),
+          key:  ValueKey('reordlv-${widget.key}'),
           shrinkWrap: true,
           onReorder: onReorder,
           scrollController: widget.scrollController,
@@ -80,7 +80,7 @@ class AppReorderableTextFormFieldsState
   }
 
   Widget _buildTenableListTile(int index) => Dismissible(
-        key: UniqueKey(),
+        key: ValueKey('tenable-dism-${widget.key}-${AppUtil.keyDirtyFix[index]}'),
         confirmDismiss: (direction) =>
             Future.value(direction == DismissDirection.endToStart),
         onDismissed: (direction) {
@@ -94,10 +94,10 @@ class AppReorderableTextFormFieldsState
         },
         background: Container(color: Colors.red),
         child: Material(
-          key: UniqueKey(),
+        key: ValueKey('tenable-mat-${widget.key}-${AppUtil.keyDirtyFix[index]}'),
           color: widget.color ?? Colors.transparent,
           child: ListTile(
-            key: UniqueKey(),
+            key: ValueKey('tenable-lt-${widget.key}-${AppUtil.keyDirtyFix[index]}'),
             title: TextFormField(
                 initialValue: items[index],
                 decoration: InputDecoration(
