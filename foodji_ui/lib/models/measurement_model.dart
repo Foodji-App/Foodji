@@ -23,6 +23,13 @@ class MeasurementModel {
   /// Connect the generated [_$PersonToJson] function to the `toJson` method.
   Map<String, dynamic> toJson() => _$MeasurementModelToJson(this);
 
+  static MeasurementModel newMeasurementModel() {
+    return MeasurementModel(
+        alternativeText: '', value: 0, 
+        unitType: ''
+    );
+  }
+
   static MeasurementModel getSample() {
     var faker = Faker();
 

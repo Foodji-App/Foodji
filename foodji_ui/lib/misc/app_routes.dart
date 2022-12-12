@@ -11,8 +11,13 @@ class AppRoutes {
       HttpHeaders.accessControlAllowMethodsHeader: 'POST, GET, PUT, DELETE'
     };
   }
-  
-  //TODO - Changer l'adresse pour l'environnement de production
-  static String baseUrl = 'http://localhost:7272';
+
+  // get baseUrl for production
+  // static String baseUrl => 'http://167.99.239.52';
+
+  // get baseUrl for current platform
+  static String get baseUrl =>
+      Platform.isAndroid ? 'http://10.0.2.2:7272' : 'http://localhost:7272';
+
   static String recipes = '/recipes';
 }

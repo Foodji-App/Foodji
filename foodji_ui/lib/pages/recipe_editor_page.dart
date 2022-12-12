@@ -315,7 +315,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
 
   Widget _ingredientBuilder(int index) {
     return Dismissible(
-      key: UniqueKey(),
+      key: ValueKey('ingredient-dism-${AppUtil.keyDirtyFix[index]}'),
       confirmDismiss: (direction) =>
           Future.value(direction == DismissDirection.endToStart),
       onDismissed: (direction) {
@@ -325,7 +325,7 @@ class RecipeEditorPageState extends State<RecipeEditorPage>
       },
       background: Container(color: Colors.red),
       child: ListTile(
-        key: UniqueKey(),
+        key: ValueKey('ingredient-lt-${AppUtil.keyDirtyFix[index]}'),
         title: Column(
           children: [
             // name
