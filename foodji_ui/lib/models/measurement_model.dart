@@ -8,12 +8,12 @@ part 'measurement_model.g.dart';
 class MeasurementModel {
   String alternativeText;
   String unitType;
-  num value; // Must be a num, which is parent to double and int, as received data can be interpreted as either by json convert
+  num? value; // Must be a num, which is parent to double and int, as received data can be interpreted as either by json convert
 
   MeasurementModel(
       {required this.alternativeText,
-      required this.unitType,
-      required this.value});
+       required this.unitType,
+       required this.value});
 
   /// Connect the generated [_$PersonFromJson] function to the `fromJson`
   /// factory.
@@ -25,8 +25,9 @@ class MeasurementModel {
 
   static MeasurementModel newMeasurementModel() {
     return MeasurementModel(
-        alternativeText: '', value: 0, 
-        unitType: ''
+        alternativeText: '',
+        value: null, 
+        unitType: UnitType.values[0].name
     );
   }
 
