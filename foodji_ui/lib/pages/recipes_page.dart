@@ -74,7 +74,7 @@ class RecipesPageState extends State<RecipesPage> {
               if (advancedFilters[i]) {
                 setState(() {
                   recipes = recipes
-                      .where((RecipeModel r) => r.ingredients.any(
+                      .where((RecipeModel r) => r.ingredients.every(
                           (RecipeIngredientModel ig) =>
                               ig.tags.any((t1) => t1 == Tags.values[i].name) ||
                               ig.substitutes.any((RecipeSubstituteModel s) => s
@@ -528,13 +528,12 @@ class RecipesPageState extends State<RecipesPage> {
                   ))
                 ])),
             floatingActionButton: FloatingActionButton(
-              backgroundColor: AppColors.highlightColor3,
-              onPressed: () =>
-                  BlocProvider.of<AppCubits>(context).gotoAddRecipe(),
-              child: const Icon(Icons.add,
-              color: AppColors.backgroundColor
-                  )));           
-       } else {
+                backgroundColor: AppColors.highlightColor3,
+                onPressed: () =>
+                    BlocProvider.of<AppCubits>(context).gotoAddRecipe(),
+                child:
+                    const Icon(Icons.add, color: AppColors.backgroundColor)));
+      } else {
         return Scaffold(
             body: Container(
                 width: double.maxFinite,
