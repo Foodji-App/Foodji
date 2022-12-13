@@ -113,7 +113,7 @@ class RecipeDetailIngredientsState extends State<RecipeDetailIngredients> {
             Container(
                 alignment: Alignment.centerLeft,
                 width: MediaQuery.of(context).size.width * 0.80,
-                height: MediaQuery.of(context).size.height * 0.1,
+                height: MediaQuery.of(context).size.height * 0.15,
                 child: Column(
                   children: [
                     ListTile(
@@ -247,11 +247,10 @@ class RecipeDetailIngredientsState extends State<RecipeDetailIngredients> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding:
-            const EdgeInsets.only(top: 24, left: 1, right: 1, bottom: 30),
+        padding: const EdgeInsets.only(top: 24, left: 1, right: 1, bottom: 30),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(children: <Widget>[
               const Expanded(
                   child: Divider(
